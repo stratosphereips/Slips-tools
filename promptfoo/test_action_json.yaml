@@ -1,0 +1,123 @@
+description: Test if Ollama generates valid JSON actions with correct structure
+
+providers:
+  - id: ollama:smollm2:1.7b
+    config:
+      num_predict: 1024
+  - id: ollama:gemma3:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:3b
+    config:
+      num_predict: 1024
+  - id: ollama:phi4-mini:latest
+    config:
+      num_predict: 1024
+
+
+prompts:
+  - "Output a raw JSON object (without backticks or formatting) that represents the following networking action: {{action}}. The JSON should contain the keys `action` and `parameters`, and no additional text or formatting."
+
+tests:
+  - vars:
+      action: 'ScanNetwork targeting 1.1.1.0/24 from 2.2.2.2'
+    assert:
+      - type: is-json
+        value:
+          required: ["action", "parameters"]
+          type: object
+          properties:
+            action:
+              type: string
+            parameters:
+              type: object
+              properties:
+                target_network:
+                  type: string
+                source_host:
+                  type: string
+
+  - vars:
+      action: 'ScanServices on 2.2.2.3 from 2.2.2.2'
+    assert:
+      - type: is-json
+        value:
+          required: ["action", "parameters"]
+          type: object
+          properties:
+            action:
+              type: string
+            parameters:
+              type: object
+              properties:
+                target_host:
+                  type: string
+                source_host:
+                  type: string
+
+  - vars:
+      action: 'ExploitService openssh on 1.1.1.1 from 1.1.1.2'
+    assert:
+      - type: is-json
+        value:
+          required: ["action", "parameters"]
+          type: object
+          properties:
+            action:
+              type: string
+            parameters:
+              type: object
+              properties:
+                target_host:
+                  type: string
+                target_service:
+                  type: string
+                source_host:
+                  type: string
+
+  - vars:
+      action: 'FindData on 1.1.1.1 from 1.1.1.2'
+    assert:
+      - type: is-json
+        value:
+          required: ["action", "parameters"]
+          type: object
+          properties:
+            action:
+              type: string
+            parameters:
+              type: object
+              properties:
+                target_host:
+                  type: string
+                source_host:
+                  type: string
+
+  - vars:
+      action: 'ExfiltrateData from 1.1.1.2 to 2.2.2.2, data owned by User1 with ID WebData'
+    assert:
+      - type: is-json
+        value:
+          required: ["action", "parameters"]
+          type: object
+          properties:
+            action:
+              type: string
+            parameters:
+              type: object
+              properties:
+                target_host:
+                  type: string
+                source_host:
+                  type: string
+                data:
+                  type: object
+                  properties:
+                    owner:
+                      type: string
+                    id:
+                      type: string
+
