@@ -1,0 +1,63 @@
+description: Test if LLM can analyze a valid Zeek log 
+
+providers:
+  - id: ollama:smollm2:1.7b
+    config:
+      num_predict: 1024
+  - id: ollama:gemma3:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:3b
+    config:
+      num_predict: 1024
+  - id: ollama:phi4-mini:latest
+    config:
+      num_predict: 1024
+  - id: ollama:qwen2.5:1.5b
+    config:
+      num_predict: 1024
+  - id: ollama:qwen2.5:3b
+    config:
+      num_predict: 1024
+
+prompts:
+  - "
+    Analyze the following Zeek log entry and summarize IP and protocols:
+    
+    Log:
+    {{zeek_log}}
+    "
+
+tests:
+  - vars:
+      zeek_log: |
+        {
+          "ts": 1591367999.430166,
+          "uid": "C5bLoe2Mvxqhawzqqd",
+          "id.orig_h": "192.168.4.76",
+          "id.orig_p": 46378,
+          "id.resp_h": "31.3.245.133",
+          "id.resp_p": 80,
+          "proto": "tcp",
+          "service": "http",
+          "duration": 0.25411510467529297,
+          "orig_bytes": 77,
+          "resp_bytes": 295,
+          "conn_state": "SF",
+          "missed_bytes": 0,
+          "history": "ShADadFf",
+          "orig_pkts": 6,
+          "orig_ip_bytes": 397,
+          "resp_pkts": 4,
+          "resp_ip_bytes": 511,
+          "ip_proto": 6
+        }
+    assert:
+      - type: icontains-all
+        value:
+          - "192.168.4.76"
+          - "31.3.245.133"
+          - "HTTP"

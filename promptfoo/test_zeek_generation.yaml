@@ -1,0 +1,110 @@
+description: Test if LLM can generate a valid Zeek log line for an HTTP request
+
+providers:
+  - id: ollama:smollm2:1.7b
+    config:
+      num_predict: 1024
+  - id: ollama:gemma3:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:3b
+    config:
+      num_predict: 1024
+  - id: ollama:phi4-mini:latest
+    config:
+      num_predict: 1024
+  - id: ollama:qwen2.5:1.5b
+    config:
+      num_predict: 1024
+  - id: ollama:qwen2.5:3b
+    config:
+      num_predict: 1024
+
+prompts:
+  - 'Generate a simple Zeek log trace for a short network session. Include fields like ts, uid, id.orig_h, id.resp_h, proto, and service. The log should represent a single {{service}} request from {{src_ip}} to {{dst_ip}} using {{proto}}. No extra formatting or explanation.
+Example:
+{"ts":1591367999.305988,"uid":"CMdzit1AMNsmfAIiQc","id.orig_h":"192.168.4.76","id.orig_p":36844,"id.resp_h":"192.168.4.1","id.resp_p":53,"proto":"udp","service":"dns","duration":0.06685185432434082,"orig_bytes":62,"resp_bytes":141,"conn_state":"SF","missed_bytes":0,"history":"Dd","orig_pkts":2,"orig_ip_bytes":118,"resp_pkts":2,"resp_ip_bytes":197,"ip_proto":17} 
+'
+tests:
+  - vars: 
+      service: 'HTTP'
+      src_ip:  '192.168.1.1'
+      dst_ip:  '92.11.12.1'
+      proto:  ' TCP'
+    assert:
+      - type: is-json
+        value:
+          type: object
+          required: ["ts", "uid", "id.orig_h", "id.resp_h", "proto", "service"]
+          properties:
+            ts:
+              type: number
+            uid:
+              type: string
+            id.orig_h:
+              type: string
+            id.resp_h:
+              type: string
+            proto:
+              type: string
+            service:
+              type: string
+  - vars:
+      service: 'DNS'
+      src_ip: '10.0.0.5'
+      dst_ip: '8.8.8.8'
+      proto: 'udp'
+    assert:
+      - type: contains-json
+        value:
+          type: object
+          required: ["ts", "uid", "id.orig_h", "id.resp_h", "proto", "service"]
+          properties:
+            ts:
+              type: number
+            uid:
+              type: string
+            id.orig_h:
+              type: string
+              pattern: "^10\\.0\\.0\\.5$"
+            id.resp_h:
+              type: string
+              pattern: "^8\\.8\\.8\\.8$"
+            proto:
+              type: string
+              enum: ["udp"]
+            service:
+              type: string
+              enum: ["dns"]
+
+  - vars:
+      service: 'SSL'
+      src_ip: '192.168.10.10'
+      dst_ip: '172.217.0.142'
+      proto: 'tcp'
+    assert:
+      - type: contains-json
+        value:
+          type: object
+          required: ["ts", "uid", "id.orig_h", "id.resp_h", "proto", "service"]
+          properties:
+            ts:
+              type: number
+            uid:
+              type: string
+            id.orig_h:
+              type: string
+              pattern: "^192\\.168\\.10\\.10$"
+            id.resp_h:
+              type: string
+              pattern: "^172\\.217\\.0\\.142$"
+            proto:
+              type: string
+              enum: ["tcp"]
+            service:
+              type: string
+              enum: ["ssl"]
+
