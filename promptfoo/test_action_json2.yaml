@@ -1,4 +1,4 @@
-description: Test if Ollama generates valid JSON actions with correct structure
+description: Test if Ollama generates correct JSON actions with verified action names
 
 providers:
   - id: ollama:smollm2:1.7b
@@ -24,8 +24,6 @@ providers:
       num_predict: 1024
 
 
-
-
 prompts:
   - "Output a raw JSON object (without backticks or formatting) that represents the following networking action: {{action}}. The JSON should contain the keys `action` and `parameters`, and no additional text or formatting. Respect the following format: {{example}}"
 
@@ -44,25 +42,28 @@ tests:
               enum: ["ScanNetwork"]
             parameters:
               type: object
-              required: ["trget_network", "source_host"]
+              required: ["target_network", "source_host"]
               properties:
                 target_network:
                   type: string
                 source_host:
                   type: string
+
   - vars:
       action: 'Find Services on 2.2.2.3 from 2.2.2.2'
       example: '{"action":"ScanServices", "parameters": {"target_host":"192.168.1.22", "source_host": "192.168.1.1"}}'
     assert:
       - type: is-json
         value:
-          required: ["action", "parameters"]
           type: object
+          required: ["action", "parameters"]
           properties:
             action:
               type: string
+              enum: ["ScanServices"]
             parameters:
               type: object
+              required: ["target_host", "source_host"]
               properties:
                 target_host:
                   type: string
@@ -75,13 +76,15 @@ tests:
     assert:
       - type: is-json
         value:
-          required: ["action", "parameters"]
           type: object
+          required: ["action", "parameters"]
           properties:
             action:
               type: string
+              enum: ["ExploitService"]
             parameters:
               type: object
+              required: ["target_host", "target_service", "source_host"]
               properties:
                 target_host:
                   type: string
@@ -96,13 +99,15 @@ tests:
     assert:
       - type: is-json
         value:
-          required: ["action", "parameters"]
           type: object
+          required: ["action", "parameters"]
           properties:
             action:
               type: string
+              enum: ["FindData"]
             parameters:
               type: object
+              required: ["target_host", "source_host"]
               properties:
                 target_host:
                   type: string
@@ -115,13 +120,15 @@ tests:
     assert:
       - type: is-json
         value:
-          required: ["action", "parameters"]
           type: object
+          required: ["action", "parameters"]
           properties:
             action:
               type: string
+              enum: ["ExfiltrateData"]
             parameters:
               type: object
+              required: ["target_host", "source_host", "data"]
               properties:
                 target_host:
                   type: string
@@ -129,6 +136,7 @@ tests:
                   type: string
                 data:
                   type: object
+                  required: ["owner", "id"]
                   properties:
                     owner:
                       type: string
