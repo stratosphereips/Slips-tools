@@ -1,0 +1,71 @@
+description: Summarize Networking Actions from JSON
+
+providers:
+  - id: ollama:smollm2:1.7b
+    config:
+      num_predict: 2048
+  - id: ollama:gemma3:1b
+    config:
+      num_predict: 2048
+  - id: ollama:llama3.2:1b
+    config:
+      num_predict: 2048
+  - id: ollama:llama3.2:3b
+    config:
+      num_predict: 2048
+  - id: ollama:phi4-mini:latest
+    config:
+      num_predict: 2048
+  - id: ollama:qwen2.5:1.5b
+    config:
+      num_predict: 2048
+  - id: ollama:qwen2.5:3b
+    config:
+      num_predict: 2048
+  - id: ollama:granite3.1-dense:2b
+    config:
+      num_predict: 2048
+
+prompts:
+  - |
+    Given the following JSON, describe the networking action in simple English:
+    {{json}}
+
+    example
+    JSON action {"action":"ScanNetwork", "parameters": {"target_network":"1.1.1.0/24", "source_host": "2.2.2.2"}}
+    Answer "Scan a Network targeting 1.1.1.0/24 from 2.2.2.2"  
+tests:
+  - vars:
+      json: '{"action":"ScanNetwork", "parameters": {"target_network":"1.1.1.0/24", "source_host": "2.2.2.2"}}'
+    assert:
+      - type: llm-rubric
+        value: "Does the explanation describe a ScanNetwork action targeting the network 1.1.1.0/24, initiated from host 2.2.2.2?"
+
+  - vars:
+      json: '{"action":"ScanServices", "parameters": {"target_host":"2.2.2.3", "source_host": "2.2.2.2"}}'
+    assert:
+      - type: llm-rubric
+        value: "Does the explanation describe a Find Services action performed on host 2.2.2.3, initiated from 2.2.2.2?"
+
+  - vars:
+      json: '{"action":"ExploitService", "parameters":{"target_host":"1.1.1.1", "target_service":"openssh", "source_host": "1.1.1.2"}}'
+    assert:
+      - type: llm-rubric
+        value: "Does the explanation describe an ExploitService action targeting the 'openssh' service on host 1.1.1.1, initiated from 1.1.1.2?"
+
+  - vars:
+      json: '{"action":"FindData", "parameters":{"target_host":"1.1.1.1", "source_host": "1.1.1.2"}}'
+    assert:
+      - type: llm-rubric
+        value: "Does the explanation describe a FindData action performed on host 1.1.1.1 from source host 1.1.1.2?"
+
+  - vars:
+      json: '{"action":"ExfiltrateData", "parameters": {"target_host": "2.2.2.2", "data": {"owner":"User1", "id":"WebData"}, "source_host": "1.1.1.2"}}'
+    assert:
+      - type: llm-rubric
+        value: "Does the answer correctly explain that the action is to exfiltrate data from source host 1.1.1.2 to target host 2.2.2.2, involving data owned by User1 with ID 'WebData'?"
+
+defaultTest:
+  options:
+    provider: ollama:qwen2.5-coder:latest
+

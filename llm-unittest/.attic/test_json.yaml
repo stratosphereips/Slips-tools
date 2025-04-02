@@ -1,0 +1,26 @@
+description: Test if Ollama generates valid JSON
+
+providers:
+  - id: ollama:smollm2:1.7b
+    config:
+      num_predict: 1024
+
+
+prompts:
+  - "Output a JSON object that contains the keys `color` and `countries`, describing the following object: {{item}}"
+
+tests:
+  - vars:
+      item: Banana
+    assert:
+      - type: is-json
+        value:
+          required: ["color", "countries"]
+          type: object
+          properties:
+            color:
+              type: string
+            countries:
+              type: array
+              items:
+                type: string
