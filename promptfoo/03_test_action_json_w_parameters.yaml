@@ -1,4 +1,4 @@
-description: Test the generation of valid JSON actions with correct structure and parameters.
+description: Generate Structured Networking JSON 
 
 providers:
   - id: ollama:smollm2:1.7b

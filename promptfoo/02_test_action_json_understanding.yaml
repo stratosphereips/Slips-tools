@@ -1,4 +1,4 @@
-description: Test JSON understanding of actions 
+description: Summarize Networking Actions from JSON
 
 providers:
   - id: ollama:smollm2:1.7b

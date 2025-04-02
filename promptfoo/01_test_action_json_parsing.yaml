@@ -1,4 +1,4 @@
-description: Test if the model can extract specific fields from JSON networking actions
+description: Field Extraction from Networking JSON
 
 providers:
   - id: ollama:smollm2:1.7b

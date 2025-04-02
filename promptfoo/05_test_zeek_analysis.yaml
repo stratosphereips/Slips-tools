@@ -1,4 +1,4 @@
-description: Test analysis of a valid Zeek log 
+description: Interpret Zeek Log Entries
 
 providers:
   - id: ollama:smollm2:1.7b

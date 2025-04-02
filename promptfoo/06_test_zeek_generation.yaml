@@ -1,4 +1,4 @@
-description: Test generation a valid Zeek log line for an HTTP request
+description: Generate Valid Zeek Log Line
 
 providers:
   - id: ollama:smollm2:1.7b
