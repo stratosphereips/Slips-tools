@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+prompts:
+  - 'What is the weather like in {{city}}?'
+
+providers:
+  - id: 'ollama:llama3.2:3b'
+    label: 'functions-defined-in-config'
+    config:
+      function:
+        [
+          {
+            'name': 'get_current_weather',
+            'description': 'Get the current weather in a given location',
+            'parameters':
+              {
+                'type': 'object',
+                'properties':
+                  {
+                    'location':
+                      {
+                        'type': 'string',
+                        'description': 'The city and state, e.g. San Francisco, CA',
+                      },
+                    'unit': { 'type': 'string', 'enum': ['celsius', 'fahrenheit'] },
+                  },
+                'required': ['location'],
+              },
+          },
+        ]
+
+tests:
+  - vars:
+      city: Boston
+    assert:
+      - type: is-json
+      - type: javascript
+        value: output.name === 'get_current_weather'

@@ -1,0 +1,48 @@
+you have access to the following tools:
+
+[AVAILABLE_TOOLS]
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_weather",
+            "description": "Retrieve the current weather for a specified location.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "The city and state, e.g., San Francisco, CA."
+                    },
+                    "unit": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"],
+                        "description": "Temperature unit."
+                    }
+                },
+                "required": ["location"]
+            }
+        }
+    }
+    ,
+              {
+                  "type": "function",
+                  "function": {
+                      "name": "tell_joke",
+                      "description": "Tell a random joke.",
+                      "parameters": {
+                          "type": "object",
+                          "properties": {},
+                          "required": []
+                      }
+                  }
+              }
+]
+[/AVAILABLE_TOOLS]
+
+To call a tool, respond with a JSON object in the following format:
+<function_call>[{"function": {"name": "function_name", "arguments": {"arg1": "value1", "arg2": "value2"}}}]</function_call>
+Please use the above format to invoke the appropriate function based on the users request
+       
+What is the weather in {{city}}?'
+
