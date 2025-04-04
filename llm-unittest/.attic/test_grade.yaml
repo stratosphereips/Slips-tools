@@ -1,0 +1,39 @@
+description: Test if Ollama generates valid JSON actions with correct structure
+
+providers:
+  - id: ollama:smollm2:1.7b
+    config:
+      num_predict: 1024
+  - id: ollama:gemma3:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:1b
+    config:
+      num_predict: 1024
+  - id: ollama:llama3.2:3b
+    config:
+      num_predict: 1024
+  - id: ollama:phi4-mini:latest
+    config:
+      num_predict: 1024
+  - id: ollama:qwen2.5:1.5b
+    config:
+      num_predict: 1024
+  - id: ollama:qwen2.5:3b
+    config:
+      num_predict: 1024
+
+prompts:
+  - 'What is {{topic}}?'
+tests:
+  - vars:
+      topic: quantum computing
+    assert:
+      - type: model-graded-closedqa
+        value: Explains the concept without using technical jargon
+      - type: model-graded-closedqa
+        value: Includes a practical real-world example
+
+defaultTest:
+  options:
+    provider: ollama:qwen2.5-coder:latest
