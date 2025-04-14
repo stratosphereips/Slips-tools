@@ -1,31 +1,8 @@
 description: Summarize Networking Actions from JSON
 
 providers:
-  - id: openai:chat:smollm2:1.7b
-    config:
-      num_predict: 2048
-  - id: openai:chat:gemma3:1b
-    config:
-      num_predict: 2048
-  - id: openai:chat:llama3.2:1b
-    config:
-      num_predict: 2048
-  - id: openai:chat:llama3.2:3b
-    config:
-      num_predict: 2048
-  - id: openai:chat:phi4-mini:latest
-    config:
-      num_predict: 2048
-  - id: openai:chat:qwen2.5:1.5b
-    config:
-      num_predict: 2048
-  - id: openai:chat:qwen2.5:3b
-    config:
-      num_predict: 2048
-  - id: openai:chat:granite3.1-dense:2b
-    config:
-      num_predict: 2048
-
+  - file://providers/providers.yaml
+  
 prompts:
   - |
     Given the following JSON, describe the networking action in simple English:
