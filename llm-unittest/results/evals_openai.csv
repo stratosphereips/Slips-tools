@@ -1,10 +1,10 @@
 ID,Created,Description,Pass Rate,# Tests
-eval-dcg-2025-04-11T22:41:39,"4/11/2025, 7:41:39 PM",Generate Structured Networking JSON (API),82.5,5
-eval-sIt-2025-04-11T22:41:34,"4/11/2025, 7:41:34 PM",Generate Function Call from Prompt,31.25,2
-eval-I6G-2025-04-11T22:41:28,"4/11/2025, 7:41:28 PM",Summarize Zeek Logs and Make Classifications,50,2
-eval-60N-2025-04-11T22:41:23,"4/11/2025, 7:41:23 PM",Generate Valid Zeek Log Line,33.333,3
-eval-EI8-2025-04-11T22:41:17,"4/11/2025, 7:41:17 PM",Interpret Zeek Log Entries,37.5,2
-eval-M9d-2025-04-11T22:41:11,"4/11/2025, 7:41:11 PM",Test the generation of valid JSON actions with correct structure.,47.5,5
-eval-yaW-2025-04-11T22:41:06,"4/11/2025, 7:41:06 PM",Generate Structured Networking JSON,50,5
-eval-ahf-2025-04-11T22:40:59,"4/11/2025, 7:40:59 PM",Summarize Networking Actions from JSON,72.5,5
-eval-lTe-2025-04-11T22:40:53,"4/11/2025, 7:40:53 PM",Field Extraction from Networking JSON,87.5,5
+eval-WOr-2025-04-14T21:33:21,"4/14/2025, 6:33:21 PM",Generate Structured Networking JSON (API),84.444,5
+eval-Obk-2025-04-14T21:33:14,"4/14/2025, 6:33:14 PM",Generate Function Call from Prompt,27.778,2
+eval-gR8-2025-04-14T21:32:59,"4/14/2025, 6:32:59 PM",Summarize Zeek Logs and Make Classifications,55.556,2
+eval-cXT-2025-04-14T21:32:51,"4/14/2025, 6:32:51 PM",Generate Valid Zeek Log Line,33.333,3
+eval-i0G-2025-04-14T21:32:42,"4/14/2025, 6:32:42 PM",Interpret Zeek Log Entries,44.444,2
+eval-cVI-2025-04-14T21:32:36,"4/14/2025, 6:32:36 PM",Test the generation of valid JSON actions with correct structure.,51.111,5
+eval-l3b-2025-04-14T21:32:29,"4/14/2025, 6:32:29 PM",Generate Structured Networking JSON,55.556,5
+eval-fev-2025-04-14T21:32:19,"4/14/2025, 6:32:19 PM",Summarize Networking Actions from JSON,71.111,5
+eval-oe8-2025-04-14T21:32:13,"4/14/2025, 6:32:13 PM",Field Extraction from Networking JSON,86.667,5

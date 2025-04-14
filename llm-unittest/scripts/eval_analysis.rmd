@@ -60,5 +60,6 @@ ggplot(long_data, aes(x = Description, y = provider, fill = pass_rate)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+ggsave(filename = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/models_heatmap.png",width = 8, height = 6, units = "in")
 ```
 
