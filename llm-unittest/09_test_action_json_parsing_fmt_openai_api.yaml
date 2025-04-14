@@ -1,8 +1,7 @@
-description: Generate Structured Networking JSON 
+description: Generate Structured Networking JSON (API)
 
 providers:
-  - file://providers/providers.yaml
-
+  - file://providers/providers_fmt_openai.yaml
 prompts:
   - "Output a raw JSON object (without backticks or formatting) that represents the following networking action: {{action}}. The JSON should contain the keys `action` and `parameters`, and no additional text or formatting. Respect the following format: {{example}}"
 

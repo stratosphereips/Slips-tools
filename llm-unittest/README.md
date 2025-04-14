@@ -15,12 +15,12 @@ This repository contains a collection of YAML-based test files for evaluating pr
 To run a test:
 
 ```bash
-OLLAMA_BASE_URL="http://<ollama_server>:11434" promptfoo eval -c <yaml_file>
+OPENAI_API_KEY="ollama" OPENAI_BASE_URL="http://10.16.20.252:11434/v1" promptfoo eval -c <yaml_file>
 ```
 
 or is you want to run all the tests:
 ```bash
-for test_case in `ls *.yaml`;do  OLLAMA_BASE_URL="http://10.16.20.252:11434" promptfoo eval -c $test_case  ;done
+for test_case in `ls *.yaml`;do OPENAI_API_KEY="ollama" OPENAI_BASE_URL="http://10.16.20.252:11434/v1" promptfoo eval -c $test_case  ;done
 ```
 
 Replace `<ollama_server>` with your actual Ollama host (e.g., `localhost`).
@@ -78,3 +78,7 @@ Checks how well the model can summarize Zeek data into human-readable security i
 ### 08 - Tool Use
 **File**: `08_test_tool_use.yaml`  
 Evaluates how well the model understands and integrates tool-based workflows or simulated tool use in prompt outputs.
+
+### 09 - Action JSON General API
+**File**: `09_test_action_json_parsing_fmt_openai_api.yaml`
+SImilar to test 03, but using openai API for validating and parsing JSON format.

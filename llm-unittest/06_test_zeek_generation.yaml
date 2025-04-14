@@ -1,31 +1,7 @@
 description: Generate Valid Zeek Log Line
 
 providers:
-  - id: ollama:smollm2:1.7b
-    config:
-      num_predict: 2048
-  - id: ollama:gemma3:1b
-    config:
-      num_predict: 2048
-  - id: ollama:llama3.2:1b
-    config:
-      num_predict: 2048
-  - id: ollama:llama3.2:3b
-    config:
-      num_predict: 2048
-  - id: ollama:phi4-mini:latest
-    config:
-      num_predict: 2048
-  - id: ollama:qwen2.5:1.5b
-    config:
-      num_predict: 2048
-  - id: ollama:qwen2.5:3b
-    config:
-      num_predict: 2048
-  - id: ollama:granite3.1-dense:2b
-    config:
-      num_predict: 2048
-
+  - file://providers/providers.yaml
 
 prompts:
   - 'Generate a simple Zeek log trace for a short network session. Include fields like ts, uid, id.orig_h, id.resp_h, proto, and service. The log should represent a single {{service}} request from {{src_ip}} to {{dst_ip}} using {{proto}}. No extra formatting or explanation.
