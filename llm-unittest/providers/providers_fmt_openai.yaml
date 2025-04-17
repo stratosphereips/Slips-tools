@@ -26,6 +26,10 @@
   config:
     num_predict: 2048
     response_format: {'type':'json_object'}
+- id: openai:chat:qwen2.5:3b-instruct-q8_0
+  config:
+    num_predict: 2048
+    response_format: {'type':'json_object'}
 - id: openai:chat:granite3.1-dense:2b
   config:
     num_predict: 2048

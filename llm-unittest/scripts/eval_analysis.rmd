@@ -6,16 +6,20 @@ output: html_notebook
 library(tidyverse)
 library(jsonlite)
 ```
+```{r}
+evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_opena_8bi.csv"
+cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_openai_8b.json"
+```
 
 
 Here we have the information about the description of the test
 ```{r}
-promptfoo_data_test<-read_csv("/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_openai.csv")
+promptfoo_data_test<-read_csv(evals_file)
 promptfoo_data_test <- promptfoo_data_test %>% rename(evalId="ID")
 ```
 Here we have the actual tests
 ```{r}
-promptfoo_data<-fromJSON("/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_openai.json",flatten = TRUE)
+promptfoo_data<-fromJSON(cols_file,flatten = TRUE)
 #promptfoo_data %>% select(description) %>% unique()
 ```
 
@@ -50,6 +54,9 @@ library(tidyr)
 # Assuming `pivot_scores` from previous step is already created
 long_data <- pivot_scores %>%
   pivot_longer(-provider, names_to = "Description", values_to = "pass_rate")
+
+long_data$provider <- gsub("openai:chat:", "", long_data$provider)
+
 
 ggplot(long_data, aes(x = Description, y = provider, fill = pass_rate)) +
   geom_tile(color = "white") +
