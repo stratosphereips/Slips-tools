@@ -7,19 +7,41 @@ library(tidyverse)
 library(jsonlite)
 ```
 ```{r}
-evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_opena_8bi.csv"
+evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_openai_8b.csv"
 cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_openai_8b.json"
+```
+
+
+```{r}
+bitnet_evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_bitnet.csv"
+bitnet_cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_bitnet.json"
+
+```
+
+```{r}
+
+
 ```
 
 
 Here we have the information about the description of the test
 ```{r}
 promptfoo_data_test<-read_csv(evals_file)
+```
+```{r}
+promptfoo_data_test_bitnet<-read_csv(bitnet_evals_file)
+promptfoo_data_test<- rbind(promptfoo_data_test,promptfoo_data_test_bitnet)
+```
+
+
+```{r}
 promptfoo_data_test <- promptfoo_data_test %>% rename(evalId="ID")
 ```
 Here we have the actual tests
 ```{r}
 promptfoo_data<-fromJSON(cols_file,flatten = TRUE)
+promptfoo_data_bitnet<-fromJSON(bitnet_cols_file,flatten = TRUE)
+promptfoo_data <- rbind(promptfoo_data,promptfoo_data_bitnet)
 #promptfoo_data %>% select(description) %>% unique()
 ```
 
@@ -46,6 +68,9 @@ pivot_scores <- promptfoo_data %>%
     values_from = pass_rate
   )
 
+pivot_scores<-pivot_scores %>% filter(! provider %in% c("openai:chat:qwen2.5:3b-instruct-q8_0",
+                                         "openai:chat:smollm:1.7b-instruct-v0.2-q5_K_M",
+                                         "openai:chat:smollm:1.7b-instruct-v0.2-q8_0"))
 ```
 ```{r fig.height=8, fig.width=8}
 library(ggplot2)

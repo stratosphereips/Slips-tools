@@ -1,0 +1,10 @@
+ID,Created,Description,Pass Rate,# Tests
+eval-rL4-2025-04-30T20:50:05,"4/30/2025, 5:50:05 PM",Generate Structured Networking JSON (API),60,5
+eval-vtx-2025-04-30T20:48:41,"4/30/2025, 5:48:41 PM",Generate Function Call from Prompt,50,2
+eval-8uC-2025-04-30T20:44:25,"4/30/2025, 5:44:25 PM",Summarize Zeek Logs and Make Classifications,50,2
+eval-jcs-2025-04-30T20:42:42,"4/30/2025, 5:42:42 PM",Generate Valid Zeek Log Line,33.333,3
+eval-9MV-2025-04-30T20:40:06,"4/30/2025, 5:40:06 PM",Interpret Zeek Log Entries,100,2
+eval-cuP-2025-04-30T20:39:11,"4/30/2025, 5:39:11 PM",Test the generation of valid JSON actions with correct structure.,60,5
+eval-ce4-2025-04-30T20:38:16,"4/30/2025, 5:38:16 PM",Generate Structured Networking JSON,80,5
+eval-CzS-2025-04-30T20:35:18,"4/30/2025, 5:35:18 PM",Summarize Networking Actions from JSON,80,5
+eval-KZv-2025-04-30T20:34:29,"4/30/2025, 5:34:29 PM",Field Extraction from Networking JSON,60,5
