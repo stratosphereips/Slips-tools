@@ -19,4 +19,9 @@ tests:
 
 defaultTest:
   options:
-    provider: openai:chat:qwen2.5-coder:latest
+    provider: 
+      text:
+        id: openai:chat:qwen2.5-coder:latest
+        config:
+          apiBaseUrl: "http://10.147.20.101:11434/v1"
+          apiKey: "ollama"  
