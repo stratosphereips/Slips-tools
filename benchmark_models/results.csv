@@ -1,0 +1,11 @@
+model,quantization,disk_size_mb,ram_size_mb,tokens_per_second
+granite3.1-dense:2b,Q4_K_M,1497.0,2615.0,5.96
+llama3.2:3b,Q4_K_M,1925.8,3331.3,4.82
+smollm2:1.7b,Q8_0,1736.1,3946.4,5.13
+qwen2.5:1.5b,Q4_K_M,940.4,1495.0,9.87
+phi4-mini:latest,Q4_K_M,2376.4,3998.7,3.98
+gemma3:4b,Q4_K_M,3184.1,5231.4,3.90
+qwen2.5:3b,Q4_K_M,1840.5,2478.6,5.11
+gemma3:1b,Q4_K_M,777.5,1361.8,11.49
+deepseek-r1:1.5b,Q4_K_M,1065.6,1495.0,9.69
+llama3.2:1b,Q8_0,1259.9,2130.1,7.45
