@@ -1,0 +1,32 @@
+This is a zeek script. Tell me if the script is going to work in zeek.
+Explain why. Think step by step. and finally provide your FINAL ANSWER YES or NO:
+
+# Helper function to analyze the message for gateway information
+function analyze_dhcp_gateway_message(c: connection, msg: DHCP::Message) {
+    # Look for Option Code 3 which is the 'Router option' indicating the default gateway.
+    if (msg.options) {
+        local default_router_option = DHCP::option_value(msg.options, DHCP_OPTION_ROUTER);
+        if (!default_router_option) {
+            return;
+        }
+
+        local router_ip: addr;
+        if (|default_router_option| > 0 && |default_router_option[0]| == 4) {
+            # Extract the first default gateway IP. Handle multi-gateway case if necessary
+            router_ip = to_addr(default_router_option[0]);
+            
+            # Generate a notice.log entry for identified GW IPs
+            local notice: DHCP_Gateway_Notice = [
+                ts=c$id$orig_h@,
+                uid="",    # Assign a UID if available from connection identifier or create a unique one.
+                id=c$id,
+                gateway_ip=router_ip,
+            ];
+
+            Notice::log(&note=$INFO, &msg="DHCP Gateway IP Detected: ", 
+                        &sub=msg.msg_type_str, &conn_id=c$id, 
+                        &addl=notice);
+        }
+    }
+}
+

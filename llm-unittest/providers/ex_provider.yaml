@@ -1,0 +1,5 @@
+- id: openai:chat:qwen2.5:3b-32k
+  config:
+    num_predict: 1024
+    apiBaseUrl: "http://10.147.20.102:11434/v1"
+    apiKey: "ollama"  

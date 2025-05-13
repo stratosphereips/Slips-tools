@@ -40,13 +40,16 @@
     response_format: {'type':'json_object'}
     apiBaseUrl: "http://10.147.20.102:11434/v1"
     apiKey: "ollama"  
-- id: openai:chat:BitNet-b1.58-2B-4T
-  config:
-    num_predict: 2048
-    response_format: {'type':'json_object'}
-    apiBaseUrl: "http://10.147.20.102:18080/v1"
-    apiKey: "ollama"  
 
+### BITNET
+#- id: openai:chat:BitNet-b1.58-2B-4T
+#  config:
+#    num_predict: 2048
+#    response_format: {'type':'json_object'}
+#    apiBaseUrl: "http://10.147.20.102:18080/v1"
+#    apiKey: "ollama"  
+
+### OTHER QUANTIZATIONS 
 #- id: openai:chat:phi4-mini:latest
 #  config:
 #    num_predict: 2048
@@ -63,7 +66,6 @@
 #- id: openai:chat:smollm:1.7b-instruct-v0.2-q8_0
 #  config:
 #    num_predict: 2048
--
 
 
 #- id: openai:chat:smollm:1.7b-instruct-v0.2-q5_K_M
@@ -137,5 +139,5 @@
 #- id: openai:chat:BitNet-b1.58-2B-4T
 #  config:
 #    num_predict: 2048
-    apiBaseUrl: "http://10.147.20.102:18080/v1"
-    apiKey: "ollama"  
+#    apiBaseUrl: "http://10.147.20.102:18080/v1"
+#    apiKey: "ollama"  

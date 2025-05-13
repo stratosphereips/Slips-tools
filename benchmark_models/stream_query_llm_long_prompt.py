@@ -1,17 +1,26 @@
 import openai
 import time
 import argparse
+import os
 
-def stream_chat_with_usage(prompt, base_url,model,stats_only):
-    # Custom OpenAI-compatible API endpoint
+def load_prompt(prompt_arg):
+    """
+    Loads the prompt from a file if the argument is a valid file path,
+    otherwise returns the argument as a raw prompt string.
+    """
+    if os.path.isfile(prompt_arg):
+        with open(prompt_arg, 'r', encoding='utf-8') as f:
+            return f.read()
+    return prompt_arg
+
+def stream_chat_with_usage(prompt, base_url, model, stats_only):
     client = openai.OpenAI(
         api_key="ollama",  # Leave blank or use a value if your API requires it
-        base_url=base_url
+        base_url=base_url,
+        timeout=1200
     )
 
     messages = [{"role": "user", "content": prompt}]
-    #model = "gpt-4"  # Change this if your local model uses a different name
-
     if not stats_only:
         print("AI:", end=" ", flush=True)
     full_reply = ""
@@ -55,11 +64,12 @@ def stream_chat_with_usage(prompt, base_url,model,stats_only):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Stream chat completions with usage metrics.")
     parser.add_argument("--base_url", default="http://10.147.20.102:11434/v1", help="Base URL of the OpenAI-compatible API")
-    parser.add_argument("--prompt", required=True, help="Prompt to send to the model")
-    parser.add_argument("--model", default="qwen2.5:3b", help="the model to use")
-    parser.add_argument("--stats_only",action="store_true", help="Print only the stats, no prompt nor completion")
+    parser.add_argument("--prompt", required=True, help="Prompt to send to the model or path to a text file")
+    parser.add_argument("--model", default="qwen2.5:3b", help="The model to use")
+    parser.add_argument("--stats_only", action="store_true", help="Print only the stats, no prompt nor completion")
 
     args = parser.parse_args()
 
-    stream_chat_with_usage(args.prompt, args.base_url,args.model, args.stats_only)
+    prompt_text = load_prompt(args.prompt)
+    stream_chat_with_usage(prompt_text, args.base_url, args.model, args.stats_only)
 
