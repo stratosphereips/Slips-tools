@@ -1,0 +1,9 @@
+provider,Field Extraction from Networking JSON,Generate Function Call from Prompt,Generate Structured Networking JSON,Generate Structured Networking JSON (API),Generate Valid Zeek Log Line,Generate a Zeek Signature,Interpret Zeek Log Entries,Summarize Networking Actions from JSON,Summarize Zeek Logs and Make Classifications,Test the generation of valid JSON actions with correct structure.
+openai:chat:BitNet-b1.58-2B-4T,80,50,60,20,0,0,100,100,0,40
+openai:chat:gemma3:1b,100,0,40,80,0,0,0,20,50,60
+openai:chat:granite3.1-dense:2b,100,0,80,80,66.67,50,50,80,0,80
+openai:chat:llama3.2:1b-instruct-q4_K_M,60,0,60,60,0,0,50,20,50,40
+openai:chat:llama3.2:3b,80,0,80,80,66.67,50,100,100,0,80
+openai:chat:qwen2.5:1.5b,80,0,20,100,33.33,0,50,100,0,40
+openai:chat:qwen2.5:3b,100,100,100,100,0,0,100,80,0,80
+openai:chat:smollm2:1.7b-instruct-q4_K_M,60,50,80,60,33.33,0,0,20,0,80
