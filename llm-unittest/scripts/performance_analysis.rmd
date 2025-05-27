@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+df <- read_csv("/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/benchmark_models/results.csv")
+df <- df %>% filter(!model %in% c("qwen2.5-coder:1.5b"))
+df <- df %>% add_row(
+  model="BitNet-b1.58-2B-4T",
+  quantization="Q1.5",
+  disk_size_mb=1200,
+  ram_size_mb=1500,
+  tokens_per_second=8.13
+)
+perf_rank<-read_csv("/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/benchmark_models/results/perf_rank.csv")
+perf_rank <- perf_rank %>%
+  mutate(provider = str_remove(provider, "^openai:chat:"))
+#perf_rank <- perf_rank %>% filter(!provider %in% c("BitNet-b1.58-2B-4T"))
+df<-left_join(perf_rank,df,  by = c("provider" = "model"))
+```
+
+
+```{r fig.height=6, fig.width=6}
+# Load required packages
+library(ggplot2)
+
+# Plot
+ggplot(df, aes(x = tokens_per_second, y =score, size = ram_size_mb, , color = provider , label = provider)) +
+  geom_point(alpha = 0.7) +
+  geom_point(size=1,color="black") +
+  geom_text(hjust = 0.5, vjust = -1.5, size = 3,color='black') +
+  scale_size_continuous(range = c(3, 10)) +
+  #scale_color_viridis_c() +
+  #xlim(0,5000)+
+  theme_minimal() +
+  labs(
+    title = "Model Performance: Score vs Tokens/sec", subtitle = "Ram Size is represented using circles",
+    y = "Performance Score",
+    x = "Tokens per Seconds",
+    size = "TPS",
+    color = "TPS"
+  )+
+  ylim(0,110)+
+  theme_minimal()+
+  theme(legend.position = 'none')
+ggsave(filename = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/trade_off.png",width = 3, height = 3, units = "in")
+```

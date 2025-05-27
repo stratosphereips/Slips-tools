@@ -48,4 +48,5 @@
 {"_path":"http","_write_ts":"2018-03-24T17:15:20.808948Z","ts":"2018-03-24T17:15:20.784224Z","uid":"CDsH7P93xT1GORv19","id.orig_h":"10.128.0.223","id.orig_p":14158,"id.resp_h":"10.47.7.58","id.resp_p":80,"trans_depth":4,"method":"GET","host":"10.47.7.58","uri":"/api/get/12/23","referrer":"http://10.47.7.58/dashboard","version":"1.1","user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299","request_body_len":0,"response_body_len":52,"status_code":200,"status_msg":"OK","tags":[],"resp_fuids":["FzQtTu3KXpNvc9219f"],"resp_mime_types":["text/json"]}
 ]
 
-{{action}}
+Provide me a detailed list of of the detected user agents.
+
