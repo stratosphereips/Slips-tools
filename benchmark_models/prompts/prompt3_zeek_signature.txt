@@ -1,0 +1,118 @@
+This the table a possible field in a zeek signature:
+
+| **Field Type**        | **Field**                                | **Description**                                                                                   |
+|-----------------------|-------------------------------------------|---------------------------------------------------------------------------------------------------|
+| **Header Conditions** | `src-ip`, `dst-ip`                        | Match source/destination IP (IPv4, IPv6, CIDR).                                                   |
+|                       | `src-port`, `dst-port`                    | Match source/destination port numbers.                                                           |
+|                       | `ip-proto`                                | Match protocol: `tcp`, `udp`, `icmp`, `icmp6`, `ip`, `ip6`.                                      |
+|                       | `header <proto>[offset:size] [& mask]`    | Match raw bytes from protocol header using offset, size, and bitmask.                            |
+| **Content Conditions**| `payload /<regex>/`                       | Match raw packet/stream payload using regex.                                                     |
+|                       | `http-request /<regex>/`                  | Match HTTP request URI.                                                                          |
+|                       | `http-request-header /<regex>/`           | Match HTTP request headers.                                                                      |
+|                       | `http-request-body /<regex>/`             | Match HTTP request body.                                                                         |
+|                       | `http-reply-header /<regex>/`             | Match HTTP reply headers.                                                                        |
+|                       | `http-reply-body /<regex>/`               | Match HTTP reply body.                                                                           |
+|                       | `ftp /<regex>/`                           | Match FTP command input.                                                                         |
+|                       | `finger /<regex>/`                        | Match finger request content.                                                                    |
+| **Dependency**        | `requires-signature [!] <id>`             | Match only if another signature matches (or not).                                                |
+|                       | `requires-reverse-signature [!] <id>`     | Same, but for opposite direction of the connection.                                              |
+| **Context Conditions**| `eval <policy-function>`                  | Invoke a Zeek script function returning a boolean.                                                |
+|                       | `payload-size <cmp> <int>`                | Compare payload size.                                                                            |
+|                       | `same-ip`                                 | True if src IP equals dst IP.                                                                    |
+|                       | `tcp-state <state-list>`                  | Restrict by TCP state: `established`, `originator`, `responder`.                                |
+|                       | `udp-state <state-list>`                  | Restrict by UDP flow direction: `originator`, `responder`.                                       |
+| **Actions**           | `event "<string>"`                        | Raise default `signature_match` event with message.                                              |
+|                       | `event <event_name> ["message"]`          | Raise custom event (optionally with message).                                                    |
+|                       | `enable "<analyzer>"`                     | Enable dynamic protocol analyzer (`http`, `ftp`, etc.)                                           |
+
+These are possible examples:
+
+1. Match TCP traffic to port 80 containing "root"
+signature sig_http_root {
+    ip-proto == tcp
+    dst-port == 80
+    payload /.*root/
+    event "Found root keyword in HTTP traffic"
+}
+
+2. Match traffic from a specific IP
+signature sig_from_malicious_ip {
+    src-ip == 192.168.1.100
+    ip-proto == tcp
+    event "Traffic from blacklisted IP"
+}
+
+3. Match HTTP GET requests
+signature sig_http_get {
+    ip-proto == tcp
+    http-request /^GET /
+    event "HTTP GET request detected"
+}
+
+4. Match access to /etc/passwd or /etc/shadow
+signature sig_sensitive_paths {
+    ip-proto == tcp
+    http-request /etc\/(passwd|shadow)/
+    event "Sensitive file path detected in HTTP request"
+}
+
+5. Enable HTTP analyzer for port 8080
+signature sig_enable_http {
+    ip-proto == tcp
+    dst-port == 8080
+    event "Enabling HTTP analyzer on non-standard port"
+    enable "http"
+}
+
+6. Use custom event for FTP command
+signature sig_ftp_login {
+    ip-proto == tcp
+    dst-port == 21
+    ftp /USER root/
+    event ftp_root_login "Attempted root FTP login"
+}
+
+7. Match reverse signature direction
+signature sig_client_request {
+    ip-proto == tcp
+    dst-port == 1234
+    payload /HELLO/
+    event "Client sent HELLO"
+}
+
+signature sig_server_response {
+    ip-proto == tcp
+    src-port == 1234
+    requires-reverse-signature sig_client_request
+    payload /WORLD/
+    event "Server responded to HELLO"
+}
+
+8. Payload size-based match
+signature sig_large_payload {
+    ip-proto == udp
+    dst-port == 53
+    payload-size > 512
+    event "Large DNS response detected"
+}
+
+9. Custom eval function for further filtering
+signature sig_eval_check {
+    ip-proto == tcp
+    dst-port == 80
+    payload /login/
+    eval ::check_login_attempt
+    event "Login attempt filtered by policy"
+}
+(Assumes you define a function function check_login_attempt(state: signature_state, data: string): bool)
+
+10. Match ICMP echo requests
+signature sig_icmp_ping {
+    ip-proto == icmp
+    header icmp[0:1] == 8
+    event "ICMP Echo Request Detected"
+}
+
+Please new generate 10 new
+ examples
+

@@ -1,12 +1,16 @@
 import openai
 import time
 import argparse
+import os
+
+from dotenv import load_dotenv
+# Load environment variables
+load_dotenv()
 
 def stream_chat_with_usage(prompt, base_url,model,stats_only):
-    # Custom OpenAI-compatible API endpoint
     client = openai.OpenAI(
-        api_key="ollama",  # Leave blank or use a value if your API requires it
-        base_url=base_url
+        api_key = os.getenv("OPENAI_API_KEY"),
+        base_url = base_url
     )
 
     messages = [{"role": "user", "content": prompt}]

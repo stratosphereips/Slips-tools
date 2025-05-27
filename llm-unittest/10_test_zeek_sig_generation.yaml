@@ -1,0 +1,67 @@
+description: Generate a Zeek Signature 
+
+providers:
+  - file://providers/providers.yaml
+
+
+prompts: |
+  Generate a Zeek signature that matches HTTP traffic on port 80 containing the string "cmd.exe" Please generate valid Zeek .sig file entries that match the following criteria:
+  *  Use the correct Zeek signature syntax.
+  *  Include appropriate ip-proto, dst-port, and payload conditions.
+  *  Each signature must define a meaningful event that describes the match.
+  *  Avoid false positives by using precise regular expressions.
+  *  Output each signature in a Zeek-compatible format (as used in .sig files).
+
+  Example scenario(s):
+
+  signature dns-query-suspicious-domain {
+    ip-proto == udp
+    dst-port == 53
+    payload /.*evil-domain\.com/
+    event "Suspicious DNS query for evil-domain.com"
+  }
+
+  signature ftp-admin-login {
+    ip-proto == tcp
+    dst-port == 21
+    payload /USER admin/
+    event "FTP login attempt with username admin"
+  }
+
+  signature suspicious-ssh-version {
+    ip-proto == tcp
+    dst-port == 22
+    payload /^SSH-2\.0-badssh/
+    event "Unusual SSH client version: badssh"
+  }
+
+  signature sql-injection-attempt {
+    ip-proto == tcp
+    dst-port == 80
+    payload /(\%27)|(\')|(\-\-)|(\%23)|(#)/
+    event "Potential SQL injection attempt in HTTP request"
+  }
+
+  Please format your output using fenced code blocks and do not include explanatory text — just the Zeek signature code.
+
+tests:
+  - name: "Validate Zeek Signature Output"
+    vars: {}
+    assert:
+      - type: "regex"
+        value: "^signature\\s+[a-zA-Z0-9_-]+\\s*\\{[\\s\\S]*?\\}$"
+        description: "Output must be a valid Zeek signature block"
+      - type: "contains"
+        value: "ip-proto == tcp"
+      - type: "contains"
+        value: "(dst-port == 80 || dst-port == 443)"
+
+  - name: "Ensure regex payload and descriptive event"
+    vars: {}
+    assert:
+      - type: "regex"
+        value: "payload\\s+/.*cmd\\\\.exe/"
+        description: "Payload must match regex for 'cmd.exe'"
+      - type: "regex"
+        value: "event\\s+\\\".*cmd\\.exe.*\\\""
+        description: "Event message must mention 'cmd.exe'"

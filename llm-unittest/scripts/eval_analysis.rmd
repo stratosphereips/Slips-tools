@@ -2,24 +2,21 @@
 title: "R Notebook"
 output: html_notebook
 ---
+
+## Load data
 ```{r}
 library(tidyverse)
 library(jsonlite)
 ```
 ```{r}
-evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_openai_8b.csv"
-cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_openai_8b.json"
+evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_rpi5_Q4.csv"
+cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_rpi5_Q4.json"
 ```
 
 
 ```{r}
-bitnet_evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_bitnet.csv"
-bitnet_cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_bitnet.json"
-
-```
-
-```{r}
-
+#bitnet_evals_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/evals_bitnet.csv"
+#bitnet_cols_file<-"/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/cols_export_bitnet.json"
 
 ```
 
@@ -28,9 +25,10 @@ Here we have the information about the description of the test
 ```{r}
 promptfoo_data_test<-read_csv(evals_file)
 ```
-```{r}
-promptfoo_data_test_bitnet<-read_csv(bitnet_evals_file)
-promptfoo_data_test<- rbind(promptfoo_data_test,promptfoo_data_test_bitnet)
+Only for merging bitnet
+```{r eval=FALSE, include=FALSE}
+#promptfoo_data_test_bitnet<-read_csv(bitnet_evals_file)
+#promptfoo_data_test<- rbind(promptfoo_data_test,promptfoo_data_test_bitnet)
 ```
 
 
@@ -40,6 +38,10 @@ promptfoo_data_test <- promptfoo_data_test %>% rename(evalId="ID")
 Here we have the actual tests
 ```{r}
 promptfoo_data<-fromJSON(cols_file,flatten = TRUE)
+```
+
+Only for merging bitnet
+```{r eval=FALSE, include=FALSE}
 promptfoo_data_bitnet<-fromJSON(bitnet_cols_file,flatten = TRUE)
 promptfoo_data <- rbind(promptfoo_data,promptfoo_data_bitnet)
 #promptfoo_data %>% select(description) %>% unique()
@@ -49,7 +51,7 @@ promptfoo_data <- rbind(promptfoo_data,promptfoo_data_bitnet)
 promptfoo_data<-left_join(promptfoo_data,promptfoo_data_test,by="evalId")
 promptfoo_data
 ```
-
+## Calculate Test scores
 ```{r}
 library(dplyr)
 library(tidyr)
@@ -71,14 +73,225 @@ pivot_scores <- promptfoo_data %>%
 pivot_scores<-pivot_scores %>% filter(! provider %in% c("openai:chat:qwen2.5:3b-instruct-q8_0",
                                          "openai:chat:smollm:1.7b-instruct-v0.2-q5_K_M",
                                          "openai:chat:smollm:1.7b-instruct-v0.2-q8_0"))
+write_csv(pivot_scores, file="/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/promptfoo_models_reportB2.csv")
 ```
+## Best model per test 
+```{r}
+df_long <- pivot_scores %>% mutate(provider = str_remove(provider, "^openai:chat:")) %>%
+  pivot_longer(
+    cols = -provider,
+    names_to = "Test",
+    values_to = "Score"
+  ) %>%
+  drop_na()
+
+# Get best provider per test
+best_per_test <- df_long %>%
+  group_by(Test) %>%
+  slice_max(order_by = Score, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  rename(`Best_Model` = provider) # %>% select(Test,Best_Provider)
+best_per_test
+```
+## Best fast models per test
+### Load CPU Performance 
+We add data for bitnet models
+```{r}
+cpu_performance <- read_csv("/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/benchmark_models/results.csv")
+cpu_performance<-cpu_performance %>% add_row(
+  model="BitNet-b1.58-2B-4T",
+  quantization="Q1.5",
+  disk_size_mb=1200,
+  ram_size_mb=1500,
+  tokens_per_second=8.13
+)
+performance<-inner_join(cpu_performance,best_per_test,  by = c("model" = "Best_Model"))
+#write_csv(performance, file="/tmp/results.csv")
+```
+
+###  Calculate Best fast model per test
+Table with the best model per test and the best model > 8 tokens/s per test
+```{r}
+
+# Ensure Score is numeric
+performance$Score <- as.numeric(performance$Score)
+
+# Get best overall provider per test
+best_overall <- df_long %>%
+  group_by(Test) %>%
+  slice_max(order_by = Score, n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  rename(`Best_Model` = provider)
+
+# Filter for providers with tokens_per_second > 8
+fast_models <- performance %>%
+  filter(tokens_per_second > 8)
+
+# Get best fast provider per test
+best_fast <- df_long %>% filter (provider %in% fast_models$model) %>%
+  group_by(Test) %>%
+  slice_max(order_by = Score, n = 1, with_ties = FALSE) %>%
+    ungroup() %>%
+  #rename(`Best_Provider_Over8TPS` = provider, `Score_Over8TPS`= Score   ) %>%
+  select(Test, Best_Model_Over8TPS = provider, Score_Over8TPS = Score)
+
+# Merge both tables
+combined <- left_join(best_overall, best_fast, by = "Test")
+
+# View result
+combined %>% select(Best_Model,Best_Model_Over8TPS,Test)
+
+# Optionally save
+# write.csv(combined, "best_providers_summary.csv", row.names = FALSE)
+#write_csv(combined, file="/tmp/results.csv")
+```
+
+#### Plot A
+A plot trying to show the differences
+
+```{r fig.width=8}
+# Load necessary libraries
+library(tidyverse)
+
+# Load the data
+#df <- read.csv("results.csv", check.names = FALSE)
+
+# Rename columns for clarity (if needed)
+combined <- combined %>%
+  rename(
+    Best_Provider = Best_Model,
+    Best_Score = Score,
+    Best_Provider_Over8TPS = Best_Model_Over8TPS,
+    Score_Over8TPS = Score_Over8TPS
+  )
+
+# Convert score columns to numeric (in case they're not)
+combined$Best_Score <- as.numeric(combined$Best_Score)
+combined$Score_Over8TPS <- as.numeric(combined$Score_Over8TPS)
+
+# Create the plot
+ggplot(combined, aes(y = reorder(Test, Best_Score))) +
+  geom_bar(aes(x = Best_Score), stat = "identity", fill = "lightgray", width = 0.9) +
+  geom_bar(aes(x = Score_Over8TPS), stat = "identity", fill = "steelblue", width = 0.9) +
+  geom_text(aes(x = Best_Score + 1, label = Best_Provider), size = 4, hjust = 0) +
+  geom_text(aes(x = 0, label = Best_Provider_Over8TPS), 
+            size = 4, hjust = 0, color = "white", na.rm = TRUE) +
+  labs(
+    title = "Comparison of Best Model vs Best Model with >8 Tokens/s per Test",
+    x = "Score",
+    y = "Test"
+  ) +
+  theme_minimal() +
+  xlim(0,150)
+  theme(legend.position = "none") #+
+  #xlim(0, max(df$Best_Score, na.rm = TRUE) + 20)
+
+```
+#### Plot B (OK)
+
+A plot trying to show the differences
+```{r}
+library(tidyverse)
+
+
+
+# Compute score gap for sorting
+combined$Score_Gap <- abs(combined$Best_Score - combined$Score_Over8TPS)
+
+# Reshape to long format
+combined_long <- combined  %>% filter(Test != "Generate a Zeek Signature") %>%
+  select(Test, Best_Score, Score_Over8TPS, Best_Provider, Best_Provider_Over8TPS, Score_Gap) %>%
+  pivot_longer(
+    cols = c(Best_Score, Score_Over8TPS),
+    names_to = "Type",
+    values_to = "Score"
+  ) %>%
+  mutate(
+    Model = ifelse(Type == "Best_Score", Best_Provider, Best_Provider_Over8TPS),
+    Type = recode(Type,
+                  Best_Score = "Best Overall",
+                  Score_Over8TPS = "Best >8 TPS")
+  )
+
+# Reorder Test by score gap for clearer visual difference
+combined_long$Test <- factor(combined_long$Test, levels = combined %>% arrange(desc(Score_Gap)) %>% pull(Test))
+
+# Plot
+ggplot(combined_long, aes(x = Test, y = Score, fill = Type)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7) +
+  geom_text(aes(label = Model),
+            position = position_dodge(width = 0.8),
+            vjust = -0.3, size = 6, na.rm = TRUE, angle = 90) +
+  labs(
+    title = "Best Models per Test (Overall vs >8 Tokens/s)",
+    x = "Test",
+    y = "Score"
+    
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,size=13)) +
+  ylim(0, max(df_long$Score, na.rm = TRUE) + 20)
+ggsave(filename = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/perf_test_model.png",width = 6, height = 3, units = "in")
+```
+
+#### Plot C
+```{r}
+ggplot(best_per_test, aes(x = Score, y = reorder(Test, Score), fill = `Best_Model`)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Best Model per Test with Score",
+    x = "Score",
+    y = "Test"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "right") +
+  coord_flip()+
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+## Best model in overall
+
+### Add average to CPU info
+Include information about the average rank
+```{r}
+performance_rank<-pivot_scores  %>%
+  rowwise() %>%
+  mutate(score = mean(c_across(2:10))) %>%
+  ungroup() %>% select(provider,score) %>% arrange(desc(score))
+
+performance_rank <- performance_rank %>%
+  mutate(provider = str_remove(provider, "^openai:chat:"))
+performance_rank
+write_csv(performance_rank,file = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/benchmark_models/results/perf_rank.csv")
+```
+
+### Plot A
+```{r}
+# Reorder for descending scores
+performance_rank$provider <- factor(performance_rank$provider, levels = performance_rank$provider[order(performance_rank$score)])
+
+# Plot
+ggplot(performance_rank, aes(x = score, y = provider)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(
+    title = "Model Performance on Promptfoo Tests (RPi5)",
+    x = "Score (%)",
+    y = "Model"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_line(color = "gray", linetype = "dashed")) 
+  #coord_flip()
+ggsave(filename = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/models_score.png",width = 4, height = 3, units = "in")
+```
+
+## Heatmap
 ```{r fig.height=8, fig.width=8}
 library(ggplot2)
 library(tidyr)
 
 # Assuming `pivot_scores` from previous step is already created
 long_data <- pivot_scores %>%
-  pivot_longer(-provider, names_to = "Description", values_to = "pass_rate")
+  pivot_longer(-provider, names_to = "Description", values_to = "pass_rate") %>% filter(Description != "Generate a Zeek Signature")
 
 long_data$provider <- gsub("openai:chat:", "", long_data$provider)
 
@@ -92,6 +305,6 @@ ggplot(long_data, aes(x = Description, y = provider, fill = pass_rate)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-ggsave(filename = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/models_heatmap.png",width = 8, height = 6, units = "in")
+ggsave(filename = "/home/harpo/Dropbox/ongoing-work/git-repos/slips-tools/llm-unittest/results/models_heatmap_rpi5_Q4.png",width = 4, height = 3, units = "in")
 ```
 

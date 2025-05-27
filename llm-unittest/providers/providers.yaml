@@ -1,4 +1,4 @@
-- id: openai:chat:smollm2:1.7b
+- id: openai:chat:smollm2:1.7b-instruct-q4_K_M
   config:
     num_predict: 2048
     apiBaseUrl: "http://10.147.20.102:11434/v1"
@@ -8,7 +8,7 @@
     num_predict: 2048
     apiBaseUrl: "http://10.147.20.102:11434/v1"
     apiKey: "ollama"  
-- id: openai:chat:llama3.2:1b
+- id: openai:chat:llama3.2:1b-instruct-q4_K_M
   config:
     num_predict: 2048
     apiBaseUrl: "http://10.147.20.102:11434/v1"
@@ -35,11 +35,11 @@
     apiKey: "ollama"  
 
 # BITNET 
-#- id: openai:chat:BitNet-b1.58-2B-4T
-#  config:
-#   num_predict: 2048
-#   apiBaseUrl: "http://10.147.20.102:18080/v1"
-#   apiKey: "ollama"  
+- id: openai:chat:BitNet-b1.58-2B-4T
+  config:
+   num_predict: 2048
+   apiBaseUrl: "http://10.147.20.102:18080/v1"
+   apiKey: "ollama"  
 
 
 # other quantization models

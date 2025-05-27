@@ -3,6 +3,12 @@ import time
 import argparse
 import os
 
+from dotenv import load_dotenv
+# Load environment variables
+load_dotenv()
+
+
+
 def load_prompt(prompt_arg):
     """
     Loads the prompt from a file if the argument is a valid file path,
@@ -15,9 +21,9 @@ def load_prompt(prompt_arg):
 
 def stream_chat_with_usage(prompt, base_url, model, stats_only):
     client = openai.OpenAI(
-        api_key="ollama",  # Leave blank or use a value if your API requires it
+        api_key = os.getenv("OPENAI_API_KEY"),
         base_url=base_url,
-        timeout=1200
+        timeout=1200000
     )
 
     messages = [{"role": "user", "content": prompt}]

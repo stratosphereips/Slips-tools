@@ -3,7 +3,7 @@ description: Summarize Zeek Logs and Make Classifications
 providers:
   - file://providers/providers.yaml
 prompts:
-  - file://prompts/zeek_summary_personality.json
+  - file://prompts/zeek_summary_personality_4000tokens.json
 
 tests:
   - vars:
