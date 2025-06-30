@@ -1,0 +1,9 @@
+model,quantization,disk_size_mb,ram_size_mb,tokens_per_second
+gemma3:1b,Q4_K_M,777.5,1024.0,12.99
+llama3.2:3b,Q4_K_M,1925.8,1024.0,4.98
+granite3.1-dense:2b,Q4_K_M,1497.0,1024.0,6.63
+qwen2.5-coder:1.5b,Q4_K_M,940.4,1024.0,11.38
+smollm2:1.7b-instruct-q4_K_M,Q4_K_M,1006.7,1024.0,10.00
+llama3.2:1b-instruct-q4_K_M,Q4_K_M,770.3,1024.0,13.62
+qwen2.5:1.5b,Q4_K_M,940.4,1024.0,11.25
+qwen2.5:3b,Q4_K_M,1840.5,1024.0,5.40

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- Configuration ---
-OLLAMA_HOST="10.147.20.102"
+OLLAMA_HOST="10.147.20.104"
 PORT="11434"
 BASE_URL="http://$OLLAMA_HOST:$PORT/v1"
 API_TAGS_URL="http://$OLLAMA_HOST:$PORT/api/tags"
