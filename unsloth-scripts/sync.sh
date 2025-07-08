@@ -4,10 +4,10 @@
 # This script provides bidirectional synchronization between local and remote directories
 
 # Configuration Variables - MODIFY THESE
-REMOTE_HOST="200.12.137.13"
-REMOTE_PORT="22036"
-REMOTE_USER="harpo"
-REMOTE_DIR="/home/harpo/unsloth-ex"
+REMOTE_HOST="1.1.1.1"
+REMOTE_PORT="22"
+REMOTE_USER="user"
+REMOTE_DIR="/your/path"
 LOCAL_DIR="$(pwd)"
 
 # Optional: SSH key path (leave empty to use default)
