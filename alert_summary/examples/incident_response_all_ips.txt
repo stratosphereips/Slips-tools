@@ -1,0 +1,39 @@
+192.168.1.113 Attack Summary:
+• 23:27 - Port scans: 8080.→5, 80.→8, 80.→7 (max: 9 hosts) [HIGH]
+• 23:27 - C&C channels: 4 connections [HIGH]
+• 23:27 - DNS evasion: 12 connections [HIGH]
+• 23:27 - Generic Evidence: 16 events [HIGH]
+• 23:27 - Blacklisted IPs: 56 unique destinations [MEDIUM]
+• Duration: 8.3 hours, 129 events
+• Risk: CRITICAL - Sustained malicious activity
+============================================================
+192.168.1.115 Attack Summary:
+• Duration: 0.0 hours, 1 events
+• Risk: MEDIUM - Sustained malicious activity
+============================================================
+192.168.1.122 Attack Summary:
+• 23:27 - Private IP Connection: 6 events [INFO]
+• Duration: 3.4 hours, 6 events
+• Risk: MEDIUM - Sustained malicious activity
+============================================================
+192.168.1.2 Attack Summary:
+• Duration: 0.0 hours, 1 events
+• Risk: MEDIUM - Sustained malicious activity
+============================================================
+fd2d:ab8c:225:0:ac13:6a8c:41cc:1f02 Attack Summary:
+• 23:27 - Generic Evidence: 9 events [INFO]
+• Duration: 0.0 hours, 9 events
+• Risk: MEDIUM - Sustained malicious activity
+============================================================
+fd2d:ab8c:225::1 Attack Summary:
+• Duration: 0.0 hours, 1 events
+• Risk: MEDIUM - Sustained malicious activity
+============================================================
+fe80::da58:d7ff:fe00:f72 Attack Summary:
+• 23:27 - Generic Evidence: 6 events [INFO]
+• Duration: 0.0 hours, 6 events
+• Risk: MEDIUM - Sustained malicious activity
+============================================================
+fe80::f106:5909:32ae:f4cb Attack Summary:
+• Duration: 0.0 hours, 1 events
+• Risk: MEDIUM - Sustained malicious activity
