@@ -1,0 +1,14 @@
+10.0.1.50 - Attack Pattern Analysis
+Phase 1 (23:00-23:59): Command & Control
+• C&C servers: 1 contacted
+• Persistence: 1 related events
+============================================================
+192.168.1.113 - Attack Pattern Analysis
+Phase 1 (23:00-23:59): Reconnaissance
+• Port scanning: 443., 80. → 2+ targets
+• Network discovery: 5 additional probes
+============================================================
+192.168.1.122 - Attack Pattern Analysis
+Phase 1 (23:00-23:59): Reconnaissance
+• Port scanning: 22. → 1+ targets
+• Network discovery: 1 additional probes

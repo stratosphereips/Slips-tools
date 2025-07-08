@@ -1,0 +1,2096 @@
+{
+  "192.168.1.113": [
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 5 IPs, Packets: 5)",
+      "threat_level": "medium",
+      "confidence": 0.5,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "5",
+        "packets": "5"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 5 IPs, Packets: 5)",
+      "threat_level": "medium",
+      "confidence": 0.5,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "5",
+        "packets": "5"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 5 IPs, Packets: 5)",
+      "threat_level": "medium",
+      "confidence": 0.5,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "5",
+        "packets": "5"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.252.75.53:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.252.75.53",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 20 IPs, Packets: 45)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "20",
+        "packets": "45"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 10 IPs, Packets: 10)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "10",
+        "packets": "10"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 25 IPs, Packets: 60)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "25",
+        "packets": "60"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 30 IPs, Packets: 55)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "30",
+        "packets": "55"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 30 IPs, Packets: 30)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "30",
+        "packets": "30"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 45 IPs, Packets: 120)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "45",
+        "packets": "120"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 10 IPs, Packets: 10)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "10",
+        "packets": "10"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 55 IPs, Packets: 105)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "55",
+        "packets": "105"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 70 IPs, Packets: 196)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "70",
+        "packets": "196"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 61 IPs, Packets: 119)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "61",
+        "packets": "119"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:32.101019",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 85 IPs, Packets: 245)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "85",
+        "packets": "245"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.52.155.45:443",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.52.155.45",
+        "port": "443"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 100 IPs, Packets: 291)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "100",
+        "packets": "291"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 15 IPs, Packets: 15)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "15",
+        "packets": "15"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 87 IPs, Packets: 247)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "87",
+        "packets": "247"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 110 IPs, Packets: 219)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "110",
+        "packets": "219"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 125 IPs, Packets: 369)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "125",
+        "packets": "369"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 97 IPs, Packets: 191)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "97",
+        "packets": "191"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 141 IPs, Packets: 416)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "141",
+        "packets": "416"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 123 IPs, Packets: 124)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "123",
+        "packets": "124"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 156 IPs, Packets: 462)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "156",
+        "packets": "462"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 133 IPs, Packets: 263)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "133",
+        "packets": "263"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 149 IPs, Packets: 436)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "149",
+        "packets": "436"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:19:41.778923",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 181 IPs, Packets: 365)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "181",
+        "packets": "365"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 30 IPs, Packets: 30)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "30",
+        "packets": "30"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 196 IPs, Packets: 585)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "196",
+        "packets": "585"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 159 IPs, Packets: 319)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "159",
+        "packets": "319"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 299 IPs, Packets: 605)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "299",
+        "packets": "605"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 70 IPs, Packets: 72)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "70",
+        "packets": "72"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 309 IPs, Packets: 626)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "309",
+        "packets": "626"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 415 IPs, Packets: 1245)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "415",
+        "packets": "1245"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 320 IPs, Packets: 649)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "320",
+        "packets": "649"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 75 IPs, Packets: 77)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "75",
+        "packets": "77"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 432 IPs, Packets: 1300)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "432",
+        "packets": "1300"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 332 IPs, Packets: 673)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "332",
+        "packets": "673"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:20:25.036062",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 348 IPs, Packets: 1049)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "348",
+        "packets": "1049"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 85 IPs, Packets: 169)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "85",
+        "packets": "169"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 443 IPs, Packets: 895)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "443",
+        "packets": "895"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 464 IPs, Packets: 1400)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "464",
+        "packets": "1400"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 353 IPs, Packets: 360)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "353",
+        "packets": "360"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 363 IPs, Packets: 735)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "363",
+        "packets": "735"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 480 IPs, Packets: 1448)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "480",
+        "packets": "1448"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 378 IPs, Packets: 1140)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "378",
+        "packets": "1140"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 485 IPs, Packets: 494)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "485",
+        "packets": "494"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 501 IPs, Packets: 1513)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "501",
+        "packets": "1513"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 90 IPs, Packets: 92)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "90",
+        "packets": "92"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 517 IPs, Packets: 1561)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "517",
+        "packets": "1561"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:02.131519",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 400 IPs, Packets: 811)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "400",
+        "packets": "811"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 533 IPs, Packets: 1611)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "533",
+        "packets": "1611"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 422 IPs, Packets: 1275)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "422",
+        "packets": "1275"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 545 IPs, Packets: 1101)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "545",
+        "packets": "1101"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 433 IPs, Packets: 876)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "433",
+        "packets": "876"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 100 IPs, Packets: 102)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "100",
+        "packets": "102"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 443 IPs, Packets: 897)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "443",
+        "packets": "897"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 579 IPs, Packets: 1744)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "579",
+        "packets": "1744"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 462 IPs, Packets: 1395)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "462",
+        "packets": "1395"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 105 IPs, Packets: 107)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "105",
+        "packets": "107"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 613 IPs, Packets: 1237)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "613",
+        "packets": "1237"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 110 IPs, Packets: 112)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "110",
+        "packets": "112"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 479 IPs, Packets: 1446)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "479",
+        "packets": "1446"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:21:23.210627",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 490 IPs, Packets: 992)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "490",
+        "packets": "992"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 838 IPs, Packets: 2532)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "838",
+        "packets": "2532"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 849 IPs, Packets: 1715)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "849",
+        "packets": "1715"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 703 IPs, Packets: 1439)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "703",
+        "packets": "1439"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 151 IPs, Packets: 154)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "151",
+        "packets": "154"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 882 IPs, Packets: 2661)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "882",
+        "packets": "2661"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.168.215.138:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.168.215.138",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 716 IPs, Packets: 1463)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "716",
+        "packets": "1463"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 898 IPs, Packets: 2713)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "898",
+        "packets": "2713"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 156 IPs, Packets: 159)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "156",
+        "packets": "159"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.104.194.203:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.104.194.203",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 925 IPs, Packets: 1872)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "925",
+        "packets": "1872"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 742 IPs, Packets: 2266)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "742",
+        "packets": "2266"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 941 IPs, Packets: 2850)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "941",
+        "packets": "2850"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 755 IPs, Packets: 1542)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "755",
+        "packets": "1542"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:23:03.841697",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 161 IPs, Packets: 164)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "161",
+        "packets": "164"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 964 IPs, Packets: 2916)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "964",
+        "packets": "2916"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 976 IPs, Packets: 1974)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "976",
+        "packets": "1974"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 798 IPs, Packets: 2438)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "798",
+        "packets": "2438"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 176 IPs, Packets: 179)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "176",
+        "packets": "179"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 816 IPs, Packets: 2490)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "816",
+        "packets": "2490"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 981 IPs, Packets: 995)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "981",
+        "packets": "995"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1304 IPs, Packets: 2645)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1304",
+        "packets": "2645"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1136 IPs, Packets: 3470)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1136",
+        "packets": "3470"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.174.143.204:443",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.174.143.204",
+        "port": "443"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.94.156.17:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.94.156.17",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1324 IPs, Packets: 4025)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1324",
+        "packets": "4025"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.252.15.23:443",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.252.15.23",
+        "port": "443"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1342 IPs, Packets: 4081)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1342",
+        "packets": "4081"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 241 IPs, Packets: 245)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "241",
+        "packets": "245"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:26:19.092371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1152 IPs, Packets: 2353)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1152",
+        "packets": "2353"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1358 IPs, Packets: 4131)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1358",
+        "packets": "4131"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1163 IPs, Packets: 2374)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1163",
+        "packets": "2374"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1375 IPs, Packets: 4185)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1375",
+        "packets": "4185"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1175 IPs, Packets: 2397)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1175",
+        "packets": "2397"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1392 IPs, Packets: 4234)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1392",
+        "packets": "4234"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1752 IPs, Packets: 5335)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1752",
+        "packets": "5335"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1433 IPs, Packets: 2930)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1433",
+        "packets": "2930"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1850 IPs, Packets: 3763)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1850",
+        "packets": "3763"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.118.47.28:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.118.47.28",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.152.1.247:443",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.152.1.247",
+        "port": "443"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1867 IPs, Packets: 5686)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1867",
+        "packets": "5686"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 322 IPs, Packets: 328)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "322",
+        "packets": "328"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1565 IPs, Packets: 3198)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1565",
+        "packets": "3198"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:31:06.629371",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1883 IPs, Packets: 5735)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1883",
+        "packets": "5735"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1576 IPs, Packets: 3223)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1576",
+        "packets": "3223"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1903 IPs, Packets: 5799)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1903",
+        "packets": "5799"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1603 IPs, Packets: 3277)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1603",
+        "packets": "3277"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 327 IPs, Packets: 333)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "327",
+        "packets": "333"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1614 IPs, Packets: 3299)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1614",
+        "packets": "3299"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1921 IPs, Packets: 5851)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1921",
+        "packets": "5851"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1632 IPs, Packets: 4992)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1632",
+        "packets": "4992"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1934 IPs, Packets: 3933)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1934",
+        "packets": "3933"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 1945 IPs, Packets: 3957)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "1945",
+        "packets": "3957"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.105.97.163:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.105.97.163",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2329 IPs, Packets: 4740)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2329",
+        "packets": "4740"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1984 IPs, Packets: 6069)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1984",
+        "packets": "6069"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:36:40.258698",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 383 IPs, Packets: 389)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "383",
+        "packets": "389"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2347 IPs, Packets: 7158)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2347",
+        "packets": "7158"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 1991 IPs, Packets: 2036)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "1991",
+        "packets": "2036"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2107 IPs, Packets: 4309)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2107",
+        "packets": "4309"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2122 IPs, Packets: 6501)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2122",
+        "packets": "6501"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2511 IPs, Packets: 5112)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2511",
+        "packets": "5112"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 403 IPs, Packets: 410)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "403",
+        "packets": "410"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.218.198.244:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.218.198.244",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 198.19.70.100:443",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "198.19.70.100",
+        "port": "443"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2835 IPs, Packets: 8664)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2835",
+        "packets": "8664"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2395 IPs, Packets: 4895)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2395",
+        "packets": "4895"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.191.114.17:80",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.191.114.17",
+        "port": "80"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Private IP Connection",
+      "description": "Connection to private IP 10.172.121.44:8080",
+      "threat_level": "medium",
+      "confidence": 0.6,
+      "raw_details": {
+        "destination": "10.172.121.44",
+        "port": "8080"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2410 IPs, Packets: 7380)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2410",
+        "packets": "7380"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2840 IPs, Packets: 2898)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2840",
+        "packets": "2898"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 450 IPs, Packets: 459)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "450",
+        "packets": "459"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:44:49.340419",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2857 IPs, Packets: 8728)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2857",
+        "packets": "8728"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2420 IPs, Packets: 4945)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2420",
+        "packets": "4945"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2874 IPs, Packets: 8779)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2874",
+        "packets": "8779"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2431 IPs, Packets: 2486)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2431",
+        "packets": "2486"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2889 IPs, Packets: 8826)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2889",
+        "packets": "8826"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 455 IPs, Packets: 464)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "455",
+        "packets": "464"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2443 IPs, Packets: 4991)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2443",
+        "packets": "4991"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2926 IPs, Packets: 8935)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2926",
+        "packets": "8935"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 460 IPs, Packets: 469)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "460",
+        "packets": "469"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2453 IPs, Packets: 5011)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2453",
+        "packets": "5011"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2468 IPs, Packets: 7556)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2468",
+        "packets": "7556"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2936 IPs, Packets: 5983)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2936",
+        "packets": "5983"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:28.310433",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2484 IPs, Packets: 5079)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2484",
+        "packets": "5079"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2972 IPs, Packets: 9076)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2972",
+        "packets": "9076"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2512 IPs, Packets: 7694)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2512",
+        "packets": "7694"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 2999 IPs, Packets: 6110)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "2999",
+        "packets": "6110"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 3018 IPs, Packets: 9214)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "3018",
+        "packets": "9214"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 470 IPs, Packets: 479)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "470",
+        "packets": "479"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2517 IPs, Packets: 2577)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2517",
+        "packets": "2577"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2536 IPs, Packets: 7773)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2536",
+        "packets": "7773"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 3040 IPs, Packets: 9279)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "3040",
+        "packets": "9279"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 8080/TCP (Targets: 475 IPs, Packets: 484)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "8080/TCP",
+        "targets": "475",
+        "packets": "484"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2541 IPs, Packets: 2601)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2541",
+        "packets": "2601"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 443/TCP (Targets: 2556 IPs, Packets: 7833)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "443/TCP",
+        "targets": "2556",
+        "packets": "7833"
+      }
+    },
+    {
+      "timestamp": "2023/10/14 12:45:56.639917",
+      "ip_address": "192.168.1.113",
+      "event_type": "Port Scan",
+      "description": "Horizontal scan to port 80/TCP (Targets: 3045 IPs, Packets: 3104)",
+      "threat_level": "medium",
+      "confidence": 1.0,
+      "raw_details": {
+        "port": "80/TCP",
+        "targets": "3045",
+        "packets": "3104"
+      }
+    }
+  ]
+}

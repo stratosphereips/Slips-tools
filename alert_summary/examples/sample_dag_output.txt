@@ -1,0 +1,363 @@
+192.168.1.113
+  |
+  |-- 2023/11/03 23:27:41.235095 ---> Private IP Connection: Connection to private IP 192.168.1.255:137
+  |                            Threat Level: info | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:45.448937 ---> Port Scan: Horizontal scan to port 443. (Targets: 1 IPs, Packets: 5)
+  |                            Threat Level: high | Confidence: 0.5
+  |                            (+ 1 similar events)
+  |
+  |-- 2023/11/03 23:27:45.823290 ---> Suspicious Connection: Non-HTTP connection to 109.168.218.206:80
+  |                            Threat Level: medium | Confidence: 0.8
+  |
+  |-- 2023/11/03 23:27:45.938470 ---> Private IP Connection: Connection to private IP 192.168.1.255:137
+  |                            Threat Level: info | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:46.441224 ---> Port Scan: Horizontal scan to port 443. (Targets: 4 IPs, Packets: 45)
+  |                            Threat Level: high | Confidence: 1.0
+  |                            (+ 1 similar events)
+  |
+  |-- 2023/11/03 23:27:46.503294 ---> Suspicious Connection: Non-SSL connection to 198.144.30.128:443
+  |                            Threat Level: medium | Confidence: 0.8
+  |
+  |-- 2023/11/03 23:27:47.083902 ---> Unencrypted Traffic: Unencrypted HTTP traffic to 13.107.4.50.
+  |                            Threat Level: low | Confidence: 1.0
+  |                            (+ 1 similar events)
+  |
+  |-- 2023/11/03 23:27:47.538235 ---> Generic Evidence: horizontal port scan by Zeek engine. 192.168.1.113 scanned at least 25 unique hosts on port 443/tcp in 0m26s .. with threat level high and confidence 1
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:47.658092 ---> Port Scan: Horizontal scan to port 8080. (Targets: 7 IPs, Packets: 6)
+  |                            Threat Level: high | Confidence: 0.6
+  |                            (+ 2 similar events)
+  |
+  |-- 2023/11/03 23:27:48.145204 ---> Generic Evidence: A connection to a private IP (10.27.150.21) outside of the used local network 192.168.0.0/16. from IP: 192.168.1.113 on port: 80/tcp .. with threat level high and confidence 1
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:48.201164 ---> Private IP Connection: Connection to private IP 10.27.150.21:80
+  |                            Threat Level: info | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:49.268248 ---> Port Scan: Horizontal scan to port 80. (Targets: 1 IPs, Packets: 79)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:49.638399 ---> C&C Channel: Connection to 88.11.164.60:443 (Score: 0.9910.)
+  |                            Threat Level: high | Confidence: 0.03
+  |
+  |-- 2023/11/03 23:27:50.225077 ---> Port Scan: Horizontal scan to port 80. (Targets: 2 IPs, Packets: 156)
+  |                            Threat Level: high | Confidence: 1.0
+  |                            (+ 1 similar events)
+  |
+  |-- 2023/11/03 23:27:50.760475 ---> Generic Evidence: A connection to a private IP (10.29.193.142) outside of the used local network 192.168.0.0/16. from IP: 192.168.1.113 on port: 8080/tcp .. with threat level high and confidence 1
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:50.917197 ---> Private IP Connection: Connection to private IP 10.29.193.142:8080
+  |                            Threat Level: info | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:51.073669 ---> C&C Channel: Connection to 173.82.117.149:443 (Score: 0.9910.)
+  |                            Threat Level: high | Confidence: 0.03
+  |
+  |-- 2023/11/03 23:27:51.290993 ---> Suspicious Connection: Non-SSL connection to 123.160.221.247:443
+  |                            Threat Level: medium | Confidence: 0.8
+  |
+  |-- 2023/11/03 23:27:51.485377 ---> Port Scan: Horizontal scan to port 80. (Targets: 5 IPs, Packets: 203)
+  |                            Threat Level: high | Confidence: 1.0
+  |                            (+ 2 similar events)
+  |
+  |-- 2023/11/03 23:27:52.041915 ---> C&C Channel: Connection to 196.81.255.88:443 (Score: 0.9910.)
+  |                            Threat Level: high | Confidence: 0.03
+  |
+  |-- 2023/11/03 23:27:52.381426 ---> Port Scan: Horizontal scan to port 80. (Targets: 8 IPs, Packets: 253)
+  |                            Threat Level: high | Confidence: 1.0
+  |                            (+ 2 similar events)
+  |
+  |-- 2023/11/03 23:27:54.759130 ---> Blacklisted IP: Connection to blacklisted 92.12.70.54 (AS: OPALTELECOM-AS TalkTalk Communications Limited)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:55.376820 ---> Generic Evidence: connection to blacklisted IP 149.118.34.225 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:27:56.044954 ---> Blacklisted IP: Connection to blacklisted 98.34.28.8 (AS: COMCAST-7922)
+  |                            Threat Level: medium | Confidence: 1.0
+  |                            (+ 3 similar events)
+  |
+  |-- 2023/11/03 23:28:00.324913 ---> Blacklisted IP: Connection to blacklisted 76.192.231.228 (AS: ATT-INTERNET4)
+  |                            Threat Level: medium | Confidence: 1.0
+  |                            (+ 4 similar events)
+  |
+  |-- 2023/11/03 23:28:22.456923 ---> Generic Evidence: connection to blacklisted IP 18.80.151.186 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:28:26.118500 ---> Blacklisted IP: Connection to blacklisted 179.104.76.10 (AS: ALGAR TELECOM SA)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:28:30.721895 ---> Generic Evidence: connection to blacklisted IP 107.44.135.232 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:28:37.961826 ---> Blacklisted IP: Connection to blacklisted 98.247.14.183 (AS: COMCAST-7922)
+  |                            Threat Level: medium | Confidence: 1.0
+  |                            (+ 1 similar events)
+  |
+  |-- 2023/11/03 23:29:39.376946 ---> Blacklisted IP: Connection to blacklisted 24.114.36.208 (AS: ROGERS-COMMUNICATIONS)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:30:04.966030 ---> Blacklisted IP: Connection to blacklisted 69.144.63.191 (AS: BRESNAN-33588)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:30:41.527795 ---> Port Scan: Horizontal scan to port 443. (Targets: 3 IPs, Packets: 279)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:32:11.262773 ---> Port Scan: Horizontal scan to port 80. (Targets: 4 IPs, Packets: 110)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:33:28.448121 ---> Generic Evidence: A connection to a private IP (10.229.92.141) outside of the used local network 192.168.0.0/16. from IP: 192.168.1.113 on port: 443/tcp .. with threat level high and confidence 1
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:35:46.177619 ---> Private IP Connection: Connection to private IP 10.229.92.141:443
+  |                            Threat Level: info | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:38:25.029861 ---> Port Scan: Horizontal scan to port 443. (Targets: 6 IPs, Packets: 324)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:42:32.934307 ---> Port Scan: Horizontal scan to port 80. (Targets: 7 IPs, Packets: 116)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/03 23:47:14.589545 ---> DNS Issue: Connection without DNS resolution to 195.113.232.73
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/03 23:52:44.689713 ---> Port Scan: Horizontal scan to port 80. (Targets: 8 IPs, Packets: 378)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:04:48.483498 ---> Port Scan: Horizontal scan to port 443. (Targets: 1 IPs, Packets: 243)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:11:09.279414 ---> C&C Channel: Connection to 118.220.248.202:80 (Score: 0.9910.)
+  |                            Threat Level: high | Confidence: 0.03
+  |
+  |-- 2023/11/04 00:17:35.454324 ---> Suspicious Connection: Non-HTTP connection to 104.90.26.185:80
+  |                            Threat Level: medium | Confidence: 0.8
+  |
+  |-- 2023/11/04 00:23:56.117887 ---> Blacklisted IP: Connection to blacklisted 94.115.209.119 (AS: VODANET International IP-Backbone of Vodafone)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:30:39.805146 ---> Blacklisted IP: Connection to blacklisted 17.87.65.103 (AS: APPLE-ENGINEERING)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:36:58.796628 ---> Blacklisted IP: Connection to blacklisted 60.223.49.199 (AS: CHINA169-BACKBONE CHINA UNICOM China169 Backbone)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:43:20.437795 ---> Generic Evidence: connection to blacklisted IP 42.161.29.43 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: SBL Data, SBL DROP/EDROP Data, PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:50:14.016252 ---> Generic Evidence: connection to blacklisted IP 42.161.29.43 from 192.168.1.113. blacklisted IP  Description: SBL262364. Source: drop.txt. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 00:56:34.181162 ---> Generic Evidence: connection to blacklisted IP 206.91.40.86 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:02:59.191211 ---> Blacklisted IP: Connection to blacklisted 136.59.130.185 (AS: GOOGLE-FIBER)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:09:34.400721 ---> Blacklisted IP: Connection to blacklisted 2.4.26.238 (AS: France Telecom - Orange)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:15:56.963735 ---> Blacklisted IP: Connection to blacklisted 109.147.30.26 (AS: BT-UK-AS BTnet UK Regional network)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:22:28.039916 ---> Port Scan: Horizontal scan to port 443. (Targets: 1 IPs, Packets: 402)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:28:55.525866 ---> Blacklisted IP: Connection to blacklisted 123.27.22.154 (AS: VNPT-AS-VN VNPT Corp)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:35:14.822357 ---> Port Scan: Horizontal scan to port 80. (Targets: 2 IPs, Packets: 279)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:41:35.830452 ---> Generic Evidence: connection to blacklisted IP 25.193.44.69 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:47:54.676641 ---> Blacklisted IP: Connection to blacklisted 125.220.30.127 (AS: ERX-CERNET-BKB China Education and Research Network Center)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 01:54:17.802863 ---> Blacklisted IP: Connection to blacklisted 88.11.164.60 (AS: TELEFONICA_DE_ESPANA)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:00:55.514000 ---> Generic Evidence: connection to blacklisted IP 59.206.239.122 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:07:40.978672 ---> Blacklisted IP: Connection to blacklisted 88.11.164.60 (AS: TELEFONICA_DE_ESPANA)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:14:02.287138 ---> Blacklisted IP: Connection to blacklisted 97.174.145.50 (AS: CELLCO-PART AS6167 rDNS: 50.sub-97-174-145.myvzw.com Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:20:18.986614 ---> Blacklisted IP: Connection to blacklisted 92.56.100.25 (AS: UNI2-AS)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:26:38.218613 ---> Blacklisted IP: Connection to blacklisted 117.216.80.116 (AS: BSNL-NIB National Internet Backbone)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:32:55.641650 ---> Blacklisted IP: Connection to blacklisted 43.143.55.40 (AS: TENCENT-NET-AP Shenzhen Tencent Computer Systems Company Limited)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:39:09.707108 ---> Blacklisted IP: Connection to blacklisted 46.86.231.230 (AS: DTAG Internet service provider operations)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:45:47.500913 ---> Blacklisted IP: Connection to blacklisted 191.19.194.140 (AS: TELEFONICA BRASIL S.A)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:52:12.355603 ---> Blacklisted IP: Connection to blacklisted 90.10.10.155 (AS: France Telecom - Orange)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 02:58:32.388476 ---> Blacklisted IP: Connection to blacklisted 93.36.182.75 (AS: FASTWEB)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:05:02.446384 ---> Blacklisted IP: Connection to blacklisted 123.245.3.177 (AS: CHINANET-BACKBONE No.31)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:11:23.431755 ---> Port Scan: Horizontal scan to port 80. (Targets: 3 IPs, Packets: 299)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:17:40.680804 ---> Port Scan: Horizontal scan to port 443. (Targets: 4 IPs, Packets: 449)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:24:02.243125 ---> Blacklisted IP: Connection to blacklisted 178.103.77.151 (AS: EE Ltd)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:30:34.022297 ---> Blacklisted IP: Connection to blacklisted 188.26.167.4 (AS: RCS-RDS 73-75 Dr. Staicovici)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:36:54.683418 ---> Blacklisted IP: Connection to blacklisted 61.163.210.239 (AS: CHINA169-BACKBONE CHINA UNICOM China169 Backbone)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:43:13.289862 ---> Blacklisted IP: Connection to blacklisted 87.113.21.38 (AS: PLUSNET UK Internet Service Provider)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 03:49:50.348061 ---> DNS Issue: Connection without DNS resolution to 143.241.134.70
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 03:56:28.151917 ---> DNS Issue: Connection without DNS resolution to 179.13.161.66
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 04:03:12.310984 ---> DNS Issue: Connection without DNS resolution to 214.146.130.191
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 04:09:46.871913 ---> DNS Issue: Connection without DNS resolution to 185.117.72.90
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 04:16:15.084006 ---> Blacklisted IP: Connection to blacklisted 211.193.87.32 (AS: KIXS-AS-KR Korea Telecom)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 04:22:35.183503 ---> Blacklisted IP: Connection to blacklisted 191.157.165.136 (AS: COMUNICACION CELULAR S.A. COMCEL S.A.)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 04:29:10.126366 ---> Blacklisted IP: Connection to blacklisted 102.191.234.125 (AS: RAYA-AS)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 04:35:31.894789 ---> Blacklisted IP: Connection to blacklisted 191.30.48.123 (AS: TELEFONICA BRASIL S.A)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 04:42:00.736032 ---> Blacklisted IP: Connection to blacklisted 24.23.238.134 (AS: COMCAST-7922)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 04:48:25.266608 ---> Blacklisted IP: Connection to blacklisted 210.29.18.28 (AS: ERX-CERNET-BKB China Education and Research Network Center)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 04:54:49.289516 ---> Blacklisted IP: Connection to blacklisted 222.201.182.119 (AS: ERX-CERNET-BKB China Education and Research Network Center)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:01:18.498460 ---> Blacklisted IP: Connection to blacklisted 197.68.51.43 (AS: MTNNS-AS)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:07:59.349243 ---> Blacklisted IP: Connection to blacklisted 123.160.221.247 (AS: CHINANET-BACKBONE No.31)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:14:29.761675 ---> Blacklisted IP: Connection to blacklisted 41.34.144.101 (AS: TE-AS TE-AS)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:21:12.300603 ---> Blacklisted IP: Connection to blacklisted 72.102.91.89 (AS: CELLCO-PART AS6167 rDNS: 89.sub-72-102-91.myvzw.com Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:27:29.808702 ---> Generic Evidence: connection to blacklisted IP 148.97.9.60 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:34:06.447550 ---> Blacklisted IP: Connection to blacklisted 36.2.12.221 (AS: SO-NET Sony Network Communications Inc.)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:40:42.196299 ---> DNS Issue: Connection without DNS resolution to 133.128.73.141
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 05:47:00.767635 ---> Generic Evidence: connection to blacklisted IP 20.182.144.88 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 05:53:27.143228 ---> DNS Issue: Connection without DNS resolution to 164.211.122.229
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 05:59:49.924981 ---> DNS Issue: Connection without DNS resolution to 57.52.186.216
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 06:06:26.462090 ---> Blacklisted IP: Connection to blacklisted 37.131.185.179 (AS: LEU-AS)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:12:51.337015 ---> Port Scan: Horizontal scan to port 8080. (Targets: 5 IPs, Packets: 21)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:19:25.986839 ---> Port Scan: Horizontal scan to port 80. (Targets: 5 IPs, Packets: 490)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:25:59.952261 ---> Generic Evidence: connection to blacklisted IP 150.127.62.194 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:32:42.327713 ---> Port Scan: Horizontal scan to port 443. (Targets: 5 IPs, Packets: 160)
+  |                            Threat Level: high | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:39:11.236233 ---> Blacklisted IP: Connection to blacklisted 219.199.155.222 (AS: GIGAINFRA SoftBank Corp.)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:45:29.562509 ---> DNS Issue: Connection without DNS resolution to 210.108.151.58
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 06:51:50.655526 ---> Blacklisted IP: Connection to blacklisted 150.108.242.190 (AS: FORDHAM-UNIVERSITY)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 06:58:06.558612 ---> DNS Issue: Connection without DNS resolution to 155.102.238.78
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 07:04:39.034533 ---> DNS Issue: Connection without DNS resolution to 92.12.70.54
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 07:11:06.906813 ---> DNS Issue: Connection without DNS resolution to 149.118.34.225
+  |                            Threat Level: high | Confidence: 0.8
+  |
+  |-- 2023/11/04 07:17:25.454365 ---> Blacklisted IP: Connection to blacklisted 78.125.39.13 (AS: LDCOMNET)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 07:23:47.649720 ---> Blacklisted IP: Connection to blacklisted 2.8.185.101 (AS: France Telecom - Orange)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 07:30:02.103630 ---> Blacklisted IP: Connection to blacklisted 174.21.138.144 (AS: CENTURYLINK-US-LEGACY-QWEST)
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 07:36:45.019176 ---> Generic Evidence: connection to blacklisted IP 51.85.229.138 from 192.168.1.113. blacklisted IP  Description: IP is not expected be delivering unauthenticated SMTP email to any Internet mail server, such as dynamic and residential IP space. Source: PBL Spamhaus Maintained, spamhaus. .. with threat level medium and confidence 1
+  |                            Threat Level: medium | Confidence: 1.0
+  |
+  |-- 2023/11/04 07:43:03.206804 ---> Blacklisted IP: Connection to blacklisted 74.132.53.54 (AS: TWC-10796-MIDWEST)
+  |                            Threat Level: medium | Confidence: 1.0
+
+==================================================
+Summary of 129 evidence events:
+
+Event Types:
+  - Blacklisted IP: 57
+  - C&C Channel: 4
+  - DNS Issue: 12
+  - Generic Evidence: 16
+  - Port Scan: 29
+  - Private IP Connection: 5
+  - Suspicious Connection: 4
+  - Unencrypted Traffic: 2
+
+Threat Levels:
+  - high: 49
+  - medium: 73
+  - low: 2
+  - info: 5
