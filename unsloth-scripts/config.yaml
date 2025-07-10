@@ -2,7 +2,7 @@
 
 # Model Configuration
 model:
-  model_name: "unsloth/Qwen3-14B"  # Options: Qwen3-4B, Qwen3-8B, Qwen3-14B, Qwen3-32B
+  model_name: "unsloth/Qwen1.5-3B"  # Options: Qwen3-4B, Qwen3-8B, Qwen3-14B, Qwen3-32B
   max_seq_length: 2048  # Sequence length (adjust based on your needs)
   dtype: null  # Auto-detect best dtype
   load_in_4bit: true  # Use 4-bit quantization for memory efficiency
@@ -87,19 +87,19 @@ wandb:
 hardware:
   # For different GPU memory configurations
   gpu_16gb:
-    model_name: "unsloth/Qwen3-14B"
+    model_name: "unsloth/Qwen1.5-3B"
     per_device_train_batch_size: 2
     gradient_accumulation_steps: 4
     max_seq_length: 2048
   
   gpu_24gb:
-    model_name: "unsloth/Qwen3-14B"
+    model_name: "unsloth/Qwen1.5-3B"
     per_device_train_batch_size: 4
     gradient_accumulation_steps: 2
     max_seq_length: 4096
   
   gpu_40gb:
-    model_name: "unsloth/Qwen3-32B"
+    model_name: "unsloth/Qwen1.5-3B"
     per_device_train_batch_size: 2
     gradient_accumulation_steps: 4
     max_seq_length: 4096
