@@ -38,7 +38,7 @@ python prepare_data.py --dataset-type custom --custom-path your_data.json
 ### 3. Configure Training
 
 Edit `config.yaml` to adjust:
-- Model size (4B, 8B, 14B, 32B)
+- Model size (1.5B, 3B)
 - Training parameters
 - Hardware-specific settings
 - Output formats
@@ -80,16 +80,12 @@ unsloth-ex/
 
 | Model | VRAM Required | Context Length | Parameters |
 |-------|---------------|----------------|------------|
-| Qwen3-4B | 8GB | 2048+ | 4B |
-| Qwen3-8B | 12GB | 2048+ | 8B |
-| Qwen3-14B | 16GB | 2048+ | 14B |
-| Qwen3-32B | 24GB+ | 2048+ | 32B |
+| Qwen2.5-1.5B | 4GB | 2048+ | 1.5B |
+| Qwen2.5-3B | 8GB | 2048+ | 3B |
 
 ### Hardware Recommendations
 
-- **16GB GPU**: Qwen3-14B with batch_size=2
-- **24GB GPU**: Qwen3-14B with batch_size=4 or Qwen3-32B with batch_size=2
-- **40GB+ GPU**: Qwen3-32B with larger batch sizes
+- **12GB GPU**: Qwen2.5-3B with batch_size=2
 
 ## Dataset Preparation
 
@@ -166,7 +162,7 @@ torchrun --nproc_per_node=2 train_qwen.py
 use_wandb: true
 wandb:
   project: "qwen-finetuning"
-  run_name: "qwen3-14b-experiment"
+  run_name: "qwen2.5-3b-experiment"
 ```
 
 ## Troubleshooting
@@ -185,13 +181,6 @@ per_device_train_batch_size: 1
 gradient_accumulation_steps: 8
 max_seq_length: 1024
 ```
-
-## Performance Benchmarks
-
-| Method | Speed | Memory | Accuracy |
-|--------|-------|--------|----------|
-| Standard | 1x | 100% | 100% |
-| Unsloth | 2x | 30% | 100% |
 
 ## Examples
 
