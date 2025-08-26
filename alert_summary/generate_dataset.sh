@@ -33,6 +33,7 @@ Options:
     --model MODEL          LLM model to use (default: gpt-4o-mini)
     --base-url URL         LLM API base URL (default: https://api.openai.com/v1)
     --text-output FILE     Also generate human-readable text output
+    --csv-output FILE      Also generate CSV format output
     --help                 Show this help message
 
 Examples:
@@ -41,6 +42,9 @@ Examples:
 
     # Use custom model and generate text output
     $0 sample_logs/slips.log dataset.json --model qwen2.5:3b --text-output analysis.txt
+    
+    # Generate both JSON and CSV output
+    $0 sample_logs/slips.log dataset.json --csv-output dataset.csv
 EOF
 }
 
@@ -65,17 +69,22 @@ log_error() {
 create_behavior_prompt() {
     local alert_evidence="$1"
     cat << EOF
-You are a cybersecurity analyst. Analyze the following network security alert and provide a clear technical explanation of the network behavior observed.
+You are a cybersecurity analyst. Analyze the following network security alert and provide a concise, low-level technical explanation of the observed network behavior.
 
 SECURITY ALERT:
 $alert_evidence
 
-Please provide a concise technical explanation of what network behavior was observed in this alert. Focus on:
-- What specific network activities occurred
-- Technical details of the observed behavior
-- Network protocols and communication patterns involved
+Guidelines for your explanation:
 
-Keep the explanation technical but clear, suitable for security analysts.
+ -  Be **succinct** (fewer words than the raw evidence).
+ - Focus only on the **actual network activity observed**.
+ - Include **protocols, ports, and common usage of those ports**.
+ - When possible, express flows in **compact suricata-style format** (e.g., src_ip:src_port/proto -> dst_ip:dst_port/proto (service)), instead of verbose sentences.
+ - Avoid unnecessary high-level definitions (e.g., what TCP is) or irrelevant metadata (e.g., timestamps that are default/invalid).
+ - Ensure consistency in tone, structure, and risk labeling across alerts.
+
+Keep it clear, precise, and **tailored for analysts**.
+
 EOF
 }
 
@@ -83,18 +92,18 @@ EOF
 create_cause_prompt() {
     local alert_evidence="$1"
     cat << EOF
-You are a cybersecurity analyst. Analyze the following network security alert and explain the possible causes of this behavior.
+ You are a cybersecurity analyst. Analyze the following network security alert and provide a concise, low-level technical explanation of the possible causes of the observed behavior.
 
 SECURITY ALERT:
 $alert_evidence
 
-Please provide an analysis of the possible causes of this network behavior. Consider:
-- Potential attack vectors or techniques
-- Possible legitimate reasons for this behavior
-- Common scenarios that could lead to this pattern
-- Root cause analysis from a security perspective
+Guidelines for your analysis:
 
-Provide a balanced analysis covering both malicious and benign possibilities.
+ - Be **succinct** (fewer words than the raw evidence).
+ - Focus only on relevant causes (attack techniques, misconfigurations, or legitimate activities).
+ - Cover both malicious and benign possibilities without over-explaining.
+ - Use precise, analyst-level language — avoid generic definitions or unnecessary context.
+ - Keep a consistent structure across alerts.
 EOF
 }
 
@@ -102,18 +111,18 @@ EOF
 create_risk_prompt() {
     local alert_evidence="$1"
     cat << EOF
-You are a cybersecurity analyst. Analyze the following network security alert and provide a risk assessment.
+ You are a cybersecurity analyst. Analyze the following network security alert and provide a concise risk assessment.
 
 SECURITY ALERT:
 $alert_evidence
 
-Please provide a risk assessment for this alert including:
-- Risk level (Critical/High/Medium/Low) with justification
-- Potential business impact if this represents a real threat
-- Likelihood this represents actual malicious activity
-- Recommended priority for investigation
+Guidelines for your assessment:
 
-Base your assessment on common cybersecurity knowledge and threat intelligence.
+ - Assign a risk level (Critical/High/Medium/Low) with a short, technical justification.
+ - Describe the business impact only in one clear sentence, focused on the most relevant effect (e.g., data access, service disruption). Avoid verbose or generic text.
+ - Estimate the likelihood of malicious activity in direct, concise terms.
+ - Recommend the priority for investigation using consistent, analyst-style language.
+ - Keep explanations short, precise, and consistent across alerts
 EOF
 }
 
@@ -155,6 +164,13 @@ escape_json() {
     echo "$input" | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | awk '{printf "%s\\n", $0}' | sed 's/\\n$//'
 }
 
+# Escape CSV string
+escape_csv() {
+    local input="$1"
+    # Replace newlines with spaces and escape double quotes
+    echo "$input" | tr '\n' ' ' | sed 's/"/\"\"/g'
+}
+
 # Validate requirements
 check_requirements() {
     # Check if DAG generator exists
@@ -190,6 +206,7 @@ main() {
     local model="$DEFAULT_MODEL"
     local base_url="$DEFAULT_BASE_URL"
     local text_output=""
+    local csv_output=""
 
     # Parse command line arguments
     while [[ $# -gt 0 ]]; do
@@ -204,6 +221,10 @@ main() {
                 ;;
             --text-output)
                 text_output="$2"
+                shift 2
+                ;;
+            --csv-output)
+                csv_output="$2"
                 shift 2
                 ;;
             --help)
@@ -452,6 +473,42 @@ EOF
         } > "$text_output"
         
         log_success "Text output generated: $text_output"
+    fi
+    
+    # Generate CSV output if requested
+    if [[ -n "$csv_output" ]]; then
+        log_info "Generating CSV output: $csv_output"
+        
+        # Generate CSV format
+        {
+            # CSV header
+            echo '"alert_id","evidence","behavior_explanation","cause_analysis","risk_assessment"'
+            
+            # Process each alert from the JSON
+            local alert_id=1
+            while jq -e ".dataset[$((alert_id-1))]" "$output_file" >/dev/null 2>&1; do
+                local evidence behavior cause risk
+                
+                evidence=$(jq -r ".dataset[$((alert_id-1))].evidence" "$output_file")
+                behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file" | sed 's/^AI: //')
+                cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file" | sed 's/^AI: //')
+                risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file" | sed 's/^AI: //')
+                
+                # Escape CSV fields
+                local csv_evidence csv_behavior csv_cause csv_risk
+                csv_evidence=$(escape_csv "$evidence")
+                csv_behavior=$(escape_csv "$behavior")
+                csv_cause=$(escape_csv "$cause")
+                csv_risk=$(escape_csv "$risk")
+                
+                # Output CSV row
+                echo "$alert_id,\"$csv_evidence\",\"$csv_behavior\",\"$csv_cause\",\"$csv_risk\""
+                
+                ((alert_id++))
+            done
+        } > "$csv_output"
+        
+        log_success "CSV output generated: $csv_output"
     fi
 }
 
