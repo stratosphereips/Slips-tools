@@ -154,10 +154,22 @@ Valid Zeek signature fields include:
 - tcp-state (TCP connection state)
 - event (description string)
 
+CRITICAL REGEX RULES FOR ZEEK SIGNATURES:
+- NO inline flags: Don't use (?i), (?m), (?s) - Zeek doesn't support them
+- Patterns are anchored at start by default - use .* to match anywhere
+- All matches are case-sensitive by default
+- URL-encoded chars: Use %27 not \\%27 for URL-encoded characters
+- Binary data: Use \\x41 for hex, \\r\\n for control chars
+- Supported: alternation (option1|option2), quantifiers (*, +, ?, {{n,m}}), character classes [a-zA-Z0-9], grouping ()
+- NOT supported: lookahead/lookbehind (?=...), named groups (?P<name>...), word boundaries \\b, unicode classes \\p{{...}}
+- Keep patterns simple and specific - test against actual decoded content
+
 DO NOT:
 - Use markdown code blocks or formatting
 - Use YARA rule syntax (id, condition, metadata blocks)
-- Include explanatory text before or after the signature"""
+- Include explanatory text before or after the signature
+- Use unsupported regex features like (?i) flags or lookahead assertions"""
+
 
         # Add reference documentation if provided
         if self.reference_content:

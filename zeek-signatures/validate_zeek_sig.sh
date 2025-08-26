@@ -1,17 +1,31 @@
 #!/bin/bash
 
 # Simple Zeek signature validator
-# Usage: validate_zeek_sig.sh <signature_file> [pcap_file]
+# Usage: validate_zeek_sig.sh <signature_file> [pcap_file] [--keep-temp]
 
 set -e
 
+KEEP_TEMP=false
+
 if [ $# -lt 1 ]; then
-    echo "Usage: $0 <signature_file> [pcap_file]"
+    echo "Usage: $0 <signature_file> [pcap_file] [--keep-temp]"
     echo "Examples:"
     echo "  $0 my_signature.sig                    # syntax check only"
     echo "  $0 my_signature.sig sample.pcap        # test against traffic"
+    echo "  $0 my_signature.sig --keep-temp        # keep temporary files"
+    echo "  $0 my_signature.sig sample.pcap --keep-temp  # test and keep files"
     exit 1
 fi
+
+# Parse arguments
+for arg in "$@"; do
+    case $arg in
+        --keep-temp)
+            KEEP_TEMP=true
+            shift
+            ;;
+    esac
+done
 
 SIGNATURE_FILE="$1"
 PCAP_FILE="$2"
@@ -44,7 +58,11 @@ else
     echo "✗ Signature syntax error:"
     zeek --parse-only load_sig.zeek
     cd - >/dev/null
-    rm -rf "$WORK_DIR"
+    if [ "$KEEP_TEMP" = false ]; then
+        rm -rf "$WORK_DIR"
+    else
+        echo "Temporary files kept in: $WORK_DIR"
+    fi
     exit 1
 fi
 
@@ -53,7 +71,11 @@ if [ -n "$PCAP_FILE" ]; then
     if [ ! -f "$PCAP_FILE" ]; then
         echo "Error: PCAP file '$PCAP_FILE' not found"
         cd - >/dev/null
-        rm -rf "$WORK_DIR"
+        if [ "$KEEP_TEMP" = false ]; then
+            rm -rf "$WORK_DIR"
+        else
+            echo "Temporary files kept in: $WORK_DIR"
+        fi
         exit 1
     fi
     
@@ -87,7 +109,11 @@ if [ -n "$PCAP_FILE" ]; then
         echo "✗ Error processing signature with traffic:"
         zeek -r "$PCAP_FILE" load_sig.zeek
         cd - >/dev/null
-        rm -rf "$WORK_DIR"
+        if [ "$KEEP_TEMP" = false ]; then
+            rm -rf "$WORK_DIR"
+        else
+            echo "Temporary files kept in: $WORK_DIR"
+        fi
         exit 1
     fi
 else
@@ -96,6 +122,10 @@ fi
 
 # Cleanup
 cd - >/dev/null
-rm -rf "$WORK_DIR"
+if [ "$KEEP_TEMP" = true ]; then
+    echo "Temporary files kept in: $WORK_DIR"
+else
+    rm -rf "$WORK_DIR"
+fi
 
 echo "Validation complete!"
