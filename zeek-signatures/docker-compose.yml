@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  zeek-validator:
+    build: .
+    volumes:
+      - .:/signatures
+      - ./test_data:/test_data:ro
+    working_dir: /signatures
+    command: bash
+    stdin_open: true
+    tty: true
+    environment:
+      - TERM=xterm-256color
