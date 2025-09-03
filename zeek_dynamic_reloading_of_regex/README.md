@@ -1,10 +1,9 @@
 # This directory contains
 1. a regex feed that we want to monitor (regex.csv)
 2. the script that registers the feed for monitoring, and checks every URI of HTTP requests for a match. it dynamically 
-reloads all changes (insertions, deletions and updates) to the feed.
+reloads all changes (insertions, deletions and updates) to the feed. (match_http_uri.zeek)
 
-
-
+   
 
 # Instructions for monitoring regex feeds
 
@@ -21,7 +20,7 @@ reloads all changes (insertions, deletions and updates) to the feed.
 
 2. Run zeek on it
 
-```zeek -C -r RAT06_Saefko.pcap ../regex_monitor.zeek```
+```zeek -C -r RAT06_Saefko.pcap match_http_uri.zeek```
 
 
 **Expected output:**
@@ -40,9 +39,9 @@ OR
 
 1. run zeek on your interface
 
-```zeek -i wlp0s20f3 ../regex_monitor.zeek ```
+```zeek -C -i wlp0s20f3 match_http_uri.zeek ```
 
-2. add/remove entries from regex.csv and watch them loaded dynamically! :)
+2. add/remove entries from regex.csv
 3. Make http requests that triggers any of them.
 
 
