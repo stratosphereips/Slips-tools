@@ -37,6 +37,20 @@ class EvidenceEvent:
         return f"{self.timestamp} -> {self.event_type}: {self.description}"
 
 
+@dataclass
+class Alert:
+    """Represents a Slips alert/analysis with associated evidence events."""
+    alert_timestamp: str
+    ip_address: str
+    timewindow_id: str
+    timewindow_start: str
+    timewindow_end: str
+    evidence_events: List[EvidenceEvent]
+    
+    def __str__(self) -> str:
+        return f"Alert for {self.ip_address} in timewindow {self.timewindow_id} ({len(self.evidence_events)} events)"
+
+
 class SlipsLogParser:
     """Parser for Slips evidence logs."""
     
@@ -325,6 +339,34 @@ class SlipsLogParser:
         # Sort IPs for consistent output
         return sorted(list(ips))
     
+    def parse_alerts(self, log_file: str, target_ip: Optional[str] = None) -> List[Alert]:
+        """Parse the Slips log file and extract alerts with their evidence."""
+        alerts = []
+        
+        try:
+            with open(log_file, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+        except FileNotFoundError:
+            print(f"Error: Log file '{log_file}' not found.")
+            return []
+        except Exception as e:
+            print(f"Error reading log file: {e}")
+            return []
+        
+        # Detect log format
+        log_format = self._detect_log_format(lines)
+        
+        if log_format == "grouped_alerts":
+            alerts = self._parse_alerts_from_grouped_format(lines, target_ip)
+        else:
+            # For original format, convert to legacy evidence-based approach
+            print("Warning: Alert-based parsing not supported for original format. Use IP-based mode instead.")
+            return []
+        
+        # Sort alerts by timestamp
+        alerts.sort(key=lambda x: x.alert_timestamp)
+        return alerts
+    
     def _detect_log_format(self, lines: List[str]) -> str:
         """Detect the format of the Slips log file."""
         # Look for grouped alerts format indicators
@@ -414,6 +456,79 @@ class SlipsLogParser:
                 events.append(event)
         
         return events
+    
+    def _parse_alerts_from_grouped_format(self, lines: List[str], target_ip: Optional[str] = None) -> List[Alert]:
+        """Parse alerts from grouped format, grouping evidence by alert/timewindow."""
+        alerts = []
+        current_alert = None
+        
+        for line_num, line in enumerate(lines, 1):
+            try:
+                # Strip ANSI color codes
+                clean_line = self._strip_ansi_codes(line.strip())
+                
+                # Check for alert header
+                if "detected as malicious in timewindow" in clean_line:
+                    # Save previous alert if it exists
+                    if current_alert and (not target_ip or current_alert.ip_address == target_ip):
+                        alerts.append(current_alert)
+                    
+                    # Parse new alert header
+                    alert_timestamp_match = re.search(r'(\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}\.\d+)', line)
+                    ip_match = re.search(r'IP ([\d.]+)\s+detected as malicious', clean_line)
+                    timewindow_match = re.search(r'timewindow (\d+)', clean_line)
+                    timewindow_period_match = re.search(r'\(start ([^,]+), stop ([^)]+)\)', clean_line)
+                    
+                    if alert_timestamp_match and ip_match and timewindow_match:
+                        alert_timestamp = alert_timestamp_match.group(1)
+                        ip_address = ip_match.group(1)
+                        timewindow_id = timewindow_match.group(1)
+                        
+                        # Extract timewindow period if available
+                        if timewindow_period_match:
+                            timewindow_start = timewindow_period_match.group(1)
+                            timewindow_end = timewindow_period_match.group(2)
+                        else:
+                            timewindow_start = "unknown"
+                            timewindow_end = "unknown"
+                        
+                        # Create new alert
+                        current_alert = Alert(
+                            alert_timestamp=alert_timestamp,
+                            ip_address=ip_address,
+                            timewindow_id=timewindow_id,
+                            timewindow_start=timewindow_start,
+                            timewindow_end=timewindow_end,
+                            evidence_events=[]
+                        )
+                    continue
+                
+                # Check for evidence items within an alert
+                if current_alert and "given the following evidence:" in clean_line:
+                    continue
+                
+                # Parse evidence items
+                if current_alert and (clean_line.startswith("- Detected ") or clean_line.startswith("\t- Detected ")):
+                    # Extract evidence text
+                    if clean_line.startswith("\t- Detected "):
+                        evidence_text = clean_line[12:]  # Remove "\t- Detected "
+                    else:
+                        evidence_text = clean_line[11:]  # Remove "- Detected "
+                    
+                    # Parse evidence into EvidenceEvent
+                    evidence_event = self._parse_evidence_item(evidence_text, current_alert.alert_timestamp, current_alert.ip_address)
+                    if evidence_event:
+                        current_alert.evidence_events.append(evidence_event)
+                
+            except Exception as e:
+                print(f"Warning: Error parsing line {line_num}: {e}")
+                continue
+        
+        # Don't forget the last alert
+        if current_alert and (not target_ip or current_alert.ip_address == target_ip):
+            alerts.append(current_alert)
+        
+        return alerts
     
     def _strip_ansi_codes(self, text: str) -> str:
         """Strip ANSI color codes from text."""
@@ -570,11 +685,12 @@ class SlipsLogParser:
 class DAGGenerator:
     """Generates textual DAG from parsed evidence events."""
     
-    def __init__(self, compact=False, minimal=False, pattern=False, group_time=None):
+    def __init__(self, compact=False, minimal=False, pattern=False, group_time=None, include_threat_level=False):
         self.compact = compact
         self.minimal = minimal
         self.pattern = pattern
         self.group_time = group_time
+        self.include_threat_level = include_threat_level
         self.threat_level_priority = {
             'critical': 5,
             'high': 4,
@@ -606,6 +722,28 @@ class DAGGenerator:
         else:
             return self._generate_verbose_format(events, target_ip)
     
+    def generate_dag_for_alert(self, alert: Alert) -> str:
+        """Generate a textual DAG for a single alert/analysis."""
+        if not alert.evidence_events:
+            return f"No evidence found for alert {alert.timewindow_id} of IP: {alert.ip_address}"
+        
+        # Create header with alert information
+        header = f"{alert.ip_address} - Analysis {alert.timewindow_id} ({alert.alert_timestamp})"
+        if alert.timewindow_start != "unknown":
+            header += f"\nTimewindow: {alert.timewindow_start} to {alert.timewindow_end}"
+        
+        # Generate DAG using existing format logic
+        if self.minimal:
+            dag_content = self._generate_minimal_format_for_alert(alert)
+        elif self.pattern:
+            dag_content = self._generate_pattern_format_for_alert(alert)
+        elif self.compact:
+            dag_content = self._generate_compact_format_for_alert(alert)
+        else:
+            dag_content = self._generate_verbose_format_for_alert(alert)
+        
+        return f"{header}\n{dag_content}"
+    
     def _generate_verbose_format(self, events: List[EvidenceEvent], target_ip: str) -> str:
         """Generate the original verbose DAG format."""
         # Group events by time proximity to reduce clutter
@@ -636,7 +774,10 @@ class DAGGenerator:
             time_short = event.timestamp.split()[1][:8]  # HH:MM:SS
             
             # Compact threat info
-            threat_short = f"[{event.threat_level.upper()[:3]}/{event.confidence}]"
+            if self.include_threat_level:
+                threat_short = f"[{event.threat_level.upper()[:3]}/{event.confidence}]"
+            else:
+                threat_short = f"[{event.confidence}]"
             
             # Concise description
             desc = self._make_description_concise(event)
@@ -661,21 +802,30 @@ class DAGGenerator:
         for event_type in high_priority_types:
             if event_type in type_summary:
                 info = type_summary[event_type]
-                lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+                if self.include_threat_level:
+                    lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+                else:
+                    lines.append(f"• {start_time} - {info['summary']}")
         
         # Add other significant events
         other_types = [t for t in type_summary if t not in high_priority_types and type_summary[t]['count'] > 5]
         for event_type in other_types[:2]:  # Limit to 2 additional types
             info = type_summary[event_type]
-            lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+            if self.include_threat_level:
+                lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+            else:
+                lines.append(f"• {start_time} - {info['summary']}")
         
         # Add summary
         duration_hours = self._calculate_duration_hours(events)
         total_events = len(events)
-        risk_level = "CRITICAL" if any(e.threat_level == "high" for e in events) else "MEDIUM"
         
         lines.append(f"• Duration: {duration_hours:.1f} hours, {total_events} events")
-        lines.append(f"• Risk: {risk_level} - Sustained malicious activity")
+        
+        # Only include risk analysis if threat levels are enabled
+        if self.include_threat_level:
+            risk_level, rationale = self._calculate_comprehensive_risk_level(events)
+            lines.append(f"• Risk: {risk_level} - {rationale}")
         
         return "\n".join(lines)
     
@@ -697,6 +847,114 @@ class DAGGenerator:
             lines.append("")  # Empty line between phases
         
         return "\n".join(lines).rstrip()
+    
+    def _generate_compact_format_for_alert(self, alert: Alert) -> str:
+        """Generate compact format for a single alert."""
+        events = alert.evidence_events
+        lines = []
+        
+        # Group similar events for better aggregation
+        aggregated = self._aggregate_events(events)
+        
+        for i, event in enumerate(aggregated):
+            is_last = (i == len(aggregated) - 1)
+            symbol = "└─" if is_last else "├─"
+            
+            # Shorter timestamp (remove date and microseconds)
+            time_short = event.timestamp.split()[1][:8]  # HH:MM:SS
+            
+            # Compact threat info
+            if self.include_threat_level:
+                threat_short = f"[{event.threat_level.upper()[:3]}/{event.confidence}]"
+            else:
+                threat_short = f"[{event.confidence}]"
+            
+            # Concise description
+            desc = self._make_description_concise(event)
+            
+            lines.append(f"{symbol} {time_short} → {desc} {threat_short}")
+        
+        return "\n".join(lines)
+    
+    def _generate_minimal_format_for_alert(self, alert: Alert) -> str:
+        """Generate minimal format for a single alert."""
+        events = alert.evidence_events
+        if not events:
+            return "No evidence events"
+        
+        lines = []
+        
+        # Aggregate by event type
+        type_summary = self._summarize_by_type(events)
+        
+        # Get time range
+        start_time = events[0].timestamp.split()[1][:5]  # HH:MM
+        
+        high_priority_types = ['Port Scan', 'C&C Channel', 'DNS Issue']
+        
+        for event_type in high_priority_types:
+            if event_type in type_summary:
+                info = type_summary[event_type]
+                if self.include_threat_level:
+                    lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+                else:
+                    lines.append(f"• {start_time} - {info['summary']}")
+        
+        # Add other significant events
+        other_types = [t for t in type_summary if t not in high_priority_types and type_summary[t]['count'] > 2]
+        for event_type in other_types[:2]:  # Limit to 2 additional types
+            info = type_summary[event_type]
+            if self.include_threat_level:
+                lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+            else:
+                lines.append(f"• {start_time} - {info['summary']}")
+        
+        # Add summary
+        total_events = len(events)
+        lines.append(f"• Evidence: {total_events} events in analysis")
+        
+        # Only include risk analysis if threat levels are enabled
+        if self.include_threat_level:
+            risk_level, rationale = self._calculate_comprehensive_risk_level(events)
+            lines.append(f"• Risk: {risk_level} - {rationale}")
+        
+        return "\n".join(lines)
+    
+    def _generate_verbose_format_for_alert(self, alert: Alert) -> str:
+        """Generate verbose format for a single alert."""
+        events = alert.evidence_events
+        # Group events by time proximity to reduce clutter
+        grouped_events = self._group_events(events)
+        
+        # Generate the DAG structure
+        dag_lines = []
+        
+        for i, event_group in enumerate(grouped_events):
+            is_last = (i == len(grouped_events) - 1)
+            dag_lines.extend(self._format_event_group(event_group, is_last))
+        
+        return "\n".join(dag_lines)
+    
+    def _generate_pattern_format_for_alert(self, alert: Alert) -> str:
+        """Generate pattern analysis format for a single alert."""
+        events = alert.evidence_events
+        lines = []
+        
+        # Group events into phases based on time and behavior
+        phases = self._identify_attack_phases(events)
+        
+        for i, phase in enumerate(phases, 1):
+            phase_name = phase['name']
+            time_range = phase['time_range']
+            activities = phase['activities']
+            
+            lines.append(f"Phase {i} ({time_range}): {phase_name}")
+            for activity in activities:
+                lines.append(f"• {activity}")
+            if i < len(phases):  # Don't add empty line after last phase
+                lines.append("")
+        
+        return "\n".join(lines)
     
     def _group_events(self, events: List[EvidenceEvent]) -> List[List[EvidenceEvent]]:
         """Group events that occur within a short time window."""
@@ -728,12 +986,18 @@ class DAGGenerator:
             # Single event
             event = events[0]
             lines.append(f"  |-- {event.timestamp} ---> {event.event_type}: {event.description}")
-            lines.append(f"  |                            Threat Level: {event.threat_level} | Confidence: {event.confidence}")
+            if self.include_threat_level:
+                lines.append(f"  |                            Threat Level: {event.threat_level} | Confidence: {event.confidence}")
+            else:
+                lines.append(f"  |                            Confidence: {event.confidence}")
         else:
             # Multiple similar events
             event = events[0]
             lines.append(f"  |-- {event.timestamp} ---> {event.event_type}: {event.description}")
-            lines.append(f"  |                            Threat Level: {event.threat_level} | Confidence: {event.confidence}")
+            if self.include_threat_level:
+                lines.append(f"  |                            Threat Level: {event.threat_level} | Confidence: {event.confidence}")
+            else:
+                lines.append(f"  |                            Confidence: {event.confidence}")
             lines.append(f"  |                            (+ {len(events)-1} similar events)")
         
         if not is_last:
@@ -763,15 +1027,16 @@ class DAGGenerator:
         for event_type, count in sorted(event_counts.items()):
             summary.append(f"  - {event_type}: {count}")
         
-        summary.extend([
-            "",
-            "Threat Levels:",
-        ])
-        
-        for threat_level, count in sorted(threat_levels.items(), 
-                                        key=lambda x: self.threat_level_priority.get(x[0], 0), 
-                                        reverse=True):
-            summary.append(f"  - {threat_level}: {count}")
+        if self.include_threat_level:
+            summary.extend([
+                "",
+                "Threat Levels:",
+            ])
+            
+            for threat_level, count in sorted(threat_levels.items(), 
+                                            key=lambda x: self.threat_level_priority.get(x[0], 0), 
+                                            reverse=True):
+                summary.append(f"  - {threat_level}: {count}")
         
         return "\n".join(summary)
     
@@ -1043,6 +1308,75 @@ class DAGGenerator:
             activities.append(f"DNS evasion: {len(dns_events)} connections without resolution")
         
         return activities
+    
+    def _calculate_comprehensive_risk_level(self, events: List[EvidenceEvent]) -> tuple:
+        """Calculate comprehensive risk level based on multiple factors."""
+        if not events:
+            return "LOW", "No security events detected"
+        
+        # Count events by threat level
+        threat_counts = {}
+        confidence_scores = []
+        event_types = set()
+        
+        for event in events:
+            threat_counts[event.threat_level] = threat_counts.get(event.threat_level, 0) + 1
+            confidence_scores.append(event.confidence)
+            event_types.add(event.event_type)
+        
+        # Calculate metrics
+        total_events = len(events)
+        avg_confidence = sum(confidence_scores) / len(confidence_scores)
+        unique_attack_types = len(event_types)
+        
+        # High-severity event types
+        critical_event_types = {'C&C Channel', 'Blacklisted IP', 'Malicious Detection'}
+        high_severity_events = sum(1 for e in events if e.event_type in critical_event_types)
+        
+        # Risk assessment logic
+        critical_threats = threat_counts.get('critical', 0)
+        high_threats = threat_counts.get('high', 0)
+        medium_threats = threat_counts.get('medium', 0)
+        
+        # Determine risk level and rationale
+        if critical_threats > 0:
+            risk_level = "CRITICAL"
+            reasons = [f"{critical_threats} critical-level threats detected"]
+            if high_threats > 0:
+                reasons.append(f"{high_threats} additional high-level threats")
+        elif high_threats >= 3:
+            risk_level = "CRITICAL" 
+            reasons = [f"Multiple high-severity threats ({high_threats} events)"]
+        elif high_threats > 0 and high_severity_events >= 2:
+            risk_level = "CRITICAL"
+            reasons = [f"{high_threats} high-level threats with {high_severity_events} critical event types"]
+        elif high_threats > 0:
+            risk_level = "HIGH"
+            reasons = [f"{high_threats} high-level security threats"]
+        elif medium_threats >= 5 or (medium_threats >= 3 and unique_attack_types >= 3):
+            risk_level = "HIGH"
+            reasons = [f"{medium_threats} medium-level threats across {unique_attack_types} attack types"]
+        elif medium_threats > 0 or high_severity_events > 0:
+            risk_level = "MEDIUM"
+            reasons = [f"{medium_threats} medium-level threats" if medium_threats > 0 else f"{high_severity_events} suspicious connections"]
+        else:
+            risk_level = "LOW"
+            reasons = ["Low-severity events only"]
+        
+        # Add contextual factors
+        if avg_confidence >= 0.8:
+            reasons.append(f"high confidence (avg: {avg_confidence:.2f})")
+        elif avg_confidence <= 0.3:
+            reasons.append(f"low confidence (avg: {avg_confidence:.2f})")
+            
+        if total_events >= 10:
+            reasons.append(f"high event volume ({total_events} events)")
+            
+        if unique_attack_types >= 4:
+            reasons.append(f"diverse attack patterns ({unique_attack_types} types)")
+        
+        rationale = "; ".join(reasons)
+        return risk_level, rationale
 
 
 def apply_filtering(events: List[EvidenceEvent], args) -> List[EvidenceEvent]:
@@ -1096,7 +1430,8 @@ def generate_output_for_ip(events: List[EvidenceEvent], target_ip: str, args) ->
             compact=compact, 
             minimal=minimal, 
             pattern=pattern, 
-            group_time=group_time
+            group_time=group_time,
+            include_threat_level=args.include_threat_level
         )
         dag = dag_generator.generate_dag(events, target_ip)
         
@@ -1132,12 +1467,16 @@ def main():
     parser.add_argument('--max-events', type=int, help='Limit to N most significant events')
     parser.add_argument('--group-time', type=int, metavar='MINUTES', 
                        help='Group events within N-minute windows')
+    parser.add_argument('--include-threat-level', action='store_true',
+                       help='Include threat level information in output (default: excluded)')
+    parser.add_argument('--per-analysis', action='store_true',
+                       help='Generate separate DAG for each alert/analysis instead of per IP')
     
     args = parser.parse_args()
     
     # Validate arguments
-    if not args.all_ips and not args.target_ip:
-        parser.error("target_ip is required unless --all-ips is specified")
+    if not args.all_ips and not args.target_ip and not args.per_analysis:
+        parser.error("target_ip is required unless --all-ips or --per-analysis is specified")
     
     # Set default format to compact if no format specified
     if not any([args.compact, args.minimal, args.pattern, args.full]):
@@ -1153,6 +1492,64 @@ def main():
     
     parser_obj = SlipsLogParser()
     
+    # Handle per-analysis mode
+    if args.per_analysis:
+        if args.verbose:
+            print("Per-analysis mode: generating separate DAGs for each alert")
+        
+        # Parse alerts instead of events
+        if args.all_ips:
+            alerts = parser_obj.parse_alerts(args.log_file)
+        else:
+            alerts = parser_obj.parse_alerts(args.log_file, args.target_ip)
+        
+        if not alerts:
+            print("No alerts found in log file")
+            return
+        
+        if args.verbose:
+            print(f"Found {len(alerts)} alerts")
+        
+        # Generate DAG for each alert
+        dag_generator = DAGGenerator(
+            compact=args.compact,
+            minimal=args.minimal,
+            pattern=args.pattern,
+            group_time=args.group_time,
+            include_threat_level=args.include_threat_level
+        )
+        
+        output_lines = []
+        for i, alert in enumerate(alerts):
+            if i > 0:  # Add separator between alerts
+                output_lines.append("=" * 60)
+            
+            dag_output = dag_generator.generate_dag_for_alert(alert)
+            output_lines.append(dag_output)
+            
+            # Add summary if requested
+            if args.summary and not args.minimal:
+                output_lines.append("-" * 40)
+                output_lines.append(dag_generator.generate_summary(alert.evidence_events))
+        
+        # Write output
+        output_text = "\n".join(output_lines)
+        
+        if args.output:
+            try:
+                with open(args.output, 'w', encoding='utf-8') as f:
+                    f.write(output_text)
+                if args.verbose:
+                    print(f"Output written to: {args.output}")
+            except Exception as e:
+                print(f"Error writing output file: {e}")
+                sys.exit(1)
+        else:
+            print(output_text)
+        
+        return
+    
+    # Original IP-based mode
     if args.all_ips:
         # Discover all IPs in the log file
         all_ips = parser_obj.discover_all_ips(args.log_file)
