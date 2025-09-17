@@ -55,8 +55,11 @@ python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --include-th
 # Compact format (default) - single line per event
 python3 slips_dag_generator.py sample_logs/test_data.log --all-ips --compact
 
-# Minimal format - bullet-point summaries
+# Minimal format - bullet-point summaries (high priority events only)
 python3 slips_dag_generator.py sample_logs/test_data.log --all-ips --minimal
+
+# Comprehensive format - bullet-point summaries showing ALL evidence types
+python3 slips_dag_generator.py sample_logs/test_data.log --all-ips --comprehensive
 
 # Pattern analysis - attack phase breakdown
 python3 slips_dag_generator.py sample_logs/test_data.log --all-ips --pattern
@@ -81,6 +84,9 @@ python3 slips_dag_generator.py sample_logs/test_data.log --all-ips --json
 
 # Include summary statistics
 python3 slips_dag_generator.py sample_logs/test_data.log --all-ips --summary
+
+# Merge similar evidence events for cleaner output
+python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --comprehensive --merge-evidence
 ```
 
 ### Common Workflows
@@ -110,6 +116,59 @@ python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --compact --
 
 # Alert-focused reporting
 python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --output alert_analysis.txt
+```
+
+## Evidence Merging
+
+### Overview
+The `--merge-evidence` flag consolidates similar evidence events within each analysis for cleaner, more concise output.
+
+### How It Works
+- Groups similar evidence by type and target (same port for scans, same IP for connections)
+- Aggregates statistics (total targets, packets, threat levels)
+- Preserves highest threat level and confidence score
+- Shows time range and burst count for merged events
+
+### Examples
+
+#### Without Merging (verbose output)
+```bash
+python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --comprehensive
+• 23:27 - Port scans: 443/TCP→45, 443/TCP→30, 80/TCP→5, 80/TCP→15, 443/TCP→20, 443/TCP→5, 80/TCP→30, 8080/TCP→6 (total: 156 hosts)
+• Evidence: 11 events in analysis
+```
+
+#### With Merging (consolidated output)
+```bash
+python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --comprehensive --merge-evidence
+• 23:27 - Port scans: 8080/TCP→6, 80→50, 443→100 (total: 156 hosts)
+• Evidence: 6 events in analysis
+```
+
+### Benefits
+- **Cleaner Output**: Reduces clutter from repetitive similar events
+- **Better Pattern Recognition**: Easier to identify attack strategies
+- **Preserved Accuracy**: All statistical data is maintained through aggregation
+- **Configurable**: Optional feature that preserves existing behavior when disabled
+
+### Merging Rules
+- **Port Scans**: Grouped by port/protocol, targets and packets summed
+- **C&C Channels**: Grouped by destination IP, connection attempts counted
+- **Blacklisted IPs**: Grouped by destination IP, attempts aggregated
+- **Private IP Connections**: Grouped by destination IP and port
+- **Other Events**: Grouped by exact event type
+
+### Compatible Modes
+Works with all output formats and analysis modes:
+```bash
+# IP-based analysis with merging
+python3 slips_dag_generator.py sample_logs/slips.log 192.168.1.113 --minimal --merge-evidence
+
+# Per-analysis mode with merging
+python3 slips_dag_generator.py sample_logs/slips.log --per-analysis --pattern --merge-evidence
+
+# All IPs with merging
+python3 slips_dag_generator.py sample_logs/slips.log --all-ips --compact --merge-evidence
 ```
 
 ## Log Format Support

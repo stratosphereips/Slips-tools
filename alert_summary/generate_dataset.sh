@@ -69,21 +69,32 @@ log_error() {
 create_behavior_prompt() {
     local alert_evidence="$1"
     cat << EOF
-You are a cybersecurity analyst. Analyze the following network security alert and provide a concise, low-level technical explanation of the observed network behavior.
+You are a cybersecurity analyst. Analyze the following network security alert and provide a concise, structured technical explanation of the observed network behavior.
 
 SECURITY ALERT:
 $alert_evidence
 
-Guidelines for your explanation:
+Output Requirements:
+- Respond with ONLY the analysis content
+- Do NOT include any prefixes (like "AI:"), statistics, or metadata
+- Do NOT include token counts, timing information, or performance stats
+- Use this exact structure:
+  **Source:** [IP address]
+  **Activity:** [Brief activity type]
+  **Detected Flows:**
+  • [flow description using format: src_ip:port/proto → dest_targets (service)]
+  • [additional flows as needed]
+  
+  **Summary:** [1-2 sentence technical summary of the behavior]
 
- -  Be **succinct** (fewer words than the raw evidence).
- - Focus only on the **actual network activity observed**.
- - Include **protocols, ports, and common usage of those ports**.
- - When possible, express flows in **compact suricata-style format** (e.g., src_ip:src_port/proto -> dst_ip:dst_port/proto (service)), instead of verbose sentences.
- - Avoid unnecessary high-level definitions (e.g., what TCP is) or irrelevant metadata (e.g., timestamps that are default/invalid).
- - Ensure consistency in tone, structure, and risk labeling across alerts.
-
-Keep it clear, precise, and **tailored for analysts**.
+Guidelines:
+- Be succinct (fewer words than raw evidence)
+- Focus only on actual network activity observed
+- Use consistent port/protocol notation (e.g., 80/TCP, 443/TCP)
+- Express flows in compact format when possible
+- Avoid high-level definitions or irrelevant metadata
+- Keep technical depth consistent across all analyses
+- Use bullet points for flows, structured format for sections
 
 EOF
 }
@@ -92,18 +103,39 @@ EOF
 create_cause_prompt() {
     local alert_evidence="$1"
     cat << EOF
- You are a cybersecurity analyst. Analyze the following network security alert and provide a concise, low-level technical explanation of the possible causes of the observed behavior.
+You are a cybersecurity analyst. Analyze the following network security alert and provide a structured analysis of possible causes.
 
 SECURITY ALERT:
 $alert_evidence
 
-Guidelines for your analysis:
+Output Requirements:
+- Respond with ONLY the analysis content
+- Do NOT include any prefixes (like "AI:"), statistics, or metadata
+- Do NOT include token counts, timing information, or performance stats
+- Use this exact structure:
 
- - Be **succinct** (fewer words than the raw evidence).
- - Focus only on relevant causes (attack techniques, misconfigurations, or legitimate activities).
- - Cover both malicious and benign possibilities without over-explaining.
- - Use precise, analyst-level language — avoid generic definitions or unnecessary context.
- - Keep a consistent structure across alerts.
+**Possible Causes:**
+
+**1. Malicious Activity:**
+• [Specific attack technique or malicious cause]
+• [Additional malicious possibilities if relevant]
+
+**2. Legitimate Activity:**
+• [Benign operational cause]
+• [Additional legitimate possibilities if relevant]
+
+**3. Misconfigurations:**
+• [Technical misconfigurations that could cause this behavior]
+
+**Conclusion:** [1-2 sentence assessment of most likely cause category with recommendation for further investigation]
+
+Guidelines:
+- Be succinct (fewer words than raw evidence)
+- Focus on relevant causes only (attack techniques, misconfigurations, legitimate operations)
+- Use precise analyst-level language
+- Maintain consistent structure and depth across all analyses
+- Avoid generic definitions or unnecessary context
+
 EOF
 }
 
@@ -111,18 +143,35 @@ EOF
 create_risk_prompt() {
     local alert_evidence="$1"
     cat << EOF
- You are a cybersecurity analyst. Analyze the following network security alert and provide a concise risk assessment.
+You are a cybersecurity analyst. Analyze the following network security alert and provide a structured risk assessment.
 
 SECURITY ALERT:
 $alert_evidence
 
-Guidelines for your assessment:
+Output Requirements:
+- Respond with ONLY the assessment content
+- Do NOT include any prefixes (like "AI:"), statistics, or metadata
+- Do NOT include token counts, timing information, or performance stats
+- Use this exact structure:
 
- - Assign a risk level (Critical/High/Medium/Low) with a short, technical justification.
- - Describe the business impact only in one clear sentence, focused on the most relevant effect (e.g., data access, service disruption). Avoid verbose or generic text.
- - Estimate the likelihood of malicious activity in direct, concise terms.
- - Recommend the priority for investigation using consistent, analyst-style language.
- - Keep explanations short, precise, and consistent across alerts
+**Risk Level:** [Critical/High/Medium/Low]
+
+**Justification:** [1-2 sentence technical justification for the risk level]
+
+**Business Impact:** [Single clear sentence describing the most relevant business effect]
+
+**Likelihood of Malicious Activity:** [High/Medium/Low] - [Brief rationale]
+
+**Investigation Priority:** [Immediate/High/Medium/Low] - [Brief justification]
+
+Guidelines:
+- Use only the four risk levels: Critical, High, Medium, Low
+- Keep justifications concise and technical
+- Focus business impact on most relevant effect (data access, service disruption, etc.)
+- Use consistent language for likelihood assessments
+- Maintain uniform structure and depth across all assessments
+- Avoid verbose or generic text
+
 EOF
 }
 
@@ -283,7 +332,7 @@ main() {
         dag_output=$(cat "$log_file")
     else
         log_info "Generating DAG analysis in per-analysis mode..."
-        local dag_cmd="python3 $SCRIPT_DIR/slips_dag_generator.py $log_file --per-analysis --minimal"
+        local dag_cmd="python3 $SCRIPT_DIR/slips_dag_generator.py $log_file --per-analysis --comprehensive --merge-evidence"
         
         if ! dag_output=$(eval "$dag_cmd" 2>&1); then
             log_error "DAG generation failed:"
@@ -376,18 +425,24 @@ main() {
         behavior_prompt=$(create_behavior_prompt "$alert")
         local behavior_analysis
         behavior_analysis=$(query_llm "$behavior_prompt" "$model" "$base_url")
+        # Clean unwanted content
+        behavior_analysis=$(echo "$behavior_analysis" | sed 's/^AI: //g' | sed '/🧠 Stats:/,$ d')
         
         log_info "  Generating cause analysis..."
         local cause_prompt
         cause_prompt=$(create_cause_prompt "$alert")
         local cause_analysis
         cause_analysis=$(query_llm "$cause_prompt" "$model" "$base_url")
+        # Clean unwanted content
+        cause_analysis=$(echo "$cause_analysis" | sed 's/^AI: //g' | sed '/🧠 Stats:/,$ d')
         
         log_info "  Generating risk assessment..."
         local risk_prompt
         risk_prompt=$(create_risk_prompt "$alert")
         local risk_assessment
         risk_assessment=$(query_llm "$risk_prompt" "$model" "$base_url")
+        # Clean unwanted content
+        risk_assessment=$(echo "$risk_assessment" | sed 's/^AI: //g' | sed '/🧠 Stats:/,$ d')
         
         # Escape content for JSON
         local escaped_evidence
@@ -446,9 +501,9 @@ EOF
                 local evidence behavior cause risk
                 
                 evidence=$(jq -r ".dataset[$((alert_id-1))].evidence" "$output_file")
-                behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file" | sed 's/^AI: //')
-                cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file" | sed 's/^AI: //')
-                risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file" | sed 's/^AI: //')
+                behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file")
+                cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file")
+                risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file")
                 
                 echo "==============================================="
                 echo "ALERT #$alert_id"
@@ -490,9 +545,9 @@ EOF
                 local evidence behavior cause risk
                 
                 evidence=$(jq -r ".dataset[$((alert_id-1))].evidence" "$output_file")
-                behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file" | sed 's/^AI: //')
-                cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file" | sed 's/^AI: //')
-                risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file" | sed 's/^AI: //')
+                behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file")
+                cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file")
+                risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file")
                 
                 # Escape CSV fields
                 local csv_evidence csv_behavior csv_cause csv_risk

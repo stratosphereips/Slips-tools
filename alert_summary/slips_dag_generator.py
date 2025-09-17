@@ -32,7 +32,9 @@ class EvidenceEvent:
     threat_level: str
     confidence: float
     raw_details: Dict[str, Any]
-    
+    merged_count: int = 1  # Number of events merged into this one
+    time_range: Optional[str] = None  # Time range for merged events
+
     def __str__(self) -> str:
         return f"{self.timestamp} -> {self.event_type}: {self.description}"
 
@@ -685,12 +687,14 @@ class SlipsLogParser:
 class DAGGenerator:
     """Generates textual DAG from parsed evidence events."""
     
-    def __init__(self, compact=False, minimal=False, pattern=False, group_time=None, include_threat_level=False):
+    def __init__(self, compact=False, minimal=False, pattern=False, comprehensive=False, group_time=None, include_threat_level=False, merge_evidence=False):
         self.compact = compact
         self.minimal = minimal
         self.pattern = pattern
+        self.comprehensive = comprehensive
         self.group_time = group_time
         self.include_threat_level = include_threat_level
+        self.merge_evidence = merge_evidence
         self.threat_level_priority = {
             'critical': 5,
             'high': 4,
@@ -712,35 +716,55 @@ class DAGGenerator:
         """Generate a textual DAG from the evidence events."""
         if not events:
             return f"No evidence found for IP: {target_ip}"
-        
+
+        # Apply evidence merging if enabled
+        processed_events = self.merge_similar_evidence(events)
+
         if self.minimal:
-            return self._generate_minimal_format(events, target_ip)
+            return self._generate_minimal_format(processed_events, target_ip)
+        elif self.comprehensive:
+            return self._generate_comprehensive_format(processed_events, target_ip)
         elif self.pattern:
-            return self._generate_pattern_format(events, target_ip)
+            return self._generate_pattern_format(processed_events, target_ip)
         elif self.compact:
-            return self._generate_compact_format(events, target_ip)
+            return self._generate_compact_format(processed_events, target_ip)
         else:
-            return self._generate_verbose_format(events, target_ip)
+            return self._generate_verbose_format(processed_events, target_ip)
     
     def generate_dag_for_alert(self, alert: Alert) -> str:
         """Generate a textual DAG for a single alert/analysis."""
         if not alert.evidence_events:
             return f"No evidence found for alert {alert.timewindow_id} of IP: {alert.ip_address}"
-        
+
+        # Apply evidence merging if enabled
+        processed_events = self.merge_similar_evidence(alert.evidence_events)
+
+        # Create a processed alert with merged events
+        processed_alert = Alert(
+            alert_timestamp=alert.alert_timestamp,
+            ip_address=alert.ip_address,
+            timewindow_id=alert.timewindow_id,
+            timewindow_start=alert.timewindow_start,
+            timewindow_end=alert.timewindow_end,
+            evidence_events=processed_events
+        )
+
         # Create header with alert information
         header = f"{alert.ip_address} - Analysis {alert.timewindow_id} ({alert.alert_timestamp})"
         if alert.timewindow_start != "unknown":
             header += f"\nTimewindow: {alert.timewindow_start} to {alert.timewindow_end}"
-        
+
         # Generate DAG using existing format logic
         if self.minimal:
-            dag_content = self._generate_minimal_format_for_alert(alert)
+            dag_content = self._generate_minimal_format_for_alert(processed_alert)
+        elif self.comprehensive:
+            dag_content = self._generate_comprehensive_format_for_alert(processed_alert)
         elif self.pattern:
-            dag_content = self._generate_pattern_format_for_alert(alert)
+            dag_content = self._generate_pattern_format_for_alert(processed_alert)
         elif self.compact:
-            dag_content = self._generate_compact_format_for_alert(alert)
+            dag_content = self._generate_compact_format_for_alert(processed_alert)
         else:
-            dag_content = self._generate_verbose_format_for_alert(alert)
+            dag_content = self._generate_verbose_format_for_alert(processed_alert)
         
         return f"{header}\n{dag_content}"
     
@@ -828,7 +852,39 @@ class DAGGenerator:
             lines.append(f"• Risk: {risk_level} - {rationale}")
         
         return "\n".join(lines)
-    
+
+    def _generate_comprehensive_format(self, events: List[EvidenceEvent], target_ip: str) -> str:
+        """Generate comprehensive bullet-point format showing ALL evidence types."""
+        lines = [f"{target_ip} Comprehensive Analysis:"]
+
+        # Aggregate by event type
+        type_summary = self._summarize_by_type(events)
+
+        # Get time range
+        start_time = events[0].timestamp.split()[1][:5]  # HH:MM
+        end_time = events[-1].timestamp.split()[1][:5]   # HH:MM
+
+        # Show ALL event types (no filtering)
+        for event_type in sorted(type_summary.keys()):
+            info = type_summary[event_type]
+            if self.include_threat_level:
+                lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+            else:
+                lines.append(f"• {start_time} - {info['summary']}")
+
+        # Add summary
+        duration_hours = self._calculate_duration_hours(events)
+        total_events = len(events)
+
+        lines.append(f"• Duration: {duration_hours:.1f} hours, {total_events} events")
+
+        # Only include risk analysis if threat levels are enabled
+        if self.include_threat_level:
+            risk_level, rationale = self._calculate_comprehensive_risk_level(events)
+            lines.append(f"• Risk: {risk_level} - {rationale}")
+
+        return "\n".join(lines)
+
     def _generate_pattern_format(self, events: List[EvidenceEvent], target_ip: str) -> str:
         """Generate attack pattern analysis format."""
         lines = [f"{target_ip} - Attack Pattern Analysis"]
@@ -919,7 +975,40 @@ class DAGGenerator:
             lines.append(f"• Risk: {risk_level} - {rationale}")
         
         return "\n".join(lines)
-    
+
+    def _generate_comprehensive_format_for_alert(self, alert: Alert) -> str:
+        """Generate comprehensive format for a single alert showing ALL evidence types."""
+        events = alert.evidence_events
+        if not events:
+            return "No evidence events"
+
+        lines = []
+
+        # Aggregate by event type
+        type_summary = self._summarize_by_type(events)
+
+        # Get time range
+        start_time = events[0].timestamp.split()[1][:5]  # HH:MM
+
+        # Show ALL event types (no filtering)
+        for event_type in sorted(type_summary.keys()):
+            info = type_summary[event_type]
+            if self.include_threat_level:
+                lines.append(f"• {start_time} - {info['summary']} [{info['max_threat'].upper()}]")
+            else:
+                lines.append(f"• {start_time} - {info['summary']}")
+
+        # Add summary
+        total_events = len(events)
+        lines.append(f"• Evidence: {total_events} events in analysis")
+
+        # Only include risk analysis if threat levels are enabled
+        if self.include_threat_level:
+            risk_level, rationale = self._calculate_comprehensive_risk_level(events)
+            lines.append(f"• Risk: {risk_level} - {rationale}")
+
+        return "\n".join(lines)
+
     def _generate_verbose_format_for_alert(self, alert: Alert) -> str:
         """Generate verbose format for a single alert."""
         events = alert.evidence_events
@@ -1153,9 +1242,15 @@ class DAGGenerator:
             if event_type == "Port Scan":
                 if "port " in event.description:
                     port = event.description.split("port ")[1].split()[0]
-                    targets = event.description.split("Targets: ")[1].split()[0] if "Targets: " in event.description else "?"
+                    # Handle merged evidence - extract total targets
+                    if "Total: " in event.description:
+                        targets = event.description.split("Total: ")[1].split()[0]
+                    elif "Targets: " in event.description:
+                        targets = event.description.split("Targets: ")[1].split()[0]
+                    else:
+                        targets = "?"
                     summary[event_type]['details'].append(f"{port}→{targets}")
-            
+
             elif event_type == "Blacklisted IP":
                 if "blacklisted " in event.description:
                     ip = event.description.split("blacklisted ")[1].split()[0]
@@ -1165,9 +1260,9 @@ class DAGGenerator:
         for event_type, info in summary.items():
             count = info['count']
             if event_type == "Port Scan":
-                ports = list(set(info['details']))[:3]  # Top 3 unique ports
-                max_targets = max([int(d.split('→')[1]) for d in info['details'] if '→' in d and d.split('→')[1].isdigit()], default=0)
-                info['summary'] = f"Port scans: {', '.join(ports)} (max: {max_targets} hosts)"
+                ports = list(set(info['details']))[:20]  # Top 20 unique ports
+                sum_targets = sum([int(d.split('→')[1]) for d in info['details'] if '→' in d and d.split('→')[1].isdigit()])
+                info['summary'] = f"Port scans: {', '.join(ports)} (total: {sum_targets} hosts)"
             
             elif event_type == "Blacklisted IP":
                 unique_ips = len(set(info['details']))
@@ -1378,6 +1473,194 @@ class DAGGenerator:
         rationale = "; ".join(reasons)
         return risk_level, rationale
 
+    def merge_similar_evidence(self, events: List[EvidenceEvent]) -> List[EvidenceEvent]:
+        """Merge similar evidence events within the same analysis."""
+        if not self.merge_evidence or not events:
+            return events
+
+        # Group events by similarity criteria
+        groups = {}
+
+        for event in events:
+            # Create grouping key based on event type and target
+            group_key = self._get_evidence_group_key(event)
+
+            if group_key not in groups:
+                groups[group_key] = []
+            groups[group_key].append(event)
+
+        # Merge events within each group
+        merged_events = []
+        for group_key, group_events in groups.items():
+            if len(group_events) == 1:
+                # No merging needed for single events
+                merged_events.append(group_events[0])
+            else:
+                # Merge multiple similar events
+                merged_event = self._merge_event_group_evidence(group_events)
+                merged_events.append(merged_event)
+
+        # Sort merged events by timestamp
+        merged_events.sort(key=lambda x: x.timestamp)
+        return merged_events
+
+    def _get_evidence_group_key(self, event: EvidenceEvent) -> str:
+        """Generate a grouping key for similar evidence events."""
+        event_type = event.event_type
+
+        if event_type == "Port Scan":
+            # Group port scans by port and protocol
+            if "port " in event.description:
+                port_part = event.description.split("port ")[1].split()[0]
+                return f"PortScan_{port_part}"
+            return f"PortScan_unknown"
+
+        elif event_type == "C&C Channel":
+            # Group C&C channels by destination IP
+            if "Connection to " in event.description:
+                dest_ip = event.description.split("Connection to ")[1].split(":")[0]
+                return f"C&C_{dest_ip}"
+            return f"C&C_unknown"
+
+        elif event_type == "Blacklisted IP":
+            # Group blacklisted IP connections by destination
+            if "blacklisted " in event.description:
+                dest_ip = event.description.split("blacklisted ")[1].split()[0]
+                return f"Blacklist_{dest_ip}"
+            return f"Blacklist_unknown"
+
+        elif event_type == "Private IP Connection":
+            # Group by destination IP and port
+            if "private IP " in event.description and ":" in event.description:
+                ip_port = event.description.split("private IP ")[1].split()[0]
+                return f"Private_{ip_port}"
+            return f"Private_unknown"
+
+        elif event_type == "Suspicious Connection":
+            # Group by connection type and destination
+            if "Non-HTTP" in event.description or "Non-SSL" in event.description:
+                conn_type = "Non-HTTP" if "Non-HTTP" in event.description else "Non-SSL"
+                if " to " in event.description:
+                    dest = event.description.split(" to ")[1].split(":")[0]
+                    return f"Suspicious_{conn_type}_{dest}"
+            return f"Suspicious_unknown"
+
+        else:
+            # For other event types, group by exact event type
+            return event_type
+
+    def _merge_event_group_evidence(self, events: List[EvidenceEvent]) -> EvidenceEvent:
+        """Merge a group of similar evidence events into one consolidated event."""
+        if len(events) == 1:
+            return events[0]
+
+        # Sort by timestamp to get chronological order
+        events.sort(key=lambda x: x.timestamp)
+
+        # Use first event as base
+        base_event = events[0]
+
+        # Calculate merged statistics
+        total_targets = 0
+        total_packets = 0
+        max_threat_priority = 0
+        max_confidence = 0.0
+        merged_details = base_event.raw_details.copy()
+
+        for event in events:
+            # Aggregate numerical values based on event type
+            if event.event_type == "Port Scan":
+                # Extract and sum target counts
+                if "Targets: " in event.description:
+                    targets_str = event.description.split("Targets: ")[1].split()[0]
+                    if targets_str.isdigit():
+                        total_targets += int(targets_str)
+
+                # Extract and sum packet counts
+                if "Packets: " in event.description:
+                    packets_str = event.description.split("Packets: ")[1].split(")")[0]
+                    if packets_str.isdigit():
+                        total_packets += int(packets_str)
+
+            # Track highest threat level
+            event_priority = self.threat_level_priority.get(event.threat_level, 0)
+            if event_priority > max_threat_priority:
+                max_threat_priority = event_priority
+
+            # Track highest confidence
+            if event.confidence > max_confidence:
+                max_confidence = event.confidence
+
+        # Find threat level name from priority
+        best_threat_level = base_event.threat_level
+        for level, priority in self.threat_level_priority.items():
+            if priority == max_threat_priority:
+                best_threat_level = level
+                break
+
+        # Create merged description
+        merged_description = self._create_merged_description(base_event, events, total_targets, total_packets)
+
+        # Create time range
+        start_time = events[0].timestamp.split()[1][:5]  # HH:MM
+        end_time = events[-1].timestamp.split()[1][:5]   # HH:MM
+        time_range = f"{start_time}-{end_time}" if start_time != end_time else start_time
+
+        # Create merged event
+        merged_event = EvidenceEvent(
+            timestamp=base_event.timestamp,
+            ip_address=base_event.ip_address,
+            event_type=base_event.event_type,
+            description=merged_description,
+            threat_level=best_threat_level,
+            confidence=max_confidence,
+            raw_details=merged_details,
+            merged_count=len(events),
+            time_range=time_range
+        )
+
+        return merged_event
+
+    def _create_merged_description(self, base_event: EvidenceEvent, events: List[EvidenceEvent],
+                                 total_targets: int, total_packets: int) -> str:
+        """Create a description for the merged evidence event."""
+        event_type = base_event.event_type
+        burst_count = len(events)
+
+        if event_type == "Port Scan":
+            # Extract port from base event
+            port = "unknown"
+            if "port " in base_event.description:
+                port_part = base_event.description.split("port ")[1].split()[0]
+                port = port_part.replace("/TCP", "").replace("/UDP", "")
+
+            if total_targets > 0:
+                desc = f"Horizontal scan to port {port} (Total: {total_targets} hosts"
+                if total_packets > 0:
+                    desc += f", {total_packets} packets"
+                desc += f", {burst_count} bursts)"
+            else:
+                desc = f"Horizontal scan to port {port} ({burst_count} separate scans)"
+            return desc
+
+        elif event_type == "C&C Channel":
+            # Extract destination from base event
+            dest = "unknown"
+            if "Connection to " in base_event.description:
+                dest = base_event.description.split("Connection to ")[1].split(":")[0]
+            return f"Multiple C&C connections to {dest} ({burst_count} attempts)"
+
+        elif event_type == "Blacklisted IP":
+            # Extract IP from base event
+            dest_ip = "unknown"
+            if "blacklisted " in base_event.description:
+                dest_ip = base_event.description.split("blacklisted ")[1].split()[0]
+            return f"Multiple connections to blacklisted {dest_ip} ({burst_count} attempts)"
+
+        else:
+            # Generic merging for other event types
+            return f"{base_event.description} ({burst_count} similar events)"
+
 
 def apply_filtering(events: List[EvidenceEvent], args) -> List[EvidenceEvent]:
     """Apply filtering options to events."""
@@ -1422,16 +1705,19 @@ def generate_output_for_ip(events: List[EvidenceEvent], target_ip: str, args) ->
         # Determine format
         compact = args.compact
         minimal = args.minimal
+        comprehensive = args.comprehensive
         pattern = args.pattern
         group_time = args.group_time
-        
+
         # Generate DAG
         dag_generator = DAGGenerator(
-            compact=compact, 
-            minimal=minimal, 
-            pattern=pattern, 
+            compact=compact,
+            minimal=minimal,
+            comprehensive=comprehensive,
+            pattern=pattern,
             group_time=group_time,
-            include_threat_level=args.include_threat_level
+            include_threat_level=args.include_threat_level,
+            merge_evidence=args.merge_evidence
         )
         dag = dag_generator.generate_dag(events, target_ip)
         
@@ -1460,6 +1746,7 @@ def main():
     format_group.add_argument('--minimal', '-m', action='store_true', help='Minimal bullet-point summary')
     format_group.add_argument('--pattern', '-p', action='store_true', help='Attack pattern analysis format')
     format_group.add_argument('--full', '-f', action='store_true', help='Full verbose format (original)')
+    format_group.add_argument('--comprehensive', action='store_true', help='Comprehensive bullet-point format showing all evidence')
     
     # Filtering options
     parser.add_argument('--min-threat', choices=['info', 'low', 'medium', 'high', 'critical'], 
@@ -1471,7 +1758,9 @@ def main():
                        help='Include threat level information in output (default: excluded)')
     parser.add_argument('--per-analysis', action='store_true',
                        help='Generate separate DAG for each alert/analysis instead of per IP')
-    
+    parser.add_argument('--merge-evidence', action='store_true',
+                       help='Merge similar evidence events within each analysis (e.g., multiple port scans to same port)')
+
     args = parser.parse_args()
     
     # Validate arguments
@@ -1479,7 +1768,7 @@ def main():
         parser.error("target_ip is required unless --all-ips or --per-analysis is specified")
     
     # Set default format to compact if no format specified
-    if not any([args.compact, args.minimal, args.pattern, args.full]):
+    if not any([args.compact, args.minimal, args.comprehensive, args.pattern, args.full]):
         args.compact = True
     
     # Parse the log
@@ -1514,9 +1803,11 @@ def main():
         dag_generator = DAGGenerator(
             compact=args.compact,
             minimal=args.minimal,
+            comprehensive=args.comprehensive,
             pattern=args.pattern,
             group_time=args.group_time,
-            include_threat_level=args.include_threat_level
+            include_threat_level=args.include_threat_level,
+            merge_evidence=args.merge_evidence
         )
         
         output_lines = []
