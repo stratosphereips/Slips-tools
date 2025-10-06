@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Slips Dataset Generator
-# Creates a JSON dataset with multi-perspective analysis of each Slips alert
+# Slips Alerts Dataset Generator (JSONL/IDEA Format)
+# Creates a JSON dataset with multi-perspective analysis of each Slips incident
 
 set -euo pipefail
 
@@ -24,12 +24,12 @@ ERROR_LOG=""
 # Print usage information
 usage() {
     cat << EOF
-Usage: $0 <log_file> <output.json> [options]
+Usage: $0 <alerts.json> <output.json> [options]
 
-Generate a JSON dataset from Slips evidence logs with multi-perspective analysis.
+Generate a JSON dataset from Slips JSONL/IDEA alert files with multi-perspective analysis.
 
 Arguments:
-    log_file        Path to the Slips evidence log file
+    alerts.json     Path to the JSONL alerts file (IDEA format)
     output.json     Path to output JSON dataset file
 
 Options:
@@ -41,13 +41,13 @@ Options:
 
 Examples:
     # Generate dataset with default model
-    $0 sample_logs/slips.log dataset.json
+    $0 sample_logs/alya_datasets/Malware/.../alerts.json dataset.json
 
     # Use custom model and generate text output
-    $0 sample_logs/slips.log dataset.json --model qwen2.5:3b --text-output analysis.txt
-    
+    $0 alerts.json dataset.json --model qwen2.5:3b --text-output analysis.txt
+
     # Generate both JSON and CSV output
-    $0 sample_logs/slips.log dataset.json --csv-output dataset.csv
+    $0 alerts.json dataset.json --csv-output dataset.csv
 EOF
 }
 
@@ -90,7 +90,7 @@ Output Requirements:
   **Detected Flows:**
   • [flow description using format: src_ip:port/proto → dest_targets (service)]
   • [additional flows as needed]
-  
+
   **Summary:** [1-2 sentence technical summary of the behavior]
 
 Guidelines:
@@ -241,9 +241,9 @@ escape_csv() {
 
 # Validate requirements
 check_requirements() {
-    # Check if DAG generator exists
-    if [[ ! -f "$SCRIPT_DIR/slips_dag_generator.py" ]]; then
-        log_error "slips_dag_generator.py not found in $SCRIPT_DIR"
+    # Check if alert DAG parser exists
+    if [[ ! -f "$SCRIPT_DIR/alert_dag_parser.py" ]]; then
+        log_error "alert_dag_parser.py not found in $SCRIPT_DIR"
         exit 1
     fi
 
@@ -264,6 +264,37 @@ check_requirements() {
         log_error "jq is required but not installed"
         exit 1
     fi
+}
+
+# Validate JSONL alert file format
+validate_alert_file() {
+    local file="$1"
+
+    # Check if file contains JSONL format
+    if ! head -1 "$file" | python3 -m json.tool >/dev/null 2>&1; then
+        log_error "File is not valid JSONL format (first line is not valid JSON)"
+        return 1
+    fi
+
+    # Check if file contains Incidents
+    local incident_count
+    incident_count=$(grep -c '"Status": "Incident"' "$file" 2>/dev/null || echo "0")
+
+    if [[ "$incident_count" -eq 0 ]]; then
+        log_error "No Incidents found in file (expected IDEA format with Status: Incident)"
+        return 1
+    fi
+
+    # Check if file contains Events
+    local event_count
+    event_count=$(grep -c '"Status": "Event"' "$file" 2>/dev/null || echo "0")
+
+    if [[ "$event_count" -eq 0 ]]; then
+        log_warning "No Events found in file (only Incidents present)"
+    fi
+
+    log_info "Validated JSONL file: $incident_count incidents, $event_count events"
+    return 0
 }
 
 # Handle interruption gracefully
@@ -339,7 +370,7 @@ main() {
 
     # Validate required arguments
     if [[ -z "$log_file" ]]; then
-        log_error "Log file is required"
+        log_error "Alert file is required"
         usage
         exit 1
     fi
@@ -351,7 +382,7 @@ main() {
     fi
 
     if [[ ! -f "$log_file" ]]; then
-        log_error "Log file not found: $log_file"
+        log_error "Alert file not found: $log_file"
         exit 1
     fi
 
@@ -364,6 +395,11 @@ main() {
 
     # Check requirements
     check_requirements
+
+    # Validate alert file format
+    if ! validate_alert_file "$log_file"; then
+        exit 1
+    fi
 
     log_info "Starting dataset generation..."
     log_info "Input: $log_file"
@@ -379,42 +415,38 @@ main() {
     fi
     log_success "LLM connection successful"
 
-    # Check if the log file is already DAG output or raw Slips log
-    if grep -q "============================================================" "$log_file"; then
-        log_info "Input appears to be pre-processed DAG output, using directly..."
-        dag_output=$(cat "$log_file")
-    else
-        log_info "Generating DAG analysis in per-analysis mode..."
-        local dag_cmd="python3 $SCRIPT_DIR/slips_dag_generator.py $log_file --per-analysis --comprehensive --merge-evidence"
-        
-        if ! dag_output=$(eval "$dag_cmd" 2>&1); then
-            log_error "DAG generation failed:"
-            echo "$dag_output"
-            exit 1
-        fi
+    # Generate DAG analysis using alert_dag_parser.py
+    log_info "Generating incident analysis..."
+    local dag_cmd="python3 $SCRIPT_DIR/alert_dag_parser.py $log_file"
+
+    local dag_output
+    if ! dag_output=$(eval "$dag_cmd" 2>&1); then
+        log_error "Alert DAG generation failed:"
+        echo "$dag_output"
+        exit 1
     fi
 
     if [[ -z "$dag_output" ]]; then
-        log_warning "No security evidence found in log file"
+        log_warning "No security incidents found in alert file"
         echo '{"dataset": []}' > "$output_file"
         log_success "Empty dataset created: $output_file"
         exit 0
     fi
 
-    log_success "DAG analysis completed"
-    
+    log_success "Incident analysis completed"
+
     # Parse individual alerts from DAG output
-    log_info "Parsing individual alerts..."
-    
+    log_info "Parsing individual incidents..."
+
     # Use a more robust approach to split by separator while preserving multi-line blocks
     local temp_file=$(mktemp)
     echo "$dag_output" > "$temp_file"
-    
+
     # Split by separator and read complete blocks
     local alerts=()
     local current_block=""
     local in_block=false
-    
+
     while IFS= read -r line; do
         if [[ "$line" == "============================================================" ]]; then
             if [[ -n "$current_block" ]]; then
@@ -437,7 +469,7 @@ main() {
             fi
         fi
     done < "$temp_file"
-    
+
     # Don't forget the last block if there's no trailing separator
     if [[ -n "$current_block" ]]; then
         current_block=$(echo "$current_block" | sed '/^[[:space:]]*$/d')
@@ -445,19 +477,19 @@ main() {
             alerts+=("$current_block")
         fi
     fi
-    
+
     rm -f "$temp_file"
-    
+
     local alert_count=${#alerts[@]}
-    log_info "Found $alert_count alerts to analyze"
-    
+    log_info "Found $alert_count incidents to analyze"
+
     if [[ $alert_count -eq 0 ]]; then
-        log_warning "No alerts found in DAG output"
+        log_warning "No incidents found in DAG output"
         echo '{"dataset": []}' > "$output_file"
         log_success "Empty dataset created: $output_file"
         exit 0
     fi
-    
+
     # Initialize JSON output
     echo '{"dataset": [' > "$output_file"
     local first_entry=true
@@ -472,7 +504,7 @@ main() {
             continue
         fi
 
-        log_info "Processing alert $current_alert/$alert_count..."
+        log_info "Processing incident $current_alert/$alert_count..."
 
         # Generate behavior analysis
         log_info "  Generating behavior analysis..."
@@ -481,7 +513,7 @@ main() {
         local behavior_analysis
 
         if ! behavior_analysis=$(query_llm "$behavior_prompt" "$model" "$base_url"); then
-            log_error "Failed to generate behavior analysis for alert $current_alert - SKIPPING"
+            log_error "Failed to generate behavior analysis for incident $current_alert - SKIPPING"
             ((failed_alerts++))
             ((current_alert++))
             continue
@@ -497,7 +529,7 @@ main() {
         local cause_analysis
 
         if ! cause_analysis=$(query_llm "$cause_prompt" "$model" "$base_url"); then
-            log_error "Failed to generate cause analysis for alert $current_alert - SKIPPING"
+            log_error "Failed to generate cause analysis for incident $current_alert - SKIPPING"
             ((failed_alerts++))
             ((current_alert++))
             continue
@@ -513,7 +545,7 @@ main() {
         local risk_assessment
 
         if ! risk_assessment=$(query_llm "$risk_prompt" "$model" "$base_url"); then
-            log_error "Failed to generate risk assessment for alert $current_alert - SKIPPING"
+            log_error "Failed to generate risk assessment for incident $current_alert - SKIPPING"
             ((failed_alerts++))
             ((current_alert++))
             continue
@@ -521,7 +553,7 @@ main() {
 
         # Clean unwanted content
         risk_assessment=$(echo "$risk_assessment" | sed 's/^AI: //g' | sed '/🧠 Stats:/,$ d')
-        
+
         # Escape content for JSON
         local escaped_evidence
         escaped_evidence=$(escape_json "$alert")
@@ -531,13 +563,13 @@ main() {
         escaped_cause=$(escape_json "$cause_analysis")
         local escaped_risk
         escaped_risk=$(escape_json "$risk_assessment")
-        
+
         # Add comma if not first entry
         if [[ "$first_entry" == false ]]; then
             echo ',' >> "$output_file"
         fi
         first_entry=false
-        
+
         # Add JSON entry
         cat >> "$output_file" << EOF
     {
@@ -548,25 +580,25 @@ main() {
         "risk_assessment": "$escaped_risk"
     }
 EOF
-        
+
         ((current_alert++))
     done
-    
+
     # Close JSON
     echo '' >> "$output_file"
     echo ']}' >> "$output_file"
 
     log_success "Dataset generation completed!"
-    log_success "Generated dataset with $((current_alert-1-failed_alerts)) alerts: $output_file"
+    log_success "Generated dataset with $((current_alert-1-failed_alerts)) incidents: $output_file"
 
     if [[ $failed_alerts -gt 0 ]]; then
-        log_warning "Completed with $failed_alerts failed alerts (skipped)"
+        log_warning "Completed with $failed_alerts failed incidents (skipped)"
     fi
-    
+
     # Generate text output if requested
     if [[ -n "$text_output" ]]; then
         log_info "Generating text output: $text_output"
-        
+
         # Generate human-readable text format
         {
             echo "==============================================="
@@ -576,17 +608,17 @@ EOF
             echo "Model: $model"
             echo "Total Alerts: $((current_alert-1-failed_alerts))"
             echo ""
-            
+
             # Process each alert from the JSON
             local alert_id=1
             while jq -e ".dataset[$((alert_id-1))]" "$output_file" >/dev/null 2>&1; do
                 local evidence behavior cause risk
-                
+
                 evidence=$(jq -r ".dataset[$((alert_id-1))].evidence" "$output_file")
                 behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file")
                 cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file")
                 risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file")
-                
+
                 echo "==============================================="
                 echo "ALERT #$alert_id"
                 echo "==============================================="
@@ -604,47 +636,47 @@ EOF
                 echo "$risk"
                 echo ""
                 echo ""
-                
+
                 ((alert_id++))
             done
         } > "$text_output"
-        
+
         log_success "Text output generated: $text_output"
     fi
-    
+
     # Generate CSV output if requested
     if [[ -n "$csv_output" ]]; then
         log_info "Generating CSV output: $csv_output"
-        
+
         # Generate CSV format
         {
             # CSV header
             echo '"alert_id","evidence","behavior_explanation","cause_analysis","risk_assessment"'
-            
+
             # Process each alert from the JSON
             local alert_id=1
             while jq -e ".dataset[$((alert_id-1))]" "$output_file" >/dev/null 2>&1; do
                 local evidence behavior cause risk
-                
+
                 evidence=$(jq -r ".dataset[$((alert_id-1))].evidence" "$output_file")
                 behavior=$(jq -r ".dataset[$((alert_id-1))].behavior_explanation" "$output_file")
                 cause=$(jq -r ".dataset[$((alert_id-1))].cause_analysis" "$output_file")
                 risk=$(jq -r ".dataset[$((alert_id-1))].risk_assessment" "$output_file")
-                
+
                 # Escape CSV fields
                 local csv_evidence csv_behavior csv_cause csv_risk
                 csv_evidence=$(escape_csv "$evidence")
                 csv_behavior=$(escape_csv "$behavior")
                 csv_cause=$(escape_csv "$cause")
                 csv_risk=$(escape_csv "$risk")
-                
+
                 # Output CSV row
                 echo "$alert_id,\"$csv_evidence\",\"$csv_behavior\",\"$csv_cause\",\"$csv_risk\""
-                
+
                 ((alert_id++))
             done
         } > "$csv_output"
-        
+
         log_success "CSV output generated: $csv_output"
     fi
 
