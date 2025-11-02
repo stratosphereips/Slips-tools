@@ -371,29 +371,47 @@ def main():
             print(f"Error: Incident {args.incident_id} not found", file=sys.stderr)
             sys.exit(1)
 
-    # Generate analysis
+    # Generate analysis as JSON
     dag_generator = AlertDAGGenerator()
-    output_lines = []
+    output_data = []
 
     for incident in incidents_to_process:
         events = alert_parser.get_incident_events(incident)
-        analysis = dag_generator.generate_comprehensive_analysis(incident, events)
-        output_lines.append(analysis)
+        analysis_text = dag_generator.generate_comprehensive_analysis(incident, events)
 
-    # Output
-    output_text = "\n".join(output_lines)
+        # Extract metadata
+        source_ip = incident.source_ips[0] if incident.source_ips else "Unknown"
+        timewindow = incident.note.get('timewindow', 'Unknown')
+        threat_level = incident.note.get('accumulated_threat_level', 0)
+        start_time = dag_generator._format_time(incident.start_time)
+        end_time = dag_generator._format_time(incident.note.get('EndTime', ''))
+        timeline = f"{start_time} to {end_time}" if end_time else start_time
+
+        incident_data = {
+            "incident_id": incident.id,
+            "source_ip": source_ip,
+            "timewindow": str(timewindow),
+            "timeline": timeline,
+            "threat_level": threat_level,
+            "event_count": len(events),
+            "analysis": analysis_text
+        }
+        output_data.append(incident_data)
+
+    # Output as JSON
+    output_json = json.dumps(output_data, indent=2, ensure_ascii=False)
 
     if args.output:
         try:
             with open(args.output, 'w', encoding='utf-8') as f:
-                f.write(output_text)
+                f.write(output_json)
             if args.verbose:
                 print(f"Output written to: {args.output}", file=sys.stderr)
         except Exception as e:
             print(f"Error writing output file: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        print(output_text)
+        print(output_json)
 
 
 if __name__ == '__main__':

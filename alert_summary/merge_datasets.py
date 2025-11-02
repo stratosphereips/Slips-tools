@@ -18,16 +18,22 @@ from typing import List, Dict, Any
 
 
 def load_json_file(filepath: str) -> List[Dict[str, Any]]:
-    """Load and parse a JSON file containing an array of incidents."""
+    """Load and parse a JSON file containing incidents in wrapped format."""
     try:
         with open(filepath, 'r') as f:
             data = json.load(f)
 
-        if not isinstance(data, list):
-            print(f"Warning: {filepath} does not contain a JSON array, skipping", file=sys.stderr)
+        # Expect format: {"total_incidents": N, "incidents": [...]}
+        if not isinstance(data, dict) or "incidents" not in data:
+            print(f"Warning: {filepath} does not have the expected format with 'incidents' field, skipping", file=sys.stderr)
             return []
 
-        return data
+        incidents = data["incidents"]
+        if not isinstance(incidents, list):
+            print(f"Warning: {filepath} 'incidents' field is not an array, skipping", file=sys.stderr)
+            return []
+
+        return incidents
     except json.JSONDecodeError as e:
         print(f"Error: Failed to parse {filepath} as JSON: {e}", file=sys.stderr)
         return []

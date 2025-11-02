@@ -15,8 +15,9 @@ from pathlib import Path
 class IncidentCorrelator:
     """Correlates incidents across multiple JSON analysis files."""
 
-    def __init__(self):
+    def __init__(self, category_mapping: Dict[str, str] = None):
         self.incidents = {}  # incident_id -> merged_data
+        self.category_mapping = category_mapping or {}  # incident_id -> category
 
     def load_json_file(self, filepath: str, analysis_type: str):
         """Load a JSON analysis file and merge incidents."""
@@ -40,9 +41,12 @@ class IncidentCorrelator:
 
             # Initialize if first time seeing this incident
             if incident_id not in self.incidents:
+                # Get category from mapping (if available), otherwise try incident, or default to Unknown
+                category = self.category_mapping.get(incident_id, incident.get('category', 'Unknown'))
+
                 self.incidents[incident_id] = {
                     'incident_id': incident_id,
-                    'category': incident.get('category', 'Unknown'),
+                    'category': category,
                     'source_ip': incident.get('source_ip', 'Unknown'),
                     'timewindow': incident.get('timewindow', 'Unknown'),
                     'timeline': incident.get('timeline', 'Unknown'),
@@ -84,6 +88,47 @@ class IncidentCorrelator:
             print(f"Dataset written to: {output_path}")
 
         return output
+
+
+def load_category_mapping(jsonl_path: str) -> Dict[str, str]:
+    """
+    Load category mapping from JSONL file.
+
+    Args:
+        jsonl_path: Path to the JSONL file from sample_dataset.py
+
+    Returns:
+        Dictionary mapping incident_id to category
+    """
+    category_mapping = {}
+
+    try:
+        with open(jsonl_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+
+                try:
+                    obj = json.loads(line)
+                    # Only process Incident objects (not Events)
+                    if obj.get('Status') == 'Incident':
+                        incident_id = obj.get('ID')
+                        category = obj.get('category', 'Unknown')
+                        if incident_id:
+                            category_mapping[incident_id] = category
+                except json.JSONDecodeError as e:
+                    print(f"Warning: Failed to parse line in JSONL: {e}")
+                    continue
+
+        print(f"Loaded category mapping for {len(category_mapping)} incidents from {jsonl_path}")
+
+    except FileNotFoundError:
+        print(f"Warning: JSONL file not found: {jsonl_path}")
+    except Exception as e:
+        print(f"Warning: Error reading JSONL file: {e}")
+
+    return category_mapping
 
 
 def detect_file_type(filename: str) -> str:
@@ -129,6 +174,10 @@ def main():
         help='Output JSON file (default: incidents_dataset.json)'
     )
     parser.add_argument(
+        '--jsonl',
+        help='Optional JSONL file to extract category information (from sample_dataset.py)'
+    )
+    parser.add_argument(
         '--pretty-print',
         action='store_true',
         help='Pretty print JSON to stdout'
@@ -136,8 +185,13 @@ def main():
 
     args = parser.parse_args()
 
+    # Load category mapping if JSONL file provided
+    category_mapping = {}
+    if args.jsonl:
+        category_mapping = load_category_mapping(args.jsonl)
+
     # Initialize correlator
-    correlator = IncidentCorrelator()
+    correlator = IncidentCorrelator(category_mapping=category_mapping)
 
     # Process each file
     for filepath in args.files:

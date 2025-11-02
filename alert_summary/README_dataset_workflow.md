@@ -120,13 +120,15 @@ Output: `my_dataset.llm.qwen2.5.1.5b.json` - JSON array from smaller model
 
 **Step 6: Correlate All Analyses**
 
-Merge all analysis files into a unified dataset by incident_id:
+Merge all analysis files into a unified dataset by incident_id, including category information from the original JSONL:
 
 ```bash
-python3 correlate_incidents.py my_dataset.*.json -o final_dataset.json
+python3 correlate_incidents.py my_dataset.*.json --jsonl my_dataset.jsonl -o final_dataset.json
 ```
 
 Output: `final_dataset.json` - Consolidated dataset with all analyses per incident
+
+**Note:** The `--jsonl` parameter is used to extract the category field (Malware/Normal) from the original sampled data, ensuring proper ground truth labeling in the final dataset.
 
 ### 3.3 Complete Workflow Example
 
@@ -137,7 +139,7 @@ Output: `final_dataset.json` - Consolidated dataset with all analyses per incide
 ./generate_llm_analysis.sh my_dataset.jsonl --model gpt-4o-mini --group-events --behavior-analysis
 ./generate_llm_analysis.sh my_dataset.jsonl --model qwen2.5:3b --base-url http://10.147.20.102:11434/v1 --group-events --behavior-analysis
 ./generate_llm_analysis.sh my_dataset.jsonl --model qwen2.5:1.5b --base-url http://10.147.20.102:11434/v1 --group-events --behavior-analysis
-python3 correlate_incidents.py my_dataset.*.json -o final_dataset.json
+python3 correlate_incidents.py my_dataset.*.json --jsonl my_dataset.jsonl -o final_dataset.json
 ```
 
 Files generated:
@@ -174,7 +176,7 @@ Run the full analysis pipeline on the new samples:
 **Step 3: Correlate Extension Data**
 
 ```bash
-python3 correlate_incidents.py extension.*.json -o extension_dataset.json
+python3 correlate_incidents.py extension.*.json --jsonl extension.jsonl -o extension_dataset.json
 ```
 
 **Step 4: Merge with Existing Dataset**
@@ -194,6 +196,14 @@ python3 merge_datasets.py final_dataset.json extension1_dataset.json extension2_
 ```
 
 **Note on Deduplication:** The `merge_datasets.py` script automatically detects and removes duplicate incidents based on `incident_id`. If the same incident appears in multiple input files, only the first occurrence is kept.
+
+**Verification:** After merging, verify the operation completed successfully:
+
+```bash
+python3 verify_merge.py --verbose
+```
+
+This validates file integrity, count accuracy, deduplication correctness, completeness, and data integrity. Use `--inputs` and `--output` flags to verify custom merge operations.
 
 ## 4. Output Dataset Structure
 

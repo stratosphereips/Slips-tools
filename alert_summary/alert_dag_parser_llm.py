@@ -23,9 +23,11 @@ import argparse
 import sys
 import os
 import time
+import re
 from dataclasses import dataclass
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime
+from collections import defaultdict
 
 # Import OpenAI for LLM integration
 import openai
@@ -217,33 +219,142 @@ class LLMAlertGenerator:
                 except:
                     pass
 
-    def generate_analysis(self, incident: JSONIncident, events: List[JSONEvent], verbose: bool = False) -> str:
+    def generate_analysis(self, incident: JSONIncident, events: List[JSONEvent],
+                         verbose: bool = False, group_events: bool = False,
+                         behavior_analysis: bool = False) -> Dict[str, str]:
         """Generate LLM-based analysis for a single incident."""
         if not events:
-            return f"Incident {incident.id}: No associated events found"
+            error_msg = f"Incident {incident.id}: No associated events found"
+            return {
+                'summary': error_msg,
+                'behavior_analysis': None
+            }
 
-        # Build the prompt
-        prompt = self._build_prompt(incident, events)
-
-        # Count tokens
-        token_count = self._count_tokens(prompt)
+        # Step 1: Generate summary analysis
+        summary_prompt = self._build_summary_prompt(incident, events, group_events)
+        summary_token_count = self._count_tokens(summary_prompt)
 
         if verbose:
-            if token_count > 0:
-                print(f"Querying LLM for incident {incident.id}... ({token_count} tokens)", file=sys.stderr)
+            if summary_token_count > 0:
+                if group_events:
+                    print(f"Querying LLM for summary of incident {incident.id}... ({summary_token_count} tokens, grouped from {len(events)} events)", file=sys.stderr)
+                else:
+                    print(f"Querying LLM for summary of incident {incident.id}... ({summary_token_count} tokens)", file=sys.stderr)
             else:
-                print(f"Querying LLM for incident {incident.id}...", file=sys.stderr)
+                print(f"Querying LLM for summary of incident {incident.id}...", file=sys.stderr)
 
-        # Query the LLM
+        # Query LLM for summary
         try:
-            response = self._query_llm(prompt)
-            return response
+            summary = self._query_llm(summary_prompt)
         except Exception as e:
-            print(f"Error querying LLM: {e}", file=sys.stderr)
-            return f"Incident {incident.id}: LLM query failed - {str(e)}"
+            print(f"Error querying LLM for summary: {e}", file=sys.stderr)
+            summary = f"Incident {incident.id}: LLM query failed - {str(e)}"
 
-    def _build_prompt(self, incident: JSONIncident, events: List[JSONEvent]) -> str:
-        """Build a concise prompt for LLM analysis."""
+        # Step 2: Generate behavior analysis if requested
+        behavior = None
+        if behavior_analysis:
+            behavior_prompt = self._build_behavior_prompt(incident, events, group_events)
+            behavior_token_count = self._count_tokens(behavior_prompt)
+
+            if verbose:
+                if behavior_token_count > 0:
+                    print(f"Querying LLM for behavior analysis of incident {incident.id}... ({behavior_token_count} tokens)", file=sys.stderr)
+                else:
+                    print(f"Querying LLM for behavior analysis of incident {incident.id}...", file=sys.stderr)
+
+            try:
+                behavior = self._query_llm(behavior_prompt)
+                # Clean unwanted prefixes/suffixes (like from generate_dataset.sh)
+                behavior = behavior.replace('AI: ', '').strip()
+            except Exception as e:
+                print(f"Error querying LLM for behavior analysis: {e}", file=sys.stderr)
+                behavior = f"Behavior analysis failed: {str(e)}"
+
+        return {
+            'summary': summary,
+            'behavior_analysis': behavior
+        }
+
+    def _normalize_pattern(self, description: str) -> str:
+        """
+        Extract pattern from event description by normalizing variable parts.
+        Only replaces IPs, ports, and numbers - everything else must match exactly.
+        """
+        pattern = description
+
+        # Replace IPv4 addresses
+        pattern = re.sub(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', '<IP>', pattern)
+
+        # Replace port numbers (various formats: "port 443", "port: 443", "ports: 443-445", "443/TCP")
+        pattern = re.sub(r'\b\d+/TCP\b', '<PORT>/TCP', pattern, flags=re.IGNORECASE)
+        pattern = re.sub(r'\b\d+/UDP\b', '<PORT>/UDP', pattern, flags=re.IGNORECASE)
+        pattern = re.sub(r'port[s]?:?\s*\d+(-\d+)?', 'port <PORT>', pattern, flags=re.IGNORECASE)
+
+        # Replace standalone numbers
+        pattern = re.sub(r'\b\d+\b', '<NUM>', pattern)
+
+        return pattern
+
+    def _group_events_by_pattern(self, events: List[JSONEvent]) -> List[Dict[str, Any]]:
+        """
+        Group events by exact pattern match (after normalizing IPs/ports/numbers).
+        Returns list of groups with count, time range, and sample data.
+        """
+        # Group events by normalized pattern
+        groups = defaultdict(list)
+
+        for event in events:
+            pattern = self._normalize_pattern(event.description)
+            groups[pattern].append(event)
+
+        # Build group summaries
+        group_summaries = []
+        for pattern, group_events in groups.items():
+            # Sort by time
+            group_events.sort(key=lambda e: e.start_time)
+
+            # Extract time range
+            first_time = self._format_time(group_events[0].start_time, short=True)
+            last_time = self._format_time(group_events[-1].start_time, short=True)
+            time_range = f"{first_time}-{last_time}" if first_time != last_time else first_time
+
+            # Extract sample IPs/ports/numbers from original descriptions
+            sample_values = []
+            for event in group_events[:3]:  # Take first 3 as samples
+                # Extract IPs
+                ips = re.findall(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', event.description)
+                if ips:
+                    sample_values.extend(ips[:2])
+
+                # Extract ports
+                ports = re.findall(r'\b(\d+)/(TCP|UDP)\b', event.description, flags=re.IGNORECASE)
+                if ports:
+                    sample_values.extend([f"{p[0]}/{p[1]}" for p in ports[:2]])
+
+            # Remove duplicates while preserving order
+            seen = set()
+            unique_samples = []
+            for val in sample_values:
+                if val not in seen:
+                    seen.add(val)
+                    unique_samples.append(val)
+
+            group_summaries.append({
+                'time_range': time_range,
+                'pattern': pattern,
+                'count': len(group_events),
+                'samples': unique_samples[:5],  # Limit to 5 samples
+                'original_desc': group_events[0].description  # Keep one original for reference
+            })
+
+        # Sort by count (descending) then by time
+        group_summaries.sort(key=lambda g: (-g['count'], g['time_range']))
+
+        return group_summaries
+
+    def _build_behavior_prompt(self, incident: JSONIncident, events: List[JSONEvent],
+                               group_events: bool = False) -> str:
+        """Build behavior analysis prompt based on generate_dataset.sh template."""
         # Extract incident metadata
         source_ip = incident.source_ips[0] if incident.source_ips else "Unknown"
         timewindow = incident.note.get('timewindow', 'Unknown')
@@ -251,13 +362,97 @@ class LLMAlertGenerator:
         start_time = self._format_time(incident.start_time)
         end_time = self._format_time(incident.note.get('EndTime', ''))
 
-        # Build raw event list (without severity - LLM will assess it)
-        event_lines = []
-        for event in events:
-            time_str = self._format_time(event.start_time, short=True)
-            event_lines.append(f"{time_str} | {event.description}")
+        # Build event summary (using same logic as summary prompt)
+        if group_events:
+            grouped = self._group_events_by_pattern(events)
+            event_lines = []
+            for group in grouped:
+                samples_str = ', '.join(group['samples']) if group['samples'] else 'various'
+                if group['count'] == 1:
+                    event_lines.append(f"{group['time_range']} | {group['original_desc']}")
+                else:
+                    event_lines.append(f"{group['time_range']} | {group['original_desc']} ({group['count']}x similar, samples: {samples_str})")
+            evidence_text = "\n".join(event_lines)
+        else:
+            event_lines = []
+            for event in events:
+                time_str = self._format_time(event.start_time, short=True)
+                event_lines.append(f"{time_str} | {event.description}")
+            evidence_text = "\n".join(event_lines)
 
-        events_text = "\n".join(event_lines)
+        # Create behavior analysis prompt (based on generate_dataset.sh create_behavior_prompt)
+        prompt = f"""You are a cybersecurity analyst. Analyze the following network security incident and provide a concise, structured technical explanation of the observed network behavior.
+
+INCIDENT METADATA:
+- Incident ID: {incident.id}
+- Source IP: {source_ip}
+- Timewindow: {timewindow}
+- Accumulated Threat Level: {threat_level}
+- Time Range: {start_time} to {end_time if end_time else 'ongoing'}
+- Total Events: {len(events)}
+
+SECURITY EVIDENCE:
+{evidence_text}
+
+Output Requirements:
+- Respond with ONLY the analysis content
+- Do NOT include any prefixes (like "AI:"), statistics, or metadata
+- Do NOT include token counts, timing information, or performance stats
+- Use this exact structure:
+
+**Source:** {source_ip}
+**Activity:** [Brief activity type]
+**Detected Flows:**
+• [flow description using format: src_ip:port/proto → dest_targets (service)]
+• [additional flows as needed]
+
+**Summary:** [1-2 sentence technical summary of the behavior]
+
+Guidelines:
+- Be succinct (fewer words than raw evidence)
+- Focus only on actual network activity observed
+- Use consistent port/protocol notation (e.g., 80/TCP, 443/TCP)
+- Express flows in compact format when possible
+- Avoid high-level definitions or irrelevant metadata
+- Keep technical depth consistent across all analyses
+- Use bullet points for flows, structured format for sections
+"""
+
+        return prompt
+
+    def _build_summary_prompt(self, incident: JSONIncident, events: List[JSONEvent],
+                             group_events: bool = False) -> str:
+        """Build summary analysis prompt for LLM."""
+        # Extract incident metadata
+        source_ip = incident.source_ips[0] if incident.source_ips else "Unknown"
+        timewindow = incident.note.get('timewindow', 'Unknown')
+        threat_level = incident.note.get('accumulated_threat_level', 'Unknown')
+        start_time = self._format_time(incident.start_time)
+        end_time = self._format_time(incident.note.get('EndTime', ''))
+
+        # Build event list
+        if group_events:
+            # Group similar events
+            grouped = self._group_events_by_pattern(events)
+            event_lines = []
+            for group in grouped:
+                samples_str = ', '.join(group['samples']) if group['samples'] else 'various'
+                if group['count'] == 1:
+                    event_lines.append(f"{group['time_range']} | {group['original_desc']}")
+                else:
+                    event_lines.append(f"{group['time_range']} | {group['original_desc']} ({group['count']}x similar, samples: {samples_str})")
+
+            events_text = "\n".join(event_lines)
+            event_description = f"GROUPED EVENTS ({len(grouped)} unique patterns from {len(events)} total events)"
+        else:
+            # Original behavior: list all events
+            event_lines = []
+            for event in events:
+                time_str = self._format_time(event.start_time, short=True)
+                event_lines.append(f"{time_str} | {event.description}")
+
+            events_text = "\n".join(event_lines)
+            event_description = "RAW EVENTS (Time | Description)"
 
         # Create prompt focused on clear summarization with LLM-assessed severity
         prompt = f"""You are a security analyst. Your task is to translate technical security events into clear, concise, human-readable summaries and assess their severity.
@@ -270,7 +465,7 @@ INCIDENT METADATA:
 - Time Range: {start_time} to {end_time if end_time else 'ongoing'}
 - Total Events: {len(events)}
 
-RAW EVENTS (Time | Description):
+{event_description}:
 {events_text}
 
 YOUR TASK:
@@ -374,6 +569,10 @@ def main():
     parser.add_argument('--model', default='gpt-4o-mini', help='LLM model to use (default: gpt-4o-mini)')
     parser.add_argument('--base-url', default='https://api.openai.com/v1',
                        help='LLM API base URL (default: https://api.openai.com/v1)')
+    parser.add_argument('--group-events', action='store_true',
+                       help='Group similar events to reduce token count (recommended for large incidents)')
+    parser.add_argument('--behavior-analysis', action='store_true',
+                       help='Generate behavior analysis in addition to summary (requires 2 LLM calls)')
     parser.add_argument('--verbose', '-v', action='store_true', help='Verbose output')
 
     args = parser.parse_args()
@@ -396,29 +595,50 @@ def main():
             print(f"Error: Incident {args.incident_id} not found", file=sys.stderr)
             sys.exit(1)
 
-    # Generate analysis
+    # Generate analysis as JSON
     llm_generator = LLMAlertGenerator(args.model, args.base_url)
-    output_lines = []
+    output_data = []
 
     for incident in incidents_to_process:
         events = alert_parser.get_incident_events(incident)
-        analysis = llm_generator.generate_analysis(incident, events, args.verbose)
-        output_lines.append(analysis)
+        analysis_result = llm_generator.generate_analysis(
+            incident, events, args.verbose, args.group_events, args.behavior_analysis
+        )
 
-    # Output
-    output_text = "\n".join(output_lines)
+        # Extract metadata
+        source_ip = incident.source_ips[0] if incident.source_ips else "Unknown"
+        timewindow = incident.note.get('timewindow', 'Unknown')
+        threat_level = incident.note.get('accumulated_threat_level', 0)
+        start_time = llm_generator._format_time(incident.start_time)
+        end_time = llm_generator._format_time(incident.note.get('EndTime', ''))
+        timeline = f"{start_time} to {end_time}" if end_time else start_time
+
+        incident_data = {
+            "incident_id": incident.id,
+            "source_ip": source_ip,
+            "timewindow": str(timewindow),
+            "timeline": timeline,
+            "threat_level": threat_level,
+            "event_count": len(events),
+            "summary": analysis_result['summary'],
+            "behavior_analysis": analysis_result['behavior_analysis']
+        }
+        output_data.append(incident_data)
+
+    # Output as JSON
+    output_json = json.dumps(output_data, indent=2, ensure_ascii=False)
 
     if args.output:
         try:
             with open(args.output, 'w', encoding='utf-8') as f:
-                f.write(output_text)
+                f.write(output_json)
             if args.verbose:
                 print(f"Output written to: {args.output}", file=sys.stderr)
         except Exception as e:
             print(f"Error writing output file: {e}", file=sys.stderr)
             sys.exit(1)
     else:
-        print(output_text)
+        print(output_json)
 
 
 if __name__ == '__main__':
