@@ -1,5 +1,9 @@
 # Dataset Generation Pipeline for Slips Alert Analysis
 
+> **Note**: This guide covers the **Summarization workflow** (summary + behavior analysis).
+> For **Cause & Risk analysis** workflow, see [README_RISK_WORKFLOW.md](README_RISK_WORKFLOW.md).
+> For a comparison of both workflows, see [WORKFLOWS_OVERVIEW.md](WORKFLOWS_OVERVIEW.md).
+
 ## 1. Overview
 
 This pipeline transforms raw Slips security logs into structured multi-model analysis datasets. The workflow consists of four stages: (1) sampling incidents from raw logs into JSONL format, (2) generating DAG-based structural analysis, (3) producing LLM-enhanced summaries with behavior analysis from multiple models, and (4) correlating all analyses into a unified JSON dataset. The output provides comprehensive incident analysis from different analytical perspectives, enabling comparative evaluation of model performance on security analysis tasks.
