@@ -56,7 +56,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
-*.log
+#*.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Intermediate LLM analysis files (regeneratable)
+alert_summary/datasets/*.cause_risk.*.json
+alert_summary/datasets/*.llm.*.json
+!alert_summary/datasets/*.llm.*.json.gz
+alert_summary/datasets/final_dataset_*.json
+alert_summary/my_dataset_*.llm.*.json
+alert_summary/results/
+.attic/
+alert_summary/.attic/
