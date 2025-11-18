@@ -7,7 +7,7 @@ The **Cause & Risk Analysis workflow** generates structured security analysis fo
 1. **Cause Analysis** - Categorized possible reasons (Malicious Activity / Legitimate Activity / Misconfigurations)
 2. **Risk Assessment** - Structured evaluation (Risk Level / Business Impact / Investigation Priority)
 
-This workflow is complementary to the [Summarization workflow](README_dataset_workflow.md), which focuses on event summarization and behavior analysis.
+This workflow is complementary to the [Summarization workflow](README_dataset_summary_workflow.md), which focuses on event summarization and behavior analysis.
 
 ---
 
@@ -30,7 +30,7 @@ This workflow is complementary to the [Summarization workflow](README_dataset_wo
 - `OPENAI_API_KEY` environment variable set
 - Access to OpenAI-compatible API (OpenAI, Ollama, etc.)
 
-For initial setup and shared steps, see [README_dataset_workflow.md](README_dataset_workflow.md).
+For initial setup and shared steps, see [README_dataset_summary_workflow.md](README_dataset_summary_workflow.md).
 
 ---
 
@@ -39,8 +39,8 @@ For initial setup and shared steps, see [README_dataset_workflow.md](README_data
 ### Steps 1-2: Sampling & DAG Generation (Shared)
 
 These steps are **identical** to the Summarization workflow. See:
-- [Step 1: Sample Incidents](README_dataset_workflow.md#321-step-1-sample-representative-incidents)
-- [Step 2: Generate DAG Analysis](README_dataset_workflow.md#322-step-2-generate-dag-structural-analysis)
+- [Step 1: Sample Incidents](README_dataset_summary_workflow.md#321-step-1-sample-representative-incidents)
+- [Step 2: Generate DAG Analysis](README_dataset_summary_workflow.md#322-step-2-generate-dag-structural-analysis)
 
 **Quick commands:**
 ```bash
@@ -229,7 +229,7 @@ wait
 ## Next Steps
 
 - **Evaluation**: [LLM_EVALUATION_GUIDE.md](LLM_EVALUATION_GUIDE.md) - Evaluate analysis quality
-- **Summarization Workflow**: [README_dataset_workflow.md](README_dataset_workflow.md) - Alternative workflow
+- **Summarization Workflow**: [README_dataset_summary_workflow.md](README_dataset_summary_workflow.md) - Alternative workflow
 - **Comparison**: [WORKFLOWS_OVERVIEW.md](WORKFLOWS_OVERVIEW.md) - Choose the right workflow
 
 For questions or issues, see the main [README.md](../README.md).

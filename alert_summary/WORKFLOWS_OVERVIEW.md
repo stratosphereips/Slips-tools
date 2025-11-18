@@ -37,7 +37,7 @@ Both workflows share the same initial steps (sampling + DAG generation) but prod
 - Behavior pattern recognition
 - Training data for summarization models
 
-**Documentation:** [README_dataset_workflow.md](README_dataset_workflow.md)
+**Documentation:** [README_dataset_summary_workflow.md](README_dataset_summary_workflow.md)
 
 **Quick Start:**
 ```bash
@@ -61,7 +61,7 @@ python3 correlate_incidents.py datasets/my_dataset.*.json --jsonl datasets/my_da
 - Risk-based decision making
 - Training data for risk assessment models
 
-**Documentation:** [README_RISK_WORKFLOW.md](README_RISK_WORKFLOW.md)
+**Documentation:** [README_dataset_risk_workflow.md](README_dataset_risk_workflow.md)
 
 **Quick Start:**
 ```bash
