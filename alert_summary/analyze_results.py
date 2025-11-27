@@ -331,12 +331,12 @@ def main():
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Analyze LLM evaluation results and generate reports')
-    parser.add_argument('--results', '-r', default='results/evaluation_results.json',
-                        help='Path to evaluation results JSON file (default: results/evaluation_results.json)')
-    parser.add_argument('--summary', '-s', default='results/evaluation_summary.md',
-                        help='Path to output summary Markdown file (default: results/evaluation_summary.md)')
-    parser.add_argument('--csv', '-c', default='results/evaluation_data.csv',
-                        help='Path to output CSV file (default: results/evaluation_data.csv)')
+    parser.add_argument('--results', '-r', default='results/summary_results.json',
+                        help='Path to evaluation results JSON file (default: results/summary_results.json)')
+    parser.add_argument('--summary', '-s', default='results/summary_report.md',
+                        help='Path to output summary Markdown file (default: results/summary_report.md)')
+    parser.add_argument('--csv', '-c', default='results/summary_data.csv',
+                        help='Path to output CSV file (default: results/summary_data.csv)')
 
     args = parser.parse_args()
 

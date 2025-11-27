@@ -18,7 +18,7 @@ load_dotenv()
 MODEL_LABELS = {
     'llm_gpt_4o_analysis': 'GPT-4o',
     'llm_gpt4o_mini_analysis': 'GPT-4o-mini',
-    'llm_qwen2_5:15b_analysis': 'Qwen2.5 15B',
+    'llm_qwen2_5:3b_analysis': 'Qwen2.5 3b',
     'llm_qwen2_5_analysis': 'Qwen2.5'
 }
 
@@ -267,10 +267,10 @@ def main():
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Evaluate LLM summaries using GPT-4o as judge (network analyst)')
-    parser.add_argument('--input', '-i', default='datasets/evaluation_sample.json',
-                        help='Path to evaluation sample JSON file (default: datasets/evaluation_sample.json)')
-    parser.add_argument('--output', '-o', default='results/evaluation_results.json',
-                        help='Path to output results JSON file (default: results/evaluation_results.json)')
+    parser.add_argument('--input', '-i', default='datasets/summary_sample.json',
+                        help='Path to evaluation sample JSON file (default: datasets/summary_sample.json)')
+    parser.add_argument('--output', '-o', default='results/summary_results.json',
+                        help='Path to output results JSON file (default: results/summary_results.json)')
     parser.add_argument('--judge', '-j', default='gpt-4o',
                         help='Judge model to use (default: gpt-4o)')
 

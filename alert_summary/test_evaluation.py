@@ -30,7 +30,7 @@ def main():
 
     # Load sample
     print("\n1. Loading evaluation sample...")
-    sample = load_evaluation_sample("datasets/evaluation_sample.json")
+    sample = load_evaluation_sample("datasets/summary_sample.json")
     print(f"   Loaded {len(sample)} incidents")
 
     # Select first incident

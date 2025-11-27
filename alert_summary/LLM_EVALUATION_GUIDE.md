@@ -23,8 +23,11 @@ export OPENAI_API_KEY="sk-your-key-here"
 ### Run Evaluation
 
 ```bash
-# Automated workflow
-./run_evaluation.sh
+# Summarization workflow
+./run_evaluation_summary.sh
+
+# Risk analysis workflow
+./run_evaluation_risk.sh
 
 # OR manual steps
 python3 datasets/create_evaluation_sample.py
@@ -33,8 +36,8 @@ python3 analyze_results.py
 python3 generate_dashboard.py
 
 # View results
-cat results/evaluation_summary.md
-firefox results/evaluation_dashboard.html
+cat results/summary_report.md
+firefox results/summary_dashboard.html
 ```
 
 ### Test First
@@ -52,25 +55,25 @@ python3 test_evaluation.py
 ```bash
 python3 datasets/create_evaluation_sample.py [--size 50] [--seed 42]
 ```
-Output: `datasets/evaluation_sample.json`
+Output: `datasets/summary_sample.json`
 
 ### 2. Judge Evaluation
 ```bash
 python3 evaluate_summaries.py [--judge gpt-4o] [--input FILE] [--output FILE]
 ```
-Output: `results/evaluation_results.json`
+Output: `results/summary_results.json`
 
 ### 3. Results Analysis
 ```bash
 python3 analyze_results.py [--results FILE] [--summary FILE] [--csv FILE]
 ```
-Output: `results/evaluation_summary.md` (Markdown), `results/evaluation_data.csv`
+Output: `results/summary_report.md` (Markdown), `results/summary_data.csv`
 
 ### 4. Dashboard Generator
 ```bash
 python3 generate_dashboard.py [--results FILE] [--sample FILE] [--output FILE]
 ```
-Output: `results/evaluation_dashboard.html`
+Output: `results/summary_dashboard.html`
 
 **All scripts support `--help` for full options.**
 
@@ -84,7 +87,7 @@ python3 datasets/create_evaluation_sample.py
 python3 evaluate_summaries.py
 python3 analyze_results.py
 python3 generate_dashboard.py
-firefox results/evaluation_dashboard.html
+firefox results/summary_dashboard.html
 ```
 
 ### Budget Evaluation (GPT-4o-mini judge, ~$1)
@@ -205,11 +208,11 @@ export OPENAI_API_KEY="sk-..."
 ## Files Generated
 
 ```
-datasets/evaluation_sample.json        # 50 sampled incidents
-results/evaluation_results.json        # Judge rankings
-results/evaluation_summary.md          # Markdown report
-results/evaluation_data.csv            # Spreadsheet data
-results/evaluation_dashboard.html      # Interactive visualization
+datasets/summary_sample.json           # 50 sampled incidents
+results/summary_results.json           # Judge rankings
+results/summary_report.md              # Markdown report
+results/summary_data.csv               # Spreadsheet data
+results/summary_dashboard.html         # Interactive visualization
 ```
 
 ---
@@ -250,24 +253,14 @@ This workflow evaluates how well LLMs perform root cause analysis and risk asses
 ### Quick Start
 
 ```bash
-# 1. Sample incidents for evaluation (18 Normal + 32 Malware = 50 total)
+# Automated workflow
+./run_evaluation_risk.sh
+
+# OR manual steps
 python3 datasets/create_risk_sample.py
-
-# 2. Evaluate all models (~$5 for 50 incidents × 4 models)
-python3 evaluate_risk.py datasets/risk_sample.json \
-  --judge-model gpt-4o \
-  -o results/risk_results.json
-
-# 3. Generate analysis report
-python3 analyze_results.py \
-  -r results/risk_results.json \
-  -s results/risk_summary.md
-
-# 4. Create interactive dashboard
-python3 generate_dashboard.py \
-  -r results/risk_results.json \
-  -s datasets/risk_sample.json \
-  -o results/risk_dashboard.html
+python3 evaluate_risk.py
+python3 analyze_results.py --results results/risk_results.json --summary results/risk_summary.md --csv results/risk_data.csv
+python3 generate_dashboard.py --results results/risk_results.json --output results/risk_dashboard.html
 ```
 
 ### Evaluation Components

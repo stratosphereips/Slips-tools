@@ -784,12 +784,12 @@ def main():
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Generate interactive HTML dashboard for evaluation results')
-    parser.add_argument('--results', '-r', default='results/evaluation_results.json',
-                        help='Path to evaluation results JSON file (default: results/evaluation_results.json)')
-    parser.add_argument('--sample', '-s', default='datasets/evaluation_sample.json',
-                        help='Path to evaluation sample JSON file (default: datasets/evaluation_sample.json)')
-    parser.add_argument('--output', '-o', default='results/evaluation_dashboard.html',
-                        help='Path to output HTML file (default: results/evaluation_dashboard.html)')
+    parser.add_argument('--results', '-r', default='results/summary_results.json',
+                        help='Path to evaluation results JSON file (default: results/summary_results.json)')
+    parser.add_argument('--sample', '-s', default='datasets/summary_sample.json',
+                        help='Path to evaluation sample JSON file (default: datasets/summary_sample.json)')
+    parser.add_argument('--output', '-o', default='results/summary_dashboard.html',
+                        help='Path to output HTML file (default: results/summary_dashboard.html)')
 
     args = parser.parse_args()
 

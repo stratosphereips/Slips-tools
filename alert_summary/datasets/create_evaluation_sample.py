@@ -127,10 +127,10 @@ def main():
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description='Create evaluation sample from summarization dataset')
-    parser.add_argument('--input', '-i', default='datasets/summarization_dataset_extended.json',
-                        help='Path to input dataset JSON file (default: datasets/summarization_dataset_extended.json)')
-    parser.add_argument('--output', '-o', default='datasets/evaluation_sample.json',
-                        help='Path to output sample JSON file (default: datasets/evaluation_sample.json)')
+    parser.add_argument('--input', '-i', default='datasets/summarization_dataset_v3.json',
+                        help='Path to input dataset JSON file (default: datasets/summarization_dataset_v3.json)')
+    parser.add_argument('--output', '-o', default='datasets/summary_sample.json',
+                        help='Path to output sample JSON file (default: datasets/summary_sample.json)')
     parser.add_argument('--size', '-n', type=int, default=50,
                         help='Target sample size (default: 50)')
     parser.add_argument('--seed', type=int, default=42,

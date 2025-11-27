@@ -29,8 +29,8 @@ echo "Step 1/3: Creating evaluation sample..."
 echo "----------------------------------------------------------------"
 python3 datasets/create_evaluation_sample.py
 
-if [ ! -f "datasets/evaluation_sample.json" ]; then
-    echo "ERROR: Failed to create evaluation sample"
+if [ ! -f "datasets/summary_sample.json" ]; then
+    echo "ERROR: Failed to create summary evaluation sample"
     exit 1
 fi
 
@@ -45,7 +45,7 @@ echo "Step 2/3: Running GPT-4o judge evaluation..."
 echo "----------------------------------------------------------------"
 python3 evaluate_summaries.py
 
-if [ ! -f "results/evaluation_results.json" ]; then
+if [ ! -f "results/summary_results.json" ]; then
     echo "ERROR: Evaluation failed to produce results"
     exit 1
 fi
@@ -76,19 +76,19 @@ echo "WORKFLOW COMPLETE"
 echo "================================================================"
 echo ""
 echo "Generated files:"
-echo "  - datasets/evaluation_sample.json       (50 sampled incidents)"
-echo "  - results/evaluation_results.json       (judge rankings)"
-echo "  - results/evaluation_summary.txt        (summary report)"
-echo "  - results/evaluation_data.csv           (detailed data)"
+echo "  - datasets/summary_sample.json          (50 sampled incidents)"
+echo "  - results/summary_results.json          (judge rankings)"
+echo "  - results/summary_report.md             (summary report)"
+echo "  - results/summary_data.csv              (detailed data)"
 if [ "$DASHBOARD_GENERATED" = true ]; then
-    echo "  - results/evaluation_dashboard.html     (interactive dashboard)"
+    echo "  - results/summary_dashboard.html        (interactive dashboard)"
     echo ""
     echo "🌐 Open dashboard in browser:"
-    echo "  firefox results/evaluation_dashboard.html"
+    echo "  firefox results/summary_dashboard.html"
     echo "  # or"
-    echo "  google-chrome results/evaluation_dashboard.html"
+    echo "  google-chrome results/summary_dashboard.html"
 fi
 echo ""
 echo "View summary report:"
-echo "  cat results/evaluation_summary.txt"
+echo "  cat results/summary_report.md"
 echo ""
