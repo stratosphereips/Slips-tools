@@ -1,0 +1,1152 @@
+[
+  {
+    "incident_id": "a991b910-f0f9-4ef9-ac66-647626ac4476",
+    "category": "Malware",
+    "event_count": 1365,
+    "threat_level": 15.360000000000007,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 5,
+      "Qwen2.5 3B": 7,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8
+    },
+    "justification": "Analysis C best identifies the root cause by accurately highlighting the malicious activities such as horizontal port scanning and connections to blacklisted IPs, which align with the ground truth of 'Malware'. It provides a comprehensive risk assessment with a high likelihood of malicious activity and immediate investigation priority. Analysis D also correctly identifies key malicious indicators and provides a strong risk assessment, but is slightly less detailed in its evidence-based reasoning compared to C. Analysis B identifies some malicious activities but lacks depth in evidence-based reasoning and misconfiguration analysis. Analysis A, while identifying potential malicious activities, incorrectly suggests legitimate activities and misconfigurations as probable causes, which misaligns with the ground truth. Critical factors missed in lower-ranked analyses include the emphasis on the significance of connections to blacklisted IPs and the potential for data exfiltration. Overall, C and D align well with the ground truth category, while B and A fall short in accurately prioritizing the malicious nature of the incident."
+  },
+  {
+    "incident_id": "46d6022c-b2f0-48b6-aedb-07b43f3020ad",
+    "category": "Normal",
+    "event_count": 552,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8,
+      "Qwen2.5 3B": 4
+    },
+    "justification": "Analysis C best identifies the root cause by considering both potential malicious activity and legitimate misconfigurations, aligning with the ground truth of a 'Normal' incident. It provides a balanced risk assessment with a medium risk level, which is appropriate given the absence of confirmed malicious activity. Analysis B also considers legitimate activities and misconfigurations but assigns a high risk level, which is less aligned with the ground truth. Analysis A incorrectly concludes a high likelihood of malicious activity and assigns a high risk level, missing the normal categorization. Analysis D focuses heavily on malicious activity without adequately considering legitimate causes or misconfigurations, resulting in a high risk level that does not match the ground truth. Overall, Analysis C provides the most accurate and balanced assessment, while Analysis D is the least aligned with the incident's actual nature."
+  },
+  {
+    "incident_id": "c23bf87e-e04a-4651-b244-3e539e8753eb",
+    "category": "Malware",
+    "event_count": 1585,
+    "threat_level": 15.120000000000005,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o": 8,
+      "Qwen2.5 3B": 5,
+      "Qwen2.5": 6,
+      "GPT-4o-mini": 9
+    },
+    "justification": "Analysis D is ranked highest because it correctly identifies the root cause as a blend of malicious activity and misconfiguration, aligning well with the ground truth of 'Malware'. It provides a comprehensive risk assessment with a high likelihood of malicious activity and immediate investigation priority, which is appropriate given the evidence of port scanning and connections to blacklisted IPs. Analysis A also identifies malicious activity as the primary cause and provides a high-risk assessment, but lacks the detailed consideration of misconfigurations found in D. Analysis C identifies malicious activity but overemphasizes legitimate activity and misconfigurations, which dilutes the focus on the malware aspect. Analysis B is ranked lowest due to its incorrect conclusion that the activity is likely legitimate, which contradicts the ground truth. It also provides a medium likelihood of malicious activity, which is not supported by the evidence of high threat level activities such as port scanning and connections to blacklisted IPs."
+  },
+  {
+    "incident_id": "0862e668-7119-41d9-ba39-5034b49af9ec",
+    "category": "Malware",
+    "event_count": 1417,
+    "threat_level": 15.080000000000005,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5:3b",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5": 6,
+      "GPT-4o": 9,
+      "Qwen2.5 3B": 5,
+      "GPT-4o-mini": 8
+    },
+    "justification": "Analysis B best identifies the root cause by focusing on horizontal port scanning and connections to blacklisted IPs, which are key indicators of malicious activity, aligning well with the ground truth of 'Malware'. It provides a comprehensive risk assessment and prioritizes immediate investigation, which is crucial given the threat level. Analysis D also accurately identifies malicious activity and provides a high-risk assessment, but it lacks some specificity in the evidence-based reasoning compared to B. Analysis A, while identifying potential causes, incorrectly emphasizes misconfiguration and lacks a strong focus on the malicious nature of the incident, leading to a less accurate risk assessment. Analysis C misses critical evidence by incorrectly identifying phishing attempts and lacks a detailed cause analysis, leading to a lower score. Overall, B and D align well with the ground truth, whereas A and C fall short in accurately assessing the risk and identifying the root cause."
+  },
+  {
+    "incident_id": "4d20aaee-a17c-4425-8d5f-8ff36242e8f1",
+    "category": "Malware",
+    "event_count": 5962,
+    "threat_level": 15.520000000000005,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 6,
+      "Qwen2.5 3B": 5
+    },
+    "justification": "Analysis A best identifies the root cause by clearly linking the observed activities to malicious behavior, such as port scanning and connections to blacklisted IPs, which aligns with the ground truth of malware. It provides a comprehensive risk assessment and prioritizes immediate investigation, making it the most actionable for risk management. Analysis B also identifies malicious activity but suggests a mix with misconfigurations, which slightly dilutes the focus on the malware aspect. It still provides a high-risk assessment and immediate priority, but with less clarity than A. Analysis C overemphasizes misconfigurations and assigns a critical risk level without strong justification, which is inconsistent with the evidence. Analysis D incorrectly focuses on SYN Flood attacks, which are not supported by the data, and lacks depth in cause identification, leading to a less accurate risk assessment. Overall, A aligns best with the ground truth category of malware, followed by B, while C and D miss critical factors and provide less accurate assessments."
+  },
+  {
+    "incident_id": "e0a2f709-3663-4aad-8075-77edd7695cff",
+    "category": "Malware",
+    "event_count": 33,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o-mini",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "Qwen2.5 3B": 8,
+      "GPT-4o": 5,
+      "Qwen2.5": 9,
+      "GPT-4o-mini": 7
+    },
+    "justification": "Analysis C best identifies the root cause by focusing on the persistent reconnection attempts and the high likelihood of malicious activity, aligning well with the ground truth of 'Malware'. It provides a high-risk assessment which is appropriate given the evidence of repeated attempts to connect to unknown IPs, suggesting a potential breach. Analysis A also correctly identifies malicious activity and provides a high-risk assessment, but its mention of SYN Flood and IP Masquerading is less directly supported by the evidence. Analysis D correctly identifies malicious activity but assigns a medium likelihood, which underestimates the threat level given the persistent connection attempts. Analysis B is the least accurate, as it assigns a medium risk level and suggests legitimate activities that are less likely given the pattern of events, failing to align with the ground truth of 'Malware'."
+  },
+  {
+    "incident_id": "13165ff7-b5c1-44b6-8778-ce30d9620d96",
+    "category": "Malware",
+    "event_count": 1090,
+    "threat_level": 15.320000000000004,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5:3b",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 8,
+      "GPT-4o-mini": 9,
+      "Qwen2.5 3B": 6,
+      "Qwen2.5": 4
+    },
+    "justification": "Analysis B is ranked highest as it correctly identifies the malicious nature of the incident, provides a clear risk assessment, and aligns well with the ground truth of 'Malware'. It highlights the reconnaissance efforts and connections to blacklisted IPs, indicating a high likelihood of malicious activity. Analysis A also identifies the malicious activity and provides a detailed risk assessment, but it slightly lacks in emphasizing the urgency compared to B. Analysis C identifies the potential for malicious activity but is less clear in its conclusions and risk assessment, leading to a lower score. Analysis D is ranked lowest as it incorrectly assesses the risk level as low, which contradicts the ground truth and the evidence of high-severity threats. It fails to recognize the urgency and potential business impact of the incident, leading to a misalignment with the ground truth category."
+  },
+  {
+    "incident_id": "0f920d94-d22b-404a-aca1-0d27495bd10a",
+    "category": "Malware",
+    "event_count": 66,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3B": 7,
+      "GPT-4o": 9,
+      "Qwen2.5": 6
+    },
+    "justification": "Analysis C best identifies the root cause by clearly linking the horizontal port scans and reconnection attempts to potential reconnaissance and data exfiltration, aligning well with the ground truth of malware. It provides a comprehensive risk assessment with a high likelihood of malicious activity and immediate investigation priority. Analysis A also performs well, identifying potential malicious activity and suggesting immediate investigation, but it includes more speculative elements regarding misconfigurations. Analysis B correctly identifies malicious activity but lacks depth in evidence-based reasoning and does not consider legitimate activities. Analysis D incorrectly interprets some malicious activities as legitimate and provides less clear evidence-based reasoning, leading to a lower score. Overall, Analysis C aligns most closely with the ground truth category of malware, providing a clear and actionable analysis suitable for executive reporting."
+  },
+  {
+    "incident_id": "add23978-a283-4f43-bf71-d594b2ddd46c",
+    "category": "Malware",
+    "event_count": 119,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 8,
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 9,
+      "Qwen2.5 3B": 7
+    },
+    "justification": "Analysis C best identifies the root cause by clearly linking the suspicious activities to potential malicious intent, such as botnet activity and command and control communication, which aligns with the ground truth of 'Malware'. It provides a comprehensive risk assessment, accurately categorizing the risk as high and emphasizing the need for immediate investigation. Analysis A also identifies the root cause effectively, but it includes more speculation about legitimate activities, which slightly detracts from its focus on the malicious nature of the incident. Analysis D correctly identifies potential threats but leans towards internal issues without strong evidence, which slightly misaligns with the malware ground truth. Analysis B is the weakest as it incorrectly concludes that the activity is likely legitimate, which contradicts the ground truth. It also fails to provide a convincing risk assessment and justification for its conclusions, leading to a lower score."
+  },
+  {
+    "incident_id": "298d32e9-8dfc-4574-aed2-aa4e48b968d0",
+    "category": "Malware",
+    "event_count": 107,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 8,
+      "GPT-4o-mini": 9,
+      "Qwen2.5": 6,
+      "GPT-4o": 7
+    },
+    "justification": "Analysis B is ranked highest because it accurately identifies the root cause as malicious activity and provides a detailed risk assessment with specific evidence from the DAG, such as the horizontal port scans and connections to unknown IPs. It aligns well with the ground truth of 'Malware' and emphasizes the need for immediate investigation. Analysis A is also strong, correctly identifying malicious activity and providing a high-risk assessment, but it is slightly less specific in evidence-based reasoning compared to B. Analysis D, while identifying malicious activity, lacks depth in evidence-based reasoning and business impact analysis, placing it third. Analysis C is ranked lowest due to its less clear identification of the root cause and a weaker connection to the ground truth category. It also provides less actionable insights for risk management and incident prioritization."
+  },
+  {
+    "incident_id": "5d04c820-9ea5-4764-84f6-5a7584f7cbcf",
+    "category": "Normal",
+    "event_count": 30,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o": 7,
+      "GPT-4o-mini": 6,
+      "Qwen2.5": 8,
+      "Qwen2.5 3B": 5
+    },
+    "justification": "Analysis C best aligns with the ground truth category of 'Normal' by assigning a medium risk level and considering the possibility of misconfigurations and legitimate activities. It provides a balanced view by acknowledging the suspicious patterns but not jumping to high-risk conclusions without further evidence. Analysis A also does a good job of identifying potential legitimate causes and misconfigurations, but it incorrectly concludes a high risk level, which is not consistent with the ground truth. Analysis B focuses heavily on malicious activity and assigns a high risk level, which is not justified given the 'Normal' classification. Analysis D also assumes a high risk and suggests malicious activity without considering legitimate scenarios, making it the least aligned with the ground truth. Critical factors missed by lower-ranked analyses include the potential for legitimate activities and misconfigurations, which are more consistent with the 'Normal' classification."
+  },
+  {
+    "incident_id": "9fcdd530-e799-41d4-9739-1f72c9609623",
+    "category": "Normal",
+    "event_count": 559,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o": 7,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 5,
+      "Qwen2.5 3B": 3
+    },
+    "justification": "Analysis B best identifies the root cause by considering both legitimate activities and misconfigurations, aligning closely with the ground truth of 'Normal'. It provides a balanced risk assessment by acknowledging potential misconfigurations without jumping to conclusions of malicious intent. Analysis A also considers legitimate causes and misconfigurations but leans more towards potential malicious activity, which is less aligned with the ground truth. Analysis C incorrectly suggests a DDoS attack and DNS poisoning without sufficient evidence, leading to a less accurate risk assessment. Analysis D overemphasizes malicious activity, suggesting DNS poisoning and high risk without supporting evidence, which does not align with the 'Normal' ground truth. Overall, B and A provide the most accurate assessments, while C and D miss critical factors by overestimating the threat level."
+  },
+  {
+    "incident_id": "6ea669a4-fcfe-42d4-8107-d7a841eacbe2",
+    "category": "Malware",
+    "event_count": 103,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "Qwen2.5 3B",
+      "3": "Qwen2.5",
+      "4": "GPT-4o-mini"
+    },
+    "scores": {
+      "Qwen2.5 3B": 8,
+      "GPT-4o": 9,
+      "Qwen2.5": 7,
+      "GPT-4o-mini": 6
+    },
+    "justification": "Analysis B best identifies the root cause by clearly linking the observed behaviors to potential malicious activities, such as reconnaissance and command-and-control communications, and provides a high-risk assessment with immediate investigation priority. It aligns well with the ground truth category of Malware. Analysis A also offers a strong cause identification and risk assessment, but its business impact analysis is slightly less detailed than B. Analysis C correctly identifies malicious activity but lacks specificity in its evidence-based reasoning and business impact assessment. Analysis D, while identifying potential malicious activity, provides a medium likelihood of malicious intent, which is less aligned with the high confidence and threat level indicated in the DAG data, leading to a lower score. Overall, B and A align best with the ground truth, while C and D miss critical factors such as the urgency and severity of the incident."
+  },
+  {
+    "incident_id": "f63c7397-31d6-4e7b-a09e-9278cf95160b",
+    "category": "Normal",
+    "event_count": 1823,
+    "threat_level": 15.355999999999998,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "Qwen2.5 3B",
+      "2": "GPT-4o",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 5,
+      "Qwen2.5 3B": 8,
+      "GPT-4o": 7,
+      "Qwen2.5": 4
+    },
+    "justification": "Analysis B best identifies the root cause by focusing on misconfigurations and routine network operations, aligning with the ground truth of 'Normal'. It provides a balanced view of potential causes, including legitimate activities, and accurately assesses the risk as high due to misconfigurations, which is realistic for incident prioritization. Analysis C also identifies misconfigurations but leans more towards malicious activity, which is less aligned with the ground truth. Analysis A incorrectly emphasizes malicious activity and high risk without sufficient evidence-based reasoning, missing the normalcy of the incident. Analysis D is the least accurate, suggesting a high financial impact and advanced threats without aligning with the ground truth, leading to an exaggerated risk assessment. Overall, B provides the most accurate and useful analysis for risk management and incident prioritization."
+  },
+  {
+    "incident_id": "ef9ecaf8-c99e-49d7-8dbe-bc0816c897be",
+    "category": "Normal",
+    "event_count": 76,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 5,
+      "GPT-4o": 9,
+      "Qwen2.5": 3,
+      "GPT-4o-mini": 7
+    },
+    "justification": "Analysis B best identifies the root cause by correctly focusing on misconfiguration as the likely cause, aligning with the ground truth of a 'Normal' incident. It provides a medium risk assessment, which is appropriate given the non-SSL connections on port 443 without evidence of malicious activity. Analysis D also considers misconfiguration but leans more towards potential malicious activity, which is less aligned with the ground truth. Analysis A incorrectly prioritizes malicious activity, assigning a high risk level without sufficient evidence, leading to a misalignment with the ground truth. Analysis C provides a low risk assessment but incorrectly emphasizes malicious activity, missing the mark on cause identification. Overall, Analysis B provides the most accurate risk assessment and aligns best with the ground truth category, while Analysis C fails to identify the correct cause and risk level, resulting in the lowest score."
+  },
+  {
+    "incident_id": "372a0467-e6a7-447e-917c-6b77cef21a8e",
+    "category": "Malware",
+    "event_count": 966,
+    "threat_level": 15.600000000000005,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 6,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9,
+      "Qwen2.5": 4
+    },
+    "justification": "Analysis C best identifies the root cause by correctly focusing on the malicious activity indicated by horizontal port scanning and connections to blacklisted IPs, aligning well with the ground truth category of 'Malware'. It provides a comprehensive risk assessment and prioritizes immediate investigation, which is crucial given the potential for data exfiltration and unauthorized access. Analysis B also identifies the malicious activity but suggests a medium likelihood, which slightly underestimates the risk compared to C. Analysis A correctly identifies malicious activity but lacks depth in evidence-based reasoning and does not address potential misconfigurations adequately. Analysis D incorrectly downplays the likelihood of malicious activity, focusing instead on misconfigurations, which misaligns with the ground truth. C's alignment with the ground truth and its detailed, actionable insights make it the most useful for risk management and incident prioritization."
+  },
+  {
+    "incident_id": "ad424957-6070-4bdc-812e-2934823fc8c3",
+    "category": "Normal",
+    "event_count": 30,
+    "threat_level": 15.3,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5 3B": 4,
+      "Qwen2.5": 5,
+      "GPT-4o": 8
+    },
+    "justification": "Analysis D is ranked highest because it provides a balanced view of potential causes, including legitimate activity and misconfigurations, which aligns with the ground truth of the incident being 'Normal'. It also suggests a thorough investigation of firewall and IDS configurations, which is appropriate for understanding the root cause. Analysis A is ranked second for its detailed exploration of possible causes and its recommendation for further investigation, although it leans too heavily on the assumption of malicious activity. Analysis C is third, as it identifies misconfigurations but lacks clarity in distinguishing between malicious and legitimate activities. Analysis B is ranked lowest because it fails to consider legitimate activities or misconfigurations, focusing solely on malicious intent, which does not align with the 'Normal' ground truth. Overall, D provides the most accurate risk assessment, while B misses critical factors by not considering non-malicious causes."
+  },
+  {
+    "incident_id": "bdf610b0-b8a4-41eb-86b6-c9c7f5655b62",
+    "category": "Normal",
+    "event_count": 31,
+    "threat_level": 15.3,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o-mini",
+      "3": "GPT-4o",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5 3B": 4,
+      "GPT-4o": 6,
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 8
+    },
+    "justification": "Analysis D best identifies the root cause by considering both malicious activity and misconfigurations while acknowledging the medium risk level, which aligns with the ground truth of 'Normal'. It provides a balanced view of potential misconfigurations and malicious activities, suggesting a medium risk level, which is more appropriate given the ground truth. Analysis C also identifies the root cause well but overestimates the risk level as high. Analysis B focuses heavily on malicious activity and assigns a high risk level, missing the potential for normal activity or misconfigurations. Analysis A incorrectly concludes a high risk level and prioritizes malicious activity without considering the ground truth of normalcy. Analysis D aligns best with the ground truth by recognizing the incident as medium risk and suggesting immediate investigation while considering misconfigurations, which is crucial for accurate risk management and incident prioritization."
+  },
+  {
+    "incident_id": "91d171dd-83a1-4fa6-ac1c-0aaa7ea0777b",
+    "category": "Normal",
+    "event_count": 29,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3B": 5,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8
+    },
+    "justification": "Analysis D is ranked highest because it provides a balanced view of potential malicious activity while considering legitimate and misconfiguration causes. It aligns with the ground truth by suggesting potential misidentification due to blacklisting, which is consistent with a 'Normal' incident. It also emphasizes the need for further investigation into firewall configurations, which is a prudent approach. Analysis C is next, as it acknowledges the possibility of a legitimate source being compromised and suggests a focus on security configurations, which aligns with the 'Normal' categorization. However, it leans more towards malicious intent without sufficient evidence. Analysis B is ranked third, as it heavily focuses on malicious activity without adequately considering the potential for misconfiguration or legitimate activity, which is critical given the 'Normal' ground truth. Analysis A ranks lowest because it concludes high risk and malicious activity without sufficient evidence from the DAG analysis, failing to align with the 'Normal' categorization. It also lacks consideration of misconfigurations or legitimate activities, which are essential for a comprehensive risk analysis."
+  },
+  {
+    "incident_id": "b11c3f5b-2838-4b24-9eda-97e64da5f31f",
+    "category": "Normal",
+    "event_count": 1232,
+    "threat_level": 15.206000000000007,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3B": 5,
+      "GPT-4o": 7,
+      "Qwen2.5": 4
+    },
+    "justification": "Analysis A best identifies the root cause by considering both malicious and legitimate activities, and it aligns with the ground truth by acknowledging the potential for legitimate traffic. It provides a balanced risk assessment and prioritizes investigation appropriately. Analysis C also considers both malicious and legitimate causes but leans more towards malicious activity without strong justification for the ground truth of 'Normal'. Analysis B incorrectly emphasizes DNS tampering and lacks evidence-based reasoning, leading to a less accurate risk assessment. Analysis D overemphasizes malicious activity and fails to consider the legitimate nature of the traffic, leading to an inaccurate risk assessment. Overall, Analysis A aligns best with the ground truth category, while Analysis D is the least aligned due to its high likelihood of malicious activity without sufficient evidence."
+  },
+  {
+    "incident_id": "56b85ca7-6c85-49ca-bd30-da193dd93cab",
+    "category": "Normal",
+    "event_count": 253,
+    "threat_level": 15.300000000000004,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5": 8,
+      "Qwen2.5 3B": 4,
+      "GPT-4o": 7,
+      "GPT-4o-mini": 5
+    },
+    "justification": "Analysis A is ranked highest because it correctly identifies the potential for legitimate network scanning activities and provides a balanced view of possible causes, including benign operations. It aligns well with the ground truth of 'Normal' and suggests further investigation into operational context, which is appropriate given the data. The risk assessment is high, which is conservative but justified given the high threat levels, although it could have been moderated considering the ground truth. Analysis C also provides a thorough examination of potential causes, including legitimate activities like custom applications and P2P protocols, but leans more towards a malicious interpretation without strong evidence. Analysis D focuses heavily on malicious activity without adequately considering legitimate causes, leading to a higher risk assessment than necessary. Analysis B is ranked lowest as it inaccurately emphasizes malicious activity without sufficient evidence and misses the possibility of legitimate network operations, leading to an incorrect high-risk assessment. None of the analyses perfectly align with the ground truth, but A provides the most balanced and evidence-based reasoning."
+  },
+  {
+    "incident_id": "f13f31b1-5f68-4b69-a051-e72f6ac2d029",
+    "category": "Malware",
+    "event_count": 81,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5": 6,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9,
+      "Qwen2.5 3B": 5
+    },
+    "justification": "Analysis C best identifies the root cause by clearly associating the activities with Advanced Persistent Threats and providing a detailed explanation of potential malicious activities, aligning well with the ground truth of malware. It offers a comprehensive risk assessment and prioritizes immediate investigation, which is crucial for malware incidents. Analysis B also provides a strong risk assessment and identifies potential malicious activities, but it introduces more ambiguity with misconfigurations and legitimate activities, slightly reducing its effectiveness. Analysis A correctly identifies malicious activity but lacks depth in evidence-based reasoning and business impact analysis, making it less effective for executive reporting. Analysis D is the weakest as it misidentifies the potential cause as phishing, which is not supported by the evidence, and provides less clarity on the business impact and urgency. Overall, Analysis C aligns best with the ground truth category of malware, providing a clear, actionable analysis suitable for risk management and incident prioritization."
+  },
+  {
+    "incident_id": "93db351b-bfb1-4eff-9c6a-65e4df7e630c",
+    "category": "Normal",
+    "event_count": 1402,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5 3B": 3,
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8
+    },
+    "justification": "Analysis D is ranked highest because it correctly identifies potential legitimate causes such as temporary misconfiguration, aligning with the ground truth of 'Normal'. It provides a balanced risk assessment with a medium risk level, which is appropriate given the non-malicious nature of the incident. Analysis C also considers legitimate activity and misconfigurations, but it leans more towards a high-risk assessment without strong evidence, which slightly misaligns with the ground truth. Analysis B focuses heavily on malicious activity and assigns a high risk level, which is not supported by the ground truth. Analysis A is ranked lowest as it strongly concludes malicious activity with a high risk level, which contradicts the ground truth of 'Normal'. It also lacks evidence-based reasoning for its conclusions. Overall, D and C provide a more nuanced understanding of the incident, while B and A overemphasize the likelihood of malicious activity."
+  },
+  {
+    "incident_id": "b1411186-df83-444e-b8b4-208153bb24ec",
+    "category": "Malware",
+    "event_count": 715,
+    "threat_level": 15.400000000000006,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9,
+      "Qwen2.5": 5,
+      "Qwen2.5 3B": 7
+    },
+    "justification": "Analysis B is ranked highest because it correctly identifies the malicious nature of the incident, provides a clear risk assessment, and emphasizes the urgency of the situation. It accurately highlights the coordinated port scanning and connections to blacklisted IPs as signs of potential malware infection, aligning well with the ground truth category of 'Malware'. Analysis A also performs well, with a strong cause identification and risk assessment, but its likelihood assessment is slightly less precise than B's. Analysis D identifies critical elements but lacks the clarity and focus of A and B, particularly in its cause analysis. Analysis C is ranked lowest due to its vague cause analysis and less accurate risk assessment, failing to clearly connect the evidence to the ground truth of malware. Overall, B and A provide the most actionable insights for risk management and incident prioritization."
+  },
+  {
+    "incident_id": "bea2a0d7-8879-4ab0-8a38-288635c22c33",
+    "category": "Malware",
+    "event_count": 3964,
+    "threat_level": 15.680000000000007,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 6,
+      "Qwen2.5": 4,
+      "GPT-4o-mini": 9,
+      "GPT-4o": 8
+    },
+    "justification": "Analysis C best identifies the root cause by highlighting both the horizontal port scan and connections to blacklisted IPs, which align with the ground truth of a malware incident. It provides a comprehensive risk assessment with a high likelihood of malicious activity, supported by specific evidence from the DAG. Analysis D also accurately identifies malicious activity and provides a high-risk assessment, but lacks some depth in evidence-based reasoning compared to C. Analysis A, while correctly identifying malicious activity, incorrectly concludes the activity might be benign, which misaligns with the ground truth. Analysis B fails to accurately assess the risk level and downplays the severity of the incident, leading to a lower ranking. Critical factors such as the significance of the port scan and blacklisted IP connections were either missed or underemphasized in lower-ranked analyses. Overall, C and D align well with the ground truth category of malware, while A and B fall short in accurately capturing the incident's severity and potential impact."
+  },
+  {
+    "incident_id": "55255ea5-5fea-4cd8-98a7-fcc19a3697eb",
+    "category": "Normal",
+    "event_count": 29,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o-mini",
+      "3": "GPT-4o",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5 3B": 3,
+      "GPT-4o": 5,
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 8
+    },
+    "justification": "Analysis D is ranked highest because it correctly identifies the potential for misconfiguration and provides a clear rationale for the high threat level, despite the ground truth being 'Normal'. It acknowledges the dynamic IP space and suggests immediate investigation, aligning well with the need for caution in risk management. Analysis C also identifies the potential for misconfiguration and provides a balanced view of legitimate activity, but its conclusion leans heavily towards malicious activity without considering the 'Normal' ground truth. Analysis B provides a good explanation but overemphasizes the malicious aspect without considering legitimate causes, leading to a less accurate risk assessment. Analysis A is ranked lowest as it fails to adequately consider the possibility of normal activity and misconfigurations, focusing too much on malicious activity, which does not align with the ground truth. All analyses overestimate the risk level, but D does so with the most comprehensive reasoning."
+  },
+  {
+    "incident_id": "f3626386-2102-4f0d-9f35-0cbbd9f36b08",
+    "category": "Malware",
+    "event_count": 3609,
+    "threat_level": 15.000000000000005,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9,
+      "Qwen2.5": 5,
+      "Qwen2.5 3B": 7
+    },
+    "justification": "Analysis B best identifies the root cause by clearly linking the horizontal port scan and connections to blacklisted IPs to malicious activity, aligning well with the ground truth of malware. It provides a high risk assessment and prioritizes immediate investigation, which is appropriate given the evidence. Analysis A also identifies malicious activity but includes more speculative causes, such as misconfigurations, which are less supported by the data. Analysis D focuses on misconfigurations and legitimate activities, which are less likely given the malware ground truth, but it still acknowledges the high risk. Analysis C incorrectly attributes the activity to legitimate administrative tasks and misconfigurations, missing the clear signs of malicious intent, and does not align well with the ground truth. Overall, B provides the most accurate risk assessment and prioritization, while C fails to recognize the severity of the incident."
+  },
+  {
+    "incident_id": "c6f77f1e-46ce-4106-a814-990ef8429bcb",
+    "category": "Malware",
+    "event_count": 3150,
+    "threat_level": 15.080000000000005,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 6,
+      "GPT-4o": 9,
+      "Qwen2.5 3B": 5
+    },
+    "justification": "Analysis C best identifies the root cause by clearly linking the multiple connections to blacklisted IPs with potential command-and-control activity, which aligns with the ground truth category of Malware. It provides a high-risk assessment, which is appropriate given the evidence of malicious activity. Analysis A also identifies malicious activity but assigns a medium risk level, which slightly underestimates the severity. Analysis B provides a reasonable assessment but lacks depth in evidence-based reasoning, particularly in its justification for a medium risk level despite recognizing high likelihood of malicious activity. Analysis D incorrectly focuses on DNS spoofing and social engineering, which are not supported by the DAG data, leading to an inaccurate root cause identification. Overall, Analysis C aligns best with the ground truth, followed by A, B, and D."
+  },
+  {
+    "incident_id": "322435a0-21bf-4095-813f-1dd99564faa0",
+    "category": "Malware",
+    "event_count": 873,
+    "threat_level": 15.640000000000006,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 5,
+      "Qwen2.5 3B": 7,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8
+    },
+    "justification": "- Analysis C best identifies the root cause by clearly linking the port scans and connections to blacklisted IPs with potential reconnaissance and command-and-control activities, aligning well with the ground truth of 'Malware'. It provides a comprehensive risk assessment and suggests a high likelihood of malicious activity, which is accurate given the data. - Analysis D also effectively identifies malicious activity, focusing on reconnaissance and potential botnet involvement. It provides a solid risk assessment but lacks some of the detailed reasoning found in C. - Analysis B identifies potential malicious activity but introduces ambiguity with legitimate activity explanations, which could detract from the urgency needed. It provides a high-risk assessment but is less precise in cause identification. - Analysis A is the weakest, as it incorrectly suggests legitimate activity and misconfigurations as possible causes without strong evidence. Its focus on non-DNS resolution connections is less relevant to the ground truth of 'Malware'. - Overall, C and D align closely with the ground truth, while B and A miss critical factors or provide less accurate assessments."
+  },
+  {
+    "incident_id": "3b825d6a-1eae-4321-8aeb-82a39af10ce5",
+    "category": "Malware",
+    "event_count": 33,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 7,
+      "Qwen2.5 3B": 8
+    },
+    "justification": "Analysis A best identifies the root cause by clearly linking the activities to potential malicious behavior, such as backdoor attempts and botnet communication, and provides a high-risk assessment that aligns with the ground truth of malware. It offers a comprehensive and evidence-based reasoning with a focus on immediate investigation, making it highly actionable. Analysis D also accurately identifies malicious activity with a focus on unauthorized connections and provides a high-risk assessment, but lacks some depth in evidence-based reasoning compared to A. Analysis C correctly identifies malicious activity and provides a high-risk assessment but rates the likelihood of malicious activity as medium, which is less aligned with the ground truth. Analysis B is ranked lowest due to its incorrect medium risk assessment and misidentification of the cause as phishing, which does not align with the malware ground truth. It also lacks clarity in evidence-based reasoning and urgency in investigation priority."
+  },
+  {
+    "incident_id": "311e9654-c70d-48aa-b5fd-7cf8fd934d8d",
+    "category": "Malware",
+    "event_count": 125,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5:3b",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "GPT-4o-mini": 6,
+      "Qwen2.5 3B": 8,
+      "Qwen2.5": 5
+    },
+    "justification": "Analysis A best identifies the root cause by clearly distinguishing between malicious activity and other potential causes, using specific evidence from the DAG to support its conclusions. It provides a high risk assessment that aligns with the ground truth of malware and offers a thorough investigation priority. Analysis C also accurately identifies malicious activity and provides a high risk assessment, but lacks some depth in exploring legitimate causes. Analysis B offers a reasonable risk assessment but underestimates the likelihood of malicious activity, which is crucial given the ground truth. Analysis D is the weakest, as it provides a less clear cause identification and overemphasizes potential misconfigurations without strong evidence from the DAG. Overall, Analysis A aligns best with the ground truth category, providing clear, actionable insights suitable for risk management and incident prioritization."
+  },
+  {
+    "incident_id": "033d4d42-2666-415f-808c-df91ec654790",
+    "category": "Malware",
+    "event_count": 5405,
+    "threat_level": 15.440000000000005,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 6,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9,
+      "Qwen2.5": 4
+    },
+    "justification": "Analysis C best identifies the root cause by clearly linking the horizontal port scan and connections to blacklisted IPs to potential malicious activity, suggesting a malware infection. It provides a comprehensive risk assessment with a high likelihood of malicious activity, aligning well with the ground truth category of 'Malware.' Analysis B also accurately identifies malicious activity through port scanning and connections to blacklisted IPs, but it is slightly less detailed in its evidence-based reasoning compared to C. Analysis A, while recognizing malicious activity, lacks specificity in evidence and does not clearly differentiate between potential causes. Analysis D is the weakest, as it misinterprets the nature of the events, focusing incorrectly on DDoS attacks and failing to align with the ground truth of malware. Critical factors such as the nature of the port scans and the significance of blacklisted IP connections were missed or incorrectly interpreted in the lower-ranked analyses."
+  },
+  {
+    "incident_id": "8130246a-1c93-482e-a657-2d852a2d66fb",
+    "category": "Malware",
+    "event_count": 4952,
+    "threat_level": 15.560000000000006,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 6,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9,
+      "Qwen2.5": 5
+    },
+    "justification": "Analysis C is ranked highest because it accurately identifies the root cause as malicious activity, specifically highlighting the horizontal port scanning and connections to blacklisted IPs, which aligns with the ground truth of malware. It provides a clear risk assessment and prioritizes immediate investigation, which is appropriate given the severity of the threat. Analysis B also correctly identifies malicious activity and provides a reasonable risk assessment, but it inaccurately mentions port 8080/TCP instead of the correct ports 80/TCP and 443/TCP. Analysis A, while identifying malicious activity, lacks specificity in evidence-based reasoning and misidentifies potential causes such as phishing and brute force attacks, which are not supported by the DAG data. Analysis D is ranked lowest as it incorrectly focuses on network misconfigurations and fails to accurately identify the malicious nature of the incident, missing critical evidence from the DAG analysis. Overall, Analysis C aligns best with the ground truth category of malware, providing a comprehensive and accurate risk assessment."
+  },
+  {
+    "incident_id": "878351ee-8ffc-4bf6-ba68-0cafb6c6fae3",
+    "category": "Normal",
+    "event_count": 166,
+    "threat_level": 15.200000000000005,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o-mini",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "Qwen2.5": 8,
+      "GPT-4o": 4,
+      "GPT-4o-mini": 5,
+      "Qwen2.5 3B": 6
+    },
+    "justification": "Analysis A best identifies the root cause by considering both malicious and legitimate possibilities, and it aligns with the ground truth by assessing the risk as low. It correctly identifies the incident as normal, given the lack of strong malicious indicators and the low business impact. Analysis D provides a high risk assessment, which is not aligned with the ground truth, but it acknowledges potential misconfigurations, offering a balanced view. Analysis C also assumes a high risk but lacks consideration of legitimate activities, leading to a less accurate assessment. Analysis B is ranked lowest as it overemphasizes the malicious aspect without sufficient evidence from the DAG, resulting in an inaccurate high-risk assessment. Overall, Analysis A provides the most accurate risk assessment and aligns well with the ground truth category of 'Normal'."
+  },
+  {
+    "incident_id": "90259357-d22b-4763-9a27-92c11c6a3e53",
+    "category": "Malware",
+    "event_count": 750,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_qwen2_5:3b",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "Qwen2.5": 7,
+      "Qwen2.5 3B": 6,
+      "GPT-4o-mini": 8
+    },
+    "justification": "Analysis A best identifies the root cause by clearly linking the high volume of port scans and connections to unknown ports to malicious activity, aligning with the ground truth of 'Malware'. It provides a high risk assessment with specific recommendations for isolation and forensic analysis, making it highly actionable. Analysis D also accurately identifies malicious activity and provides a clear risk assessment, but lacks the depth of evidence-based reasoning found in Analysis A. Analysis B correctly identifies the potential for malicious activity but places too much emphasis on misconfigurations without strong evidence, leading to a less focused conclusion. Analysis C misses critical factors by not adequately addressing the evidence of malicious intent and overemphasizing legitimate activity possibilities, resulting in a less accurate risk assessment. Overall, Analysis A aligns most closely with the ground truth category and provides the most comprehensive and actionable insights."
+  },
+  {
+    "incident_id": "5607229c-55d7-4186-87e9-e836ace00f88",
+    "category": "Normal",
+    "event_count": 1028,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "Qwen2.5",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o": 8,
+      "GPT-4o-mini": 5,
+      "Qwen2.5": 6,
+      "Qwen2.5 3B": 4
+    },
+    "justification": "Analysis A best identifies the root cause by considering legitimate activities and misconfigurations, aligning well with the ground truth of 'Normal'. It provides a balanced risk assessment and highlights the need for further investigation without jumping to conclusions. Analysis C also considers legitimate causes and misconfigurations but places undue emphasis on malicious activity, leading to a high-risk assessment. Analysis B incorrectly assesses the risk as high and prioritizes investigation based on assumptions of malicious activity, despite the incident being normal. Analysis D provides a high-risk assessment and focuses on malicious activity without sufficient evidence, failing to align with the ground truth. Critical factors missed in lower-ranked analyses include the consideration of legitimate network activities and the context of non-SSL connections, which are not inherently malicious. Overall, A aligns best with the ground truth category, providing a clear, actionable analysis suitable for executive reporting."
+  },
+  {
+    "incident_id": "f1986bd6-d690-45b6-82b5-183c70410cc6",
+    "category": "Normal",
+    "event_count": 521,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 5,
+      "Qwen2.5": 4,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8
+    },
+    "justification": "Analysis D best identifies the root cause by considering legitimate activities and misconfigurations, which aligns with the ground truth of the incident being 'Normal'. It provides a balanced risk assessment, acknowledging the potential for both benign and malicious activities. Analysis C also considers legitimate activities and misconfigurations, but it leans more towards suspecting malicious activity, which is less aligned with the ground truth. Analysis A incorrectly concludes a high risk of malicious activity, missing the ground truth that the incident is normal. Analysis B also overemphasizes malicious activity and lacks evidence-based reasoning, making it the least accurate. Both A and B fail to adequately consider legitimate causes and misconfigurations, leading to incorrect conclusions. D and C provide more nuanced assessments that better align with the incident's normal categorization."
+  },
+  {
+    "incident_id": "63c97487-975b-464a-8e38-58f9691e30c3",
+    "category": "Malware",
+    "event_count": 3925,
+    "threat_level": 15.360000000000005,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5 3B": 5,
+      "Qwen2.5": 7,
+      "GPT-4o-mini": 9,
+      "GPT-4o": 8
+    },
+    "justification": "Analysis C is ranked highest because it correctly identifies the malicious activity through horizontal port scanning and connections to blacklisted IPs, providing a clear link to potential reconnaissance and exploitation efforts. It offers a comprehensive risk assessment and aligns well with the ground truth of malware. Analysis D also identifies key malicious indicators, such as port scanning and connections to blacklisted IPs, but lacks the depth of evidence-based reasoning found in C. Analysis B identifies connections to blacklisted IPs, suggesting malicious activity, but it includes unnecessary speculation about legitimate activity, which detracts from its focus. Analysis A is ranked lowest as it incorrectly emphasizes denial-of-service attacks and misconfigurations, which are not strongly supported by the evidence. It fails to align with the malware ground truth and lacks clarity in its risk assessment."
+  },
+  {
+    "incident_id": "5f6f48da-8412-4691-a47d-1c8a4e71b2bc",
+    "category": "Malware",
+    "event_count": 31,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_gpt_4o_mini"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 4,
+      "Qwen2.5 3B": 8,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 6
+    },
+    "justification": "Analysis C best identifies the root cause by clearly linking the observed behaviors to potential malicious activities, such as reconnaissance and unauthorized access attempts, and aligns well with the ground truth of malware. It provides a comprehensive risk assessment and prioritizes immediate investigation, which is appropriate given the threat level. Analysis B also accurately identifies malicious activity and provides a high-risk assessment, but it slightly lacks in detailing the business impact compared to C. Analysis D correctly identifies the potential for malicious activity but does not emphasize the urgency of investigation as strongly as B and C. Analysis A incorrectly attributes the activity primarily to misconfigurations and legitimate actions, which misaligns with the ground truth of malware, leading to an inaccurate risk assessment and investigation priority. Critical factors such as the significance of horizontal port scanning and repeated connection attempts were underemphasized in lower-ranked analyses."
+  },
+  {
+    "incident_id": "4fc45322-77d4-40f2-a2a4-cafffc31b7b5",
+    "category": "Malware",
+    "event_count": 2685,
+    "threat_level": 15.240000000000006,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "Qwen2.5": 6,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3B": 5
+    },
+    "justification": "Analysis B best identifies the root cause by clearly linking the horizontal port scan and connections to blacklisted IPs to potential reconnaissance and malware activity, aligning well with the ground truth category of 'Malware'. It provides a comprehensive risk assessment with a high likelihood of malicious activity and immediate investigation priority. Analysis C also correctly identifies malicious activity and provides a strong risk assessment, but is slightly less detailed in evidence-based reasoning compared to B. Analysis A, while identifying potential causes, incorrectly emphasizes misconfigurations and lacks strong evidence-based reasoning for a malware conclusion. Analysis D is the weakest, as it provides vague cause identification and lacks specific evidence from the DAG, resulting in a less accurate risk assessment. Overall, B and C align well with the ground truth, while A and D miss critical factors indicating malware activity."
+  },
+  {
+    "incident_id": "2efcf77c-1f1a-4074-a4f8-05c3557b78b4",
+    "category": "Malware",
+    "event_count": 203,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "Qwen2.5 3B",
+      "2": "GPT-4o-mini",
+      "3": "GPT-4o",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 6,
+      "Qwen2.5 3B": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 5
+    },
+    "justification": "Analysis B best identifies the root cause by focusing on the repeated reconnection attempts and potential malicious IP addresses, aligning well with the ground truth of 'Malware'. It provides a high risk assessment and emphasizes the urgency for investigation, which is appropriate given the threat level. Analysis C also accurately identifies the potential for malicious activity and provides a high risk assessment, but its likelihood of malicious activity is rated medium, which slightly underestimates the threat. Analysis A identifies malicious activity but rates the risk as medium, which does not align with the high threat level indicated by the ground truth. Analysis D incorrectly assesses the likelihood of malicious activity as low and provides a medium risk level, which is inconsistent with the ground truth and the observed threat level. Critical factors missed in lower-ranked analyses include the emphasis on DNS spoofing in Analysis D, which is less relevant to the observed behavior, and the medium risk assessment in Analysis A, which underestimates the potential impact. Overall, Analysis B provides the most comprehensive and accurate risk assessment, aligning closely with the ground truth category of 'Malware'."
+  },
+  {
+    "incident_id": "793a3f26-73b3-49b1-86c3-ac78fb19de70",
+    "category": "Normal",
+    "event_count": 58,
+    "threat_level": 15.499999999999993,
+    "randomization": {
+      "A": "cause_risk_gpt_4o",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5:3b",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o-mini",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "GPT-4o": 4,
+      "GPT-4o-mini": 6,
+      "Qwen2.5 3B": 7,
+      "Qwen2.5": 8
+    },
+    "justification": "Analysis D is ranked highest because it considers both legitimate activities and misconfigurations as potential causes, aligning with the ground truth that the incident is 'Normal.' It suggests a balanced approach by highlighting configuration issues and routine activities, which is crucial for a non-malicious incident. Analysis C also acknowledges legitimate activities and misconfigurations but places more emphasis on malicious activities, which slightly misaligns with the ground truth. Analysis B focuses heavily on malicious intent without sufficient consideration of legitimate activities or misconfigurations, leading to a less accurate risk assessment. Analysis A is ranked lowest as it strongly concludes malicious activity without adequately considering the possibility of normal operations or misconfigurations, which is critical given the ground truth. Overall, D provides the most accurate risk assessment by considering all potential causes and aligning closely with the ground truth category."
+  },
+  {
+    "incident_id": "7fc20ce2-662b-48e5-96fa-4a3a23784d00",
+    "category": "Normal",
+    "event_count": 30,
+    "threat_level": 15.3,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_gpt_4o",
+      "C": "cause_risk_qwen2_5",
+      "D": "cause_risk_qwen2_5:3b"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o-mini",
+      "3": "GPT-4o",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "GPT-4o": 6,
+      "Qwen2.5": 8,
+      "Qwen2.5 3B": 5
+    },
+    "justification": "Analysis C best identifies the root cause by considering both malicious activity and misconfigurations, and it aligns more closely with the ground truth of 'Normal' by not overstating the risk. It provides a balanced view of potential misconfigurations and legitimate activities, which is crucial given the ground truth. Analysis A also identifies potential causes well but leans too heavily on malicious activity without considering the normal categorization. Analysis B is similar to A but less detailed in its consideration of legitimate activities. Analysis D is the least aligned with the ground truth, as it fails to identify any legitimate activity and incorrectly focuses on high-risk scenarios, which is inconsistent with the 'Normal' category. Overall, C provides the most accurate risk assessment and aligns better with the ground truth by considering the possibility of benign causes and providing a medium investigation priority, which is more appropriate for a 'Normal' incident."
+  },
+  {
+    "incident_id": "66860469-34c1-4a72-a4f7-888528d8918f",
+    "category": "Malware",
+    "event_count": 121,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "cause_risk_qwen2_5:3b",
+      "B": "cause_risk_qwen2_5",
+      "C": "cause_risk_gpt_4o_mini",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "Qwen2.5 3B",
+      "3": "GPT-4o",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3B": 8,
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 9,
+      "GPT-4o": 7
+    },
+    "justification": "Analysis C is ranked highest as it provides a comprehensive cause analysis, accurately identifying the malicious activity with evidence-based reasoning. It correctly highlights the potential command-and-control interactions and reconnaissance activities, aligning well with the ground truth category of 'Malware'. The risk assessment and business impact are clearly articulated, and the investigation priority is appropriate. Analysis A is ranked second; it effectively identifies malicious activity and provides a solid risk assessment, but lacks some specificity in evidence-based reasoning compared to C. Analysis D, while correctly identifying malicious activity, is less detailed in its evidence-based reasoning and business impact analysis. Analysis B is ranked lowest due to its vague cause analysis and lack of specific evidence from the DAG, leading to a less accurate risk assessment. It also fails to clearly differentiate between legitimate and malicious activities, which is critical for prioritization and aligns less effectively with the ground truth category."
+  },
+  {
+    "incident_id": "9bcb9d22-f168-4f85-8d2c-20d33507a374",
+    "category": "Malware",
+    "event_count": 3302,
+    "threat_level": 15.360000000000005,
+    "randomization": {
+      "A": "cause_risk_qwen2_5",
+      "B": "cause_risk_gpt_4o_mini",
+      "C": "cause_risk_qwen2_5:3b",
+      "D": "cause_risk_gpt_4o"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3B",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3B": 7,
+      "GPT-4o": 9
+    },
+    "justification": "Analysis D best identifies the root cause by clearly linking the horizontal port scanning and connections to blacklisted IPs with malicious activity, aligning well with the ground truth of 'Malware'. It provides a comprehensive risk assessment with a high likelihood of malicious intent and immediate investigation priority. Analysis B also accurately identifies malicious activity and provides a strong risk assessment, but lacks some depth in business impact analysis compared to D. Analysis C correctly identifies potential malicious activity but is less precise in its conclusions and risk assessment. Analysis A is the weakest, as it incorrectly concludes legitimate internal operations as the primary cause, which does not align with the ground truth. It also fails to emphasize the high-risk nature of the incident, leading to a less accurate risk assessment."
+  },
+  {
+    "incident_id": "b52d0260-2b3b-4e6a-a2d8-dd8bd53d2942",
+    "category": "Normal",
+    "event_count": 59,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "cause_risk_gpt_4o_mini",
+      "B": "cause_risk_qwen2_5:3b",
+      "C": "cause_risk_gpt_4o",
+      "D": "cause_risk_qwen2_5"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5 3B"
+    },
+    "scores": {
+      "GPT-4o-mini": 5,
+      "Qwen2.5 3B": 4,
+      "GPT-4o": 7,
+      "Qwen2.5": 8
+    },
+    "justification": "Analysis D is ranked highest because it correctly identifies the incident as potentially malicious but also considers the possibility of misconfigurations, aligning with the 'Normal' ground truth by suggesting further investigation into network settings. It provides a balanced view of the situation, considering both malicious activity and legitimate causes, and suggests a realistic business impact without over-exaggerating the threat. Analysis C also aligns well with the ground truth by considering misconfigurations and potential legitimate activity, but it leans more heavily towards malicious activity without sufficient evidence. Analysis A overemphasizes the malicious intent without adequately considering the 'Normal' categorization, leading to a high-risk assessment that doesn't align with the ground truth. Analysis B is ranked lowest due to its incorrect identification of a DDoS attack and SMTP injection attempts, which are not supported by the evidence, leading to an inaccurate risk assessment and misaligned business impact. Overall, D and C provide the most balanced and evidence-based analyses, while A and B fail to align with the ground truth effectively."
+  }
+]

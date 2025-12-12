@@ -1,0 +1,1177 @@
+[
+  {
+    "incident_id": "a991b910-f0f9-4ef9-ac66-647626ac4476",
+    "category": "Malware",
+    "event_count": 1365,
+    "threat_level": 15.360000000000007,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 5,
+      "GPT-4o-mini": 9,
+      "GPT-4o": 7,
+      "Qwen2.5": 3
+    },
+    "justification": "Summary B best identifies the key threats by clearly outlining the high-severity port scanning activity and connections to blacklisted IPs, aligning well with the ground truth of a malware incident. It provides actionable intelligence by highlighting the malicious scanning and connection attempts, making it the most useful for incident response. Summary C also identifies the port scanning and suspicious connections but lacks some clarity in severity assessment, placing it second. Summary A fails to emphasize the high-severity events adequately and misrepresents the severity breakdown, affecting its completeness and accuracy. Summary D contains critical inaccuracies, such as incorrect IP addresses and severity levels, making it the least reliable and actionable. Overall, B aligns best with the ground truth, followed by C, A, and D."
+  },
+  {
+    "incident_id": "46d6022c-b2f0-48b6-aedb-07b43f3020ad",
+    "category": "Normal",
+    "event_count": 552,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 5,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D best identifies the key threats by clearly stating the nature of the connections (non-SSL to HTTPS port 443) and provides a concise breakdown of the events, aligning well with the ground truth category of 'Normal' by not overemphasizing the threat level. It offers actionable intelligence by highlighting potential misconfigurations or benign activities. Summary C also provides a clear and accurate description of the events, but lacks the emphasis on the benign nature of the incident, which is why it ranks second. Summary B inaccurately suggests malware activity, which does not align with the ground truth, and provides less clarity on the nature of the connections. Summary A is the least useful, as it contains incorrect details, such as the timeline and severity breakdown, and fails to provide actionable insights, making it less trustworthy in a security operations context. Overall, D and C align better with the ground truth category, while B and A introduce inaccuracies or misleading information."
+  },
+  {
+    "incident_id": "c23bf87e-e04a-4651-b244-3e539e8753eb",
+    "category": "Malware",
+    "event_count": 1585,
+    "threat_level": 15.120000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 5,
+      "Qwen2.5": 3,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D is ranked highest because it accurately identifies the key threats, including the horizontal port scan and unauthorized connections to blacklisted IPs, and provides clear, actionable intelligence. It aligns well with the ground truth category of 'Malware' by highlighting suspicious scanning and unauthorized connections. Summary C also provides a good overview of the threats, but with slightly less clarity and completeness than D. Summary A is less accurate in its severity assessment and misses some critical details, such as the specific nature of the port scans. Summary B is the least effective, with incorrect severity breakdowns and lacking clarity and completeness, making it less actionable for incident response."
+  },
+  {
+    "incident_id": "0862e668-7119-41d9-ba39-5034b49af9ec",
+    "category": "Malware",
+    "event_count": 1417,
+    "threat_level": 15.080000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 5,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 3,
+      "GPT-4o": 9
+    },
+    "justification": "Summary D best identifies the key threats by clearly outlining the horizontal port scan and connections to blacklisted IPs, aligning well with the ground truth of 'Malware'. It provides actionable intelligence by highlighting suspicious activities and potential reconnaissance. Summary B also captures the main threats but lacks some clarity in detailing the severity breakdown. Summary A misses critical details by incorrectly summarizing the severity breakdown and lacks clarity in threat identification. Summary C is the least effective, with incorrect severity assessments and missing key threat details. Overall, D and B align well with the ground truth category, while A and C fall short in accuracy and completeness."
+  },
+  {
+    "incident_id": "4d20aaee-a17c-4425-8d5f-8ff36242e8f1",
+    "category": "Malware",
+    "event_count": 5962,
+    "threat_level": 15.520000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 2,
+      "GPT-4o": 7,
+      "Qwen2.5 3b": 4,
+      "GPT-4o-mini": 9
+    },
+    "justification": "Summary D best identifies the key threats by accurately highlighting the horizontal port scan and connections to blacklisted IPs, aligning well with the ground truth of a malware incident. It provides actionable intelligence by detailing specific IPs and activities that suggest reconnaissance and potential compromise. Summary B also identifies critical threats but lacks some clarity and completeness compared to D. Summary C misrepresents the severity and nature of the threats, incorrectly categorizing them as CRITICAL and involving unrelated protocols, which detracts from its accuracy. Summary A fails to provide relevant information, with incorrect protocol associations and a lack of clarity, making it the least useful. Overall, D aligns best with the ground truth, providing a clear and actionable overview of the incident's malicious nature."
+  },
+  {
+    "incident_id": "e0a2f709-3663-4aad-8075-77edd7695cff",
+    "category": "Malware",
+    "event_count": 33,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "GPT-4o": 9,
+      "Qwen2.5": 4,
+      "Qwen2.5 3b": 6
+    },
+    "justification": "Summary B best identifies the key threats by correctly categorizing the repeated connections to port 449 as HIGH severity, which aligns with the potential malware activity indicated by the ground truth. It provides actionable intelligence by suggesting reconnaissance or unauthorized access attempts, which is crucial for incident response. Summary A is clear and concise but lacks the proper severity assessment, underestimating the threat level. Summary D includes incorrect details, such as the use of UDP and incorrect port numbers, which reduces its reliability. Summary C is the least accurate, with incorrect severity breakdowns and irrelevant information, failing to align with the ground truth category of malware. Overall, Summary B provides the most accurate, complete, and actionable information for incident response."
+  },
+  {
+    "incident_id": "13165ff7-b5c1-44b6-8778-ce30d9620d96",
+    "category": "Malware",
+    "event_count": 1090,
+    "threat_level": 15.320000000000004,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 6,
+      "Qwen2.5": 4,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9
+    },
+    "justification": "Summary D best identifies the key threats by accurately highlighting the horizontal port scan on port 443 and connections to multiple blacklisted IPs. It provides actionable intelligence by clearly categorizing the severity of events and suggesting potential malicious behavior. Summary C also provides a good overview, but lacks the depth of analysis found in D. Summary A misses some critical details, such as the accurate severity breakdown and the high number of unique IPs involved in the port scan, which affects its completeness and actionability. Summary B is the least effective, as it incorrectly categorizes the severity breakdown and provides less clarity on the threat landscape. Overall, Summary D aligns best with the ground truth category of 'Malware' by effectively summarizing the malicious activities observed in the raw data."
+  },
+  {
+    "incident_id": "0f920d94-d22b-404a-aca1-0d27495bd10a",
+    "category": "Malware",
+    "event_count": 66,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 6,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 4,
+      "GPT-4o": 9
+    },
+    "justification": "Summary D best identifies the key threats by clearly outlining the horizontal port scan on port 443 and the suspicious connections to port 449/TCP, aligning well with the ground truth of malware activity. It provides actionable intelligence by highlighting unauthorized connections and scanning behavior, which are critical for incident response. Summary B also provides a good level of detail and clarity but slightly lacks in emphasizing the severity of the threats compared to D. Summary A, while capturing some key events, misclassifies the severity breakdown and lacks clarity in threat identification. Summary C is the least effective, with a confusing structure and incorrect threat level assessments, failing to align with the malware categorization. Overall, D and B provide the most comprehensive and actionable insights, while A and C miss critical details or misrepresent the severity of the incident."
+  },
+  {
+    "incident_id": "add23978-a283-4f43-bf71-d594b2ddd46c",
+    "category": "Malware",
+    "event_count": 119,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 4,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3b": 6
+    },
+    "justification": "Summary B best identifies the key threats by clearly outlining the horizontal port scan and reconnection attempts, which are critical indicators of malware activity. It provides actionable intelligence by highlighting potential reconnaissance and unauthorized access attempts, aligning well with the ground truth category of 'Malware'. Summary C also correctly identifies the horizontal port scan and reconnection attempts but lacks the depth of analysis present in Summary B. Summary D includes some inaccuracies, such as the incorrect mention of port 0 UDP, and lacks clarity in severity categorization. Summary A is the least effective as it miscategorizes severity levels and fails to provide a coherent analysis of the incident, making it less actionable and trustworthy in a security operations context."
+  },
+  {
+    "incident_id": "298d32e9-8dfc-4574-aed2-aa4e48b968d0",
+    "category": "Malware",
+    "event_count": 107,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5 3b": 5,
+      "GPT-4o": 9,
+      "Qwen2.5": 3
+    },
+    "justification": "Summary C best identifies the key threats by accurately detailing the horizontal port scan and multiple reconnection attempts, aligning well with the ground truth of a malware incident. It provides clear and actionable intelligence by highlighting unauthorized access attempts and DNS bypass, which are critical for incident response. Summary A also provides a good overview but misses some medium severity events and incorrectly categorizes the severity breakdown. Summary B lacks completeness and clarity, failing to provide a comprehensive threat analysis. Summary D is the least useful, as it miscategorizes the severity and focuses incorrectly on DNS resolution, which is not a primary concern in this incident. Overall, Summary C aligns best with the ground truth category of malware, offering a detailed and actionable analysis."
+  },
+  {
+    "incident_id": "5d04c820-9ea5-4764-84f6-5a7584f7cbcf",
+    "category": "Normal",
+    "event_count": 30,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "Qwen2.5 3b",
+      "3": "GPT-4o",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "GPT-4o": 5,
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 7
+    },
+    "justification": "Summary A best identifies the key threats by accurately describing the unauthorized connection attempts and the involvement of a blacklisted IP, aligning well with the ground truth of a 'Normal' incident. It provides clear and actionable intelligence by highlighting the specific unauthorized activities without overestimating the severity. Summary D also provides a good overview but incorrectly categorizes the severity as HIGH, which is not aligned with the ground truth. Summary B misclassifies the severity of the incident by introducing a HIGH severity level, which is not supported by the data. Summary C is the least accurate, with incorrect details such as the mention of HTTP and SSH traffic, which are not present in the raw data, and an incorrect severity breakdown. Overall, Summary A is the most professional and trustworthy for use in a security operations center, while Summary C contains significant inaccuracies that reduce its usefulness."
+  },
+  {
+    "incident_id": "9fcdd530-e799-41d4-9739-1f72c9609623",
+    "category": "Normal",
+    "event_count": 559,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 5,
+      "GPT-4o": 8,
+      "Qwen2.5": 3,
+      "GPT-4o-mini": 6
+    },
+    "justification": "Summary B best identifies the key threats by clearly describing the nature of the connections and highlighting potential misconfigurations or policy violations, which aligns well with the ground truth of a 'Normal' incident. It provides actionable intelligence by suggesting potential misconfigurations that could be addressed. Summary D is also clear and concise, but it lacks the depth of analysis found in B. Summary A misses critical details by not adequately covering the breadth of medium severity events and incorrectly categorizes severity levels. Summary C provides an incorrect severity breakdown and lacks clarity, making it the least useful. Overall, B aligns best with the ground truth category by recognizing the incident as non-malicious but potentially indicative of misconfigurations."
+  },
+  {
+    "incident_id": "6ea669a4-fcfe-42d4-8107-d7a841eacbe2",
+    "category": "Malware",
+    "event_count": 103,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_gpt_4o_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 8,
+      "Qwen2.5": 4,
+      "Qwen2.5 3b": 6,
+      "GPT-4o-mini": 9
+    },
+    "justification": "Summary D best identifies the key threats by clearly highlighting the horizontal port scan on port 443/TCP and multiple connection attempts to suspicious IPs, which aligns with the ground truth of a malware incident. It provides actionable intelligence by indicating reconnaissance activities and potential malicious intent, making it highly useful for incident response. Summary A is also strong, accurately identifying unauthorized connections and scanning activity, but it lacks some clarity in the severity breakdown. Summary C provides a good overview but misses some critical details about the severity and specific actions needed. Summary B is the weakest, with inaccuracies in the timeline and severity breakdown, and it fails to clearly align with the ground truth category of malware, making it less actionable and trustworthy."
+  },
+  {
+    "incident_id": "f63c7397-31d6-4e7b-a09e-9278cf95160b",
+    "category": "Normal",
+    "event_count": 1823,
+    "threat_level": 15.355999999999998,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5 3b": 6,
+      "GPT-4o": 8,
+      "Qwen2.5": 4
+    },
+    "justification": "Summary C best identifies the key threats by accurately highlighting the horizontal port scan and non-SSL connections, which are critical to understanding the incident. It provides a clear and concise breakdown of events and aligns well with the 'Normal' ground truth by not overemphasizing the severity. Summary A also provides a good overview but slightly misrepresents the severity of some events, such as the long-duration connections. Summary B contains inaccuracies, such as mentioning UDP packets in a TCP port scan, which affects its reliability. Summary D lacks completeness and clarity, failing to cover critical events like the horizontal port scan, and incorrectly categorizes the severity of events, making it the least useful for incident response."
+  },
+  {
+    "incident_id": "ef9ecaf8-c99e-49d7-8dbe-bc0816c897be",
+    "category": "Normal",
+    "event_count": 76,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "Qwen2.5 3b",
+      "3": "Qwen2.5",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3b": 7,
+      "GPT-4o": 1,
+      "Qwen2.5": 5
+    },
+    "justification": "Summary A is ranked highest because it accurately identifies the key threat of non-SSL connections to port 443 and provides a clear overview of the activity, aligning well with the ground truth of 'Normal' as it does not overstate the threat level. It offers actionable intelligence by summarizing the activity concisely. Summary B is slightly less clear due to repetition and incorrect protocol mention (UDP instead of TCP), but still provides a reasonable overview of the situation. Summary D incorrectly categorizes the severity levels and introduces inaccuracies in the timeline and threat assessment, which do not align with the ground truth. Summary C fails to provide any useful information due to an error, making it the least useful for incident response. Overall, summaries A and B align better with the ground truth category, while D and C contain inaccuracies or lack information."
+  },
+  {
+    "incident_id": "372a0467-e6a7-447e-917c-6b77cef21a8e",
+    "category": "Malware",
+    "event_count": 966,
+    "threat_level": 15.600000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 6,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 4
+    },
+    "justification": "Summary B best identifies the key threats by accurately highlighting the horizontal port scan and connections to blacklisted IPs, providing a clear and actionable overview of the incident. It aligns well with the ground truth category of 'Malware' by emphasizing suspicious scanning and connections. Summary C also provides a good overview but lacks the depth and clarity of B, particularly in the actionability of the intelligence. Summary A misses some critical details, such as the severity of the non-SSL connections and the extent of the scanning activity, leading to a less actionable report. Summary D is the least accurate, incorrectly categorizing the severity levels and missing key events, such as the port scan and connections to blacklisted IPs, which are crucial for identifying the incident as malware-related."
+  },
+  {
+    "incident_id": "ad424957-6070-4bdc-812e-2934823fc8c3",
+    "category": "Normal",
+    "event_count": 30,
+    "threat_level": 15.3,
+    "randomization": {
+      "A": "llm_gpt_4o_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "Qwen2.5 3b": 6,
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 4
+    },
+    "justification": "Summary A is ranked highest because it accurately identifies the key threats, including the vertical port scan and unauthorized SMTP attempts, and provides a clear and actionable summary of the events. It aligns well with the ground truth category of 'Normal' by not overemphasizing the threat level. Summary C also identifies the main threats but lacks some detail in the behavior analysis, making it slightly less actionable than A. Summary B provides a detailed account of the events but includes incorrect information about NFS and SMB protocols, which were not part of the raw data, leading to potential confusion. Summary D is ranked lowest due to incorrect categorization of severity levels and a misunderstanding of the event flow, which could mislead incident response efforts. Overall, A and C align best with the ground truth, while B and D introduce inaccuracies or omissions that reduce their utility."
+  },
+  {
+    "incident_id": "bdf610b0-b8a4-41eb-86b6-c9c7f5655b62",
+    "category": "Normal",
+    "event_count": 31,
+    "threat_level": 15.3,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "Qwen2.5 3b",
+      "3": "Qwen2.5",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "Qwen2.5 3b": 7,
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 1
+    },
+    "justification": "Summary C best identifies the key threats by accurately listing the high and medium severity events and correctly categorizing the activities as suspicious outbound connections. It provides actionable intelligence by specifying the potential for unauthorized activity and spam, aligning well with the 'Normal' ground truth by not overemphasizing the threat level. Summary A is also accurate and provides a clear overview of the events, but it misclassifies the severity breakdown and introduces a non-existent critical severity level, which slightly reduces its usefulness. Summary B lacks clarity and accuracy, with incorrect details such as unspecified connection activity and incorrect time windows, making it less actionable. Summary D fails to provide any useful information due to an error, making it the least useful for incident response."
+  },
+  {
+    "incident_id": "91d171dd-83a1-4fa6-ac1c-0aaa7ea0777b",
+    "category": "Normal",
+    "event_count": 29,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "GPT-4o": 7,
+      "Qwen2.5": 4,
+      "Qwen2.5 3b": 5
+    },
+    "justification": "Summary A best identifies the key threats by clearly detailing the port scanning and SMTP activities, providing a clear timeline and severity breakdown. It offers actionable intelligence by highlighting the potential malicious intent associated with spam activities, which aligns well with the ground truth category of 'Normal' by not overemphasizing the threat level. Summary B also provides a clear and actionable analysis but lacks the detail in the number of ports scanned and the packets sent, which slightly reduces its completeness. Summary D fails to accurately categorize the severity breakdown and misrepresents the number of events, which affects its clarity and actionability. Summary C is the least effective, as it misses critical details such as the number of events and provides incorrect information about the services targeted, which misaligns with the ground truth category."
+  },
+  {
+    "incident_id": "b11c3f5b-2838-4b24-9eda-97e64da5f31f",
+    "category": "Normal",
+    "event_count": 1232,
+    "threat_level": 15.206000000000007,
+    "randomization": {
+      "A": "llm_gpt_4o_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 7,
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3b": 6,
+      "Qwen2.5": 4
+    },
+    "justification": "Summary B is ranked highest because it accurately identifies key threats like the horizontal port scan and provides a clear breakdown of suspicious activities, making it actionable. It aligns well with the ground truth of a 'Normal' incident by not overemphasizing threats. Summary A is also comprehensive and clear but slightly less detailed in actionability compared to B. Summary C mischaracterizes some activities, such as labeling the port scan as targeting 'multiple IPs' instead of 'unique IPs,' and lacks clarity in its threat assessment. Summary D is the least useful as it provides minimal actionable intelligence and incorrectly states the severity breakdown, missing critical high and medium severity events. Overall, B offers the best balance of accuracy, completeness, and clarity, aligning closely with the ground truth category."
+  },
+  {
+    "incident_id": "56b85ca7-6c85-49ca-bd30-da193dd93cab",
+    "category": "Normal",
+    "event_count": 253,
+    "threat_level": 15.300000000000004,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 5,
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 3,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D best identifies the key threats by clearly categorizing the nature of the connections and providing a plausible explanation for the observed behavior, such as CDN or API access, which aligns with the ground truth of 'Normal'. It also accurately assesses the severity and provides actionable insights by suggesting the nature of the connections. Summary B is the second best as it identifies suspicious activities and provides a reasonable assessment of the threat levels, though it slightly overemphasizes the potential maliciousness. Summary A lacks clarity and misrepresents the severity breakdown, which could mislead incident response actions. Summary C is the least accurate, with incorrect severity assessments and inclusion of a non-existent critical threat level, which does not align with the ground truth of 'Normal'. Overall, D and B provide the most actionable intelligence, while A and C miss critical details or misinterpret the data."
+  },
+  {
+    "incident_id": "f13f31b1-5f68-4b69-a051-e72f6ac2d029",
+    "category": "Malware",
+    "event_count": 81,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_gpt_4o_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 7,
+      "GPT-4o-mini": 9,
+      "Qwen2.5": 4,
+      "Qwen2.5 3b": 6
+    },
+    "justification": "Summary B best identifies the key threats by clearly listing the horizontal port scan and reconnection attempts, aligning well with the ground truth of 'Malware'. It provides actionable intelligence by specifying the suspicious activities and their severities accurately. Summary A is also accurate but slightly less clear in its severity breakdown, leading to a lower score. Summary D provides a good overview but incorrectly categorizes the severity levels, which affects its actionability. Summary C misses critical details, such as the correct severity assessment and a clear explanation of the threat, leading to its lower ranking. Overall, B aligns best with the ground truth category and provides the most useful information for incident response."
+  },
+  {
+    "incident_id": "93db351b-bfb1-4eff-9c6a-65e4df7e630c",
+    "category": "Normal",
+    "event_count": 1402,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "Qwen2.5": 4,
+      "GPT-4o": 7,
+      "Qwen2.5 3b": 3,
+      "GPT-4o-mini": 8
+    },
+    "justification": "Summary D provides a clear and concise overview of the incident, correctly identifying the non-SSL connections as medium severity and aligning with the ground truth of 'Normal' by not exaggerating the threat level. It offers actionable intelligence by highlighting suspicious outbound connections without overemphasizing the risk. Summary B also performs well by identifying unauthorized connection attempts and non-standard use of port 443, but it slightly overstates the severity of the situation. Summary A fails to provide a coherent severity breakdown and miscategorizes the threat level, leading to confusion. Summary C incorrectly labels normal network activity as 'CRITICAL,' which is misleading and does not align with the ground truth. Overall, D and B provide the most accurate and actionable insights, while A and C miss critical details and misinterpret the severity of the events."
+  },
+  {
+    "incident_id": "b1411186-df83-444e-b8b4-208153bb24ec",
+    "category": "Malware",
+    "event_count": 715,
+    "threat_level": 15.400000000000006,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 4,
+      "Qwen2.5 3b": 6,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D is ranked highest as it accurately identifies the key threats, including the horizontal port scan and connections to multiple blacklisted IPs. It provides clear and actionable intelligence by detailing the suspicious activities and potential malicious connections, aligning well with the ground truth category of 'Malware'. Summary A is also effective, clearly outlining the port scan and blacklisted IP connections, but it slightly underrepresents the severity of the incident. Summary C provides a comprehensive overview but miscategorizes the severity levels and lacks clarity in presenting the threat landscape. Summary B is the least effective, with inaccuracies in severity breakdown and a lack of clarity and detail, making it less actionable and trustworthy for incident response. Overall, Summary D offers the best balance of accuracy, completeness, clarity, and professional quality, making it the most reliable for a security operations center."
+  },
+  {
+    "incident_id": "bea2a0d7-8879-4ab0-8a38-288635c22c33",
+    "category": "Malware",
+    "event_count": 3964,
+    "threat_level": 15.680000000000007,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 5,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 7
+    },
+    "justification": "Summary C best identifies the key threats by accurately highlighting the horizontal port scan and unauthorized connections to blacklisted IPs, which aligns well with the ground truth category of 'Malware'. It provides comprehensive coverage of critical events and offers actionable intelligence by detailing the malicious behavior patterns. Summary D also identifies the horizontal port scan and suspicious connections but lacks some detail on the blacklisted IP connections. Summary B is less accurate, with some incorrect details such as critical severity levels and a focus on non-existent services, which reduces its actionability. Summary A is the least accurate, with incorrect port and threat level details, making it unreliable for incident response. Overall, Summary C aligns best with the ground truth, providing a clear and actionable overview of the incident."
+  },
+  {
+    "incident_id": "55255ea5-5fea-4cd8-98a7-fcc19a3697eb",
+    "category": "Normal",
+    "event_count": 29,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8,
+      "Qwen2.5 3b": 5,
+      "Qwen2.5": 3
+    },
+    "justification": "Summary B is ranked highest as it accurately identifies the key threats of unauthorized SMTP connections and vertical port scanning, and provides a clear and actionable analysis of the incident. It correctly categorizes the severity levels and aligns well with the ground truth of 'Normal' by not overstating the threat. Summary A is also clear and actionable but slightly misrepresents the severity breakdown, which affects its accuracy. Summary C incorrectly categorizes the severity of the events, marking medium severity events as high, which could lead to unnecessary escalation. Summary D is the least accurate, with incorrect details such as SSL/TLS connections and an incorrect severity breakdown, making it unreliable for incident response. Overall, B provides the most actionable intelligence with a balanced assessment of the situation."
+  },
+  {
+    "incident_id": "f3626386-2102-4f0d-9f35-0cbbd9f36b08",
+    "category": "Malware",
+    "event_count": 3609,
+    "threat_level": 15.000000000000005,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "GPT-4o": 9,
+      "Qwen2.5 3b": 3,
+      "Qwen2.5": 5
+    },
+    "justification": "Summary B best identifies the key threats by accurately highlighting the horizontal port scanning on port 443 and connections to blacklisted IPs, which aligns with the ground truth of a malware incident. It provides actionable intelligence by clearly outlining the unauthorized connections and potential network compromise. Summary A also identifies the port scanning and blacklisted IP connections but lacks the clarity and detail of Summary B. Summary D contains incorrect information about ICMP traffic and does not focus on the critical malware-related activities, thus providing less actionable intelligence. Summary C is the least accurate, with incorrect timelines and activities that do not match the provided data, failing to identify the malware threat. Overall, Summary B aligns best with the ground truth category, providing a comprehensive and clear analysis of the incident."
+  },
+  {
+    "incident_id": "bbdb68aa-9fe6-484b-b351-37f847b16852",
+    "category": "Malware",
+    "event_count": 2407,
+    "threat_level": 15.640000000000006,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "Qwen2.5 3b",
+      "2": "GPT-4o",
+      "3": "GPT-4o-mini",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 9,
+      "GPT-4o-mini": 6,
+      "GPT-4o": 7
+    },
+    "justification": "Summary B best identifies the key threats by clearly highlighting connections to known malware C2 IPs and unauthorized access attempts, aligning well with the ground truth category of 'Malware'. It provides actionable intelligence by specifying critical and high-severity events that require immediate attention. Summary D also provides a clear picture of suspicious activities, including port scanning and connections to blacklisted IPs, but lacks the critical emphasis on malware C2 connections found in Summary B. Summary C captures the scanning behavior and connections to blacklisted IPs but misses the critical malware C2 connections, making it less actionable. Summary A is the least effective, as it provides vague descriptions and incorrect severity breakdowns, failing to highlight critical threats and offering limited actionable intelligence. Overall, Summary B aligns best with the ground truth and provides the most comprehensive and actionable insights for incident response."
+  },
+  {
+    "incident_id": "c6f77f1e-46ce-4106-a814-990ef8429bcb",
+    "category": "Malware",
+    "event_count": 3150,
+    "threat_level": 15.080000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "Qwen2.5 3b",
+      "2": "GPT-4o-mini",
+      "3": "GPT-4o",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 9,
+      "GPT-4o": 6,
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 3
+    },
+    "justification": "Summary A best identifies the key threats by highlighting connections to known malicious C2 servers and categorizing them as CRITICAL, which aligns with the ground truth of a malware incident. It provides a clear and actionable summary of the prohibited network activity, making it highly useful for incident response. Summary C also identifies suspicious outbound connections and blacklisted IPs, but lacks the critical severity assessment found in A. Summary B provides a detailed list of connections but fails to emphasize the malware nature of the incident, focusing more on low-severity events. Summary D is inaccurate and irrelevant to the incident, with incorrect source IP and threat level, and does not align with the ground truth category. Overall, A provides the most actionable intelligence, while D misses critical details and is not aligned with the incident's context."
+  },
+  {
+    "incident_id": "322435a0-21bf-4095-813f-1dd99564faa0",
+    "category": "Malware",
+    "event_count": 873,
+    "threat_level": 15.640000000000006,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "GPT-4o-mini": 9,
+      "GPT-4o": 8,
+      "Qwen2.5 3b": 5
+    },
+    "justification": "Summary B best identifies the key threats by highlighting the horizontal port scan and connections to blacklisted IPs, which are critical indicators of malware activity. It provides actionable intelligence by clearly outlining suspicious activities and potential malicious intent. Summary C also captures the main threats but lacks some clarity in threat level assessment. Summary D introduces unnecessary complexity with incorrect severity levels, such as labeling events as 'CRITICAL' without justification. Summary A fails to accurately represent the event data, missing the high-severity port scan and misrepresenting severity levels, making it the least useful for incident response. Overall, Summary B aligns best with the ground truth category of 'Malware' by focusing on the most critical events and providing a clear, actionable summary."
+  },
+  {
+    "incident_id": "3b825d6a-1eae-4321-8aeb-82a39af10ce5",
+    "category": "Malware",
+    "event_count": 33,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5 3b": 6,
+      "Qwen2.5": 4,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D best identifies the key threats by accurately highlighting the horizontal port scan on port 443 and the suspicious connections to port 449, aligning well with the ground truth of malware activity. It provides clear and actionable intelligence for incident response, focusing on the most critical events. Summary A is also strong, but it slightly underrepresents the severity of the events by missing some medium severity details. Summary B includes unauthorized access attempts but introduces some inaccuracies, such as the incorrect severity breakdown and flow descriptions. Summary C is the least effective, as it contains multiple errors in severity assessment and introduces unrelated incidents, which detracts from its clarity and actionability. Overall, Summary D aligns best with the ground truth category of malware, providing a clear and professional quality analysis suitable for a security operations center."
+  },
+  {
+    "incident_id": "311e9654-c70d-48aa-b5fd-7cf8fd934d8d",
+    "category": "Malware",
+    "event_count": 125,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_qwen2_5_analysis"
+    },
+    "rankings": {
+      "1": "Qwen2.5 3b",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "Qwen2.5 3b": 9,
+      "GPT-4o": 1,
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 5
+    },
+    "justification": "Summary A best identifies the key threats by accurately highlighting the horizontal port scanning and multiple reconnection attempts, which are critical indicators of malware activity. It provides a clear and actionable overview, making it highly useful for incident response. Summary C also identifies key threats but lacks some details and has a lower severity breakdown accuracy. Summary D contains inaccuracies in the timeline and severity assessment, misclassifying critical events, thus reducing its reliability. Summary B fails to provide any useful information due to an error, making it the least useful. Summary A aligns well with the ground truth category of malware, providing a comprehensive and professional quality analysis."
+  },
+  {
+    "incident_id": "033d4d42-2666-415f-808c-df91ec654790",
+    "category": "Malware",
+    "event_count": 5405,
+    "threat_level": 15.440000000000005,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5 3b": 5,
+      "Qwen2.5": 2,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D best identifies the key threats by accurately describing the horizontal port scan and connections to blacklisted IPs, aligning well with the ground truth of malware. It provides actionable intelligence by highlighting suspicious network scanning and potential botnet behavior. Summary A also captures the critical events but lacks clarity in severity assessment and actionability. Summary B miscategorizes threat levels and lacks specific details on the scanning activity, reducing its usefulness. Summary C fails to provide a coherent analysis of the incident, missing critical details and misrepresenting the nature of the events, leading to its lowest ranking."
+  },
+  {
+    "incident_id": "8130246a-1c93-482e-a657-2d852a2d66fb",
+    "category": "Malware",
+    "event_count": 4952,
+    "threat_level": 15.560000000000006,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o-mini": 7,
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 5,
+      "GPT-4o": 9
+    },
+    "justification": "Summary D best identifies the key threats by accurately describing the horizontal port scan and connections to blacklisted IPs, aligning well with the ground truth of 'Malware'. It provides clear and actionable intelligence, highlighting malicious scanning and unauthorized communications. Summary A also identifies key threats but lacks some clarity and completeness compared to D. Summary C provides some useful information but misses the broader context of the incident, particularly the high-severity events. Summary B is the least useful, as it fails to accurately capture the severity and scope of the incident, missing critical details such as the high number of events and specific malicious activities. Overall, D aligns best with the ground truth category and provides the most comprehensive and actionable insights."
+  },
+  {
+    "incident_id": "878351ee-8ffc-4bf6-ba68-0cafb6c6fae3",
+    "category": "Normal",
+    "event_count": 166,
+    "threat_level": 15.200000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "Qwen2.5",
+      "2": "GPT-4o-mini",
+      "3": "GPT-4o",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "Qwen2.5": 9,
+      "Qwen2.5 3b": 4,
+      "GPT-4o": 6,
+      "GPT-4o-mini": 8
+    },
+    "justification": "Summary A best identifies the key threats by providing a balanced view of the incident, correctly assessing the severity of events, and aligning with the ground truth category of 'Normal'. It highlights the potential for false positives and suggests further investigation without overestimating the threat level. Summary D also provides a clear and actionable overview but slightly overemphasizes the threat level by labeling the activity as 'malicious'. Summary C provides some useful insights but lacks clarity and mislabels the severity of events, which could lead to unnecessary alarm. Summary B is the least accurate, as it incorrectly categorizes the incident as 'CRITICAL' and 'HIGH', which is inconsistent with the ground truth of 'Normal'. This could lead to misallocation of resources and unnecessary escalation."
+  },
+  {
+    "incident_id": "90259357-d22b-4763-9a27-92c11c6a3e53",
+    "category": "Malware",
+    "event_count": 750,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "Qwen2.5": 6,
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3b": 4,
+      "GPT-4o": 9
+    },
+    "justification": "Summary D best identifies the key threats by clearly outlining the vertical port scan and the attempts to connect to high-numbered ports, which aligns well with the ground truth of a malware incident. It provides actionable intelligence by specifying the nature of the threat and the specific ports involved. Summary B also identifies the port scan and connections but lacks the clarity and completeness of D. Summary A provides some details but is less clear and complete, missing specific threat levels and actions. Summary C is the least useful, with incomplete information and lacking clarity in threat identification. Overall, D aligns best with the ground truth category of malware, providing a comprehensive and actionable summary."
+  },
+  {
+    "incident_id": "5607229c-55d7-4186-87e9-e836ace00f88",
+    "category": "Normal",
+    "event_count": 1028,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 5,
+      "GPT-4o-mini": 7,
+      "GPT-4o": 8
+    },
+    "justification": "Summary D best identifies the key threats by accurately categorizing the activity as unusual outbound connections with a proper severity assessment, aligning well with the ground truth of 'Normal'. It provides actionable intelligence by highlighting the non-SSL connections and lack of DNS resolution, which could indicate misconfiguration rather than malicious activity. Summary C also provides a clear view of the non-SSL connections and potential issues but lacks the detailed context provided in D. Summary B miscategorizes the severity levels and does not clearly differentiate between the types of connections, reducing its actionability. Summary A is the least accurate, with incorrect severity breakdowns and misleading information about DNS leaks and port forwarding, which do not align with the ground truth category."
+  },
+  {
+    "incident_id": "f1986bd6-d690-45b6-82b5-183c70410cc6",
+    "category": "Normal",
+    "event_count": 521,
+    "threat_level": 15.200000000000008,
+    "randomization": {
+      "A": "llm_gpt_4o_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 5,
+      "Qwen2.5 3b": 6
+    },
+    "justification": "Summary A best identifies the key threats by accurately describing the non-SSL connections and the lack of DNS resolution, which are the main points of interest in the raw data. It provides a clear and concise overview that aligns with the 'Normal' ground truth by not overstating the severity of the incident. Summary B also captures the main activities but introduces a high severity level that is not supported by the data, slightly reducing its accuracy. Summary D provides a detailed account but misclassifies the severity levels, which could lead to unnecessary alarm. Summary C is the least accurate, incorrectly labeling a medium event as high severity and missing the broader context of the incident, thus not aligning well with the ground truth category. Summary A offers the most actionable intelligence by clearly outlining the behavior without exaggerating the threat level, making it the most useful for incident response."
+  },
+  {
+    "incident_id": "63c97487-975b-464a-8e38-58f9691e30c3",
+    "category": "Malware",
+    "event_count": 3925,
+    "threat_level": 15.360000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5:3b_analysis",
+      "B": "llm_qwen2_5_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5 3b": 5,
+      "Qwen2.5": 2,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 9
+    },
+    "justification": "- Summary D best identifies the key threats by clearly highlighting the horizontal port scan and connections to blacklisted IPs, aligning well with the 'Malware' ground truth. It provides a comprehensive view of the suspicious activities and is actionable for incident response.\n- Summary C also provides a detailed account of the events, including the port scan and connections to blacklisted IPs, but is slightly less clear in its presentation compared to D.\n- Summary A misses some critical details, such as the specific IPs involved in the malicious activities, and incorrectly categorizes the severity breakdown, which affects its accuracy and actionability.\n- Summary B is the least effective, as it fails to capture the majority of the critical events and misrepresents the severity of the incident, making it unreliable for a security operations center.\n- Overall, D and C align well with the ground truth category, while A and B fall short in accuracy and completeness."
+  },
+  {
+    "incident_id": "5f6f48da-8412-4691-a47d-1c8a4e71b2bc",
+    "category": "Malware",
+    "event_count": 31,
+    "threat_level": 15.100000000000001,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 4,
+      "Qwen2.5 3b": 6,
+      "GPT-4o-mini": 9,
+      "GPT-4o": 8
+    },
+    "justification": "Summary C best identifies the key threats by clearly outlining the horizontal port scan to port 443/TCP and the connection attempts to port 449/TCP, aligning well with the ground truth category of 'Malware'. It provides a concise and actionable overview of the suspicious activities, making it highly useful for incident response. Summary D also provides a clear description of the events but lacks some detail compared to C. Summary B misses some clarity in describing the threat activities and does not emphasize the horizontal scan as effectively. Summary A is the least effective, with inaccuracies in severity breakdown and a lack of clarity in describing the key threats, making it less actionable. Overall, C aligns best with the ground truth and provides the most actionable intelligence, while A fails to capture critical details accurately."
+  },
+  {
+    "incident_id": "4fc45322-77d4-40f2-a2a4-cafffc31b7b5",
+    "category": "Malware",
+    "event_count": 2685,
+    "threat_level": 15.240000000000006,
+    "randomization": {
+      "A": "llm_gpt4o_mini_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_gpt_4o_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "Qwen2.5 3b",
+      "3": "Qwen2.5",
+      "4": "GPT-4o"
+    },
+    "scores": {
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3b": 6,
+      "Qwen2.5": 4,
+      "GPT-4o": 1
+    },
+    "justification": "Summary A best identifies the key threats by highlighting the horizontal port scans and connections to blacklisted IPs, which aligns with the ground truth of a malware incident. It provides a comprehensive overview of the high and medium severity events, making it the most actionable for incident response. Summary B lacks completeness as it misses some high-severity events and incorrectly categorizes severity levels, but still provides a decent overview of the malicious activities. Summary C is incomplete and lacks clarity, failing to provide a detailed analysis of the incident. Summary D is unusable due to an error, providing no actionable intelligence. Summary A aligns well with the ground truth category by emphasizing the malicious scanning and connections, while B partially aligns, and C and D fail to align effectively."
+  },
+  {
+    "incident_id": "2efcf77c-1f1a-4074-a4f8-05c3557b78b4",
+    "category": "Malware",
+    "event_count": 203,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_qwen2_5:3b_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "GPT-4o": 7,
+      "Qwen2.5 3b": 5,
+      "GPT-4o-mini": 8
+    },
+    "justification": "Summary D is ranked highest as it accurately identifies the key threats, including suspicious outbound connections and reconnection attempts, aligning well with the ground truth of a malware incident. It provides clear and actionable intelligence by highlighting potential reconnaissance or compromise. Summary B is second, offering a good overview of the suspicious activities, though it lacks some depth in threat categorization. Summary C is third, as it captures the reconnection attempts but misses some clarity and completeness in threat assessment. Summary A is ranked lowest due to inaccuracies in severity assessment and lack of clarity, which could mislead incident response efforts. Overall, Summary D best aligns with the ground truth category of malware, providing a comprehensive and professional quality analysis."
+  },
+  {
+    "incident_id": "793a3f26-73b3-49b1-86c3-ac78fb19de70",
+    "category": "Normal",
+    "event_count": 58,
+    "threat_level": 15.499999999999993,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o-mini",
+      "2": "GPT-4o",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "Qwen2.5": 5,
+      "GPT-4o-mini": 8,
+      "GPT-4o": 7,
+      "Qwen2.5 3b": 4
+    },
+    "justification": "Summary B best identifies the key threats by accurately detailing the high-severity events such as horizontal and vertical port scans and connections to blacklisted IPs. It provides actionable intelligence by clearly outlining the activities and their implications, which aligns well with the ground truth of 'Normal' by not overemphasizing the threat level. Summary C also provides a clear overview but lacks some detail in the severity breakdown and actionability compared to B. Summary A misses critical high-severity events and incorrectly categorizes the severity breakdown, reducing its usefulness. Summary D contains inaccuracies, such as a 'CRITICAL' severity level that was not present in the raw data, and misrepresents the nature of the incident, making it the least reliable and actionable summary. Overall, summaries B and C align better with the ground truth, while A and D fail in either accuracy or clarity."
+  },
+  {
+    "incident_id": "7fc20ce2-662b-48e5-96fa-4a3a23784d00",
+    "category": "Normal",
+    "event_count": 30,
+    "threat_level": 15.3,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 5,
+      "GPT-4o": 8,
+      "GPT-4o-mini": 7
+    },
+    "justification": "Summary C best identifies the key threats by clearly outlining unauthorized SMTP attempts and a vertical port scan, providing a concise and accurate representation of the events. It aligns well with the ground truth of 'Normal' by not overstating the threat level. Summary D is also clear and actionable but slightly less concise than C. Summary B provides some useful details but overstates the threat level by labeling multiple activities as high threat, which is inconsistent with the ground truth. Summary A is the least effective, missing critical details and incorrectly categorizing the severity of events, making it less useful for incident response. Overall, C and D provide the most actionable intelligence, while A fails to align with the ground truth category, leading to its lower score."
+  },
+  {
+    "incident_id": "66860469-34c1-4a72-a4f7-888528d8918f",
+    "category": "Malware",
+    "event_count": 121,
+    "threat_level": 15.350000000000001,
+    "randomization": {
+      "A": "llm_gpt_4o_analysis",
+      "B": "llm_gpt4o_mini_analysis",
+      "C": "llm_qwen2_5_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5": 6,
+      "Qwen2.5 3b": 5
+    },
+    "justification": "Summary A best identifies the key threats by accurately describing the unauthorized horizontal port scanning and suspicious connections, aligning well with the ground truth of malware. It provides clear and actionable intelligence, highlighting the critical events with appropriate severity. Summary B also captures the main threats but lacks some detail compared to A, making it slightly less actionable. Summary C misses some critical details, such as the specific number of events and the correct severity breakdown, which affects its clarity and actionability. Summary D contains inaccuracies in the severity breakdown and repeats information, reducing its professional quality and trustworthiness. Overall, A aligns best with the ground truth category, followed by B, while C and D have notable deficiencies in accuracy and completeness."
+  },
+  {
+    "incident_id": "9bcb9d22-f168-4f85-8d2c-20d33507a374",
+    "category": "Malware",
+    "event_count": 3302,
+    "threat_level": 15.360000000000005,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_gpt_4o_analysis",
+      "C": "llm_gpt4o_mini_analysis",
+      "D": "llm_qwen2_5:3b_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5",
+      "4": "Qwen2.5 3b"
+    },
+    "scores": {
+      "Qwen2.5": 5,
+      "GPT-4o": 9,
+      "GPT-4o-mini": 8,
+      "Qwen2.5 3b": 4
+    },
+    "justification": "Summary B best identifies the key threats by clearly outlining the horizontal port scanning, non-SSL connections to port 443, and connections to blacklisted IPs, which align with the ground truth of a 'Malware' incident. It provides actionable intelligence by highlighting potential reconnaissance and unauthorized data communication activities. Summary C also identifies key threats and provides a good level of detail but is slightly less clear in its presentation. Summary A misses critical high-severity events and focuses more on low-severity activities, making it less actionable. Summary D contains inaccuracies, such as incorrect threat levels and non-existent critical events, which misalign with the ground truth category and reduce its professional quality and trustworthiness."
+  },
+  {
+    "incident_id": "b52d0260-2b3b-4e6a-a2d8-dd8bd53d2942",
+    "category": "Normal",
+    "event_count": 59,
+    "threat_level": 15.0,
+    "randomization": {
+      "A": "llm_qwen2_5_analysis",
+      "B": "llm_qwen2_5:3b_analysis",
+      "C": "llm_gpt_4o_analysis",
+      "D": "llm_gpt4o_mini_analysis"
+    },
+    "rankings": {
+      "1": "GPT-4o",
+      "2": "GPT-4o-mini",
+      "3": "Qwen2.5 3b",
+      "4": "Qwen2.5"
+    },
+    "scores": {
+      "Qwen2.5": 3,
+      "Qwen2.5 3b": 5,
+      "GPT-4o": 8,
+      "GPT-4o-mini": 7
+    },
+    "justification": "Summary C best identifies the key threats by accurately describing the vertical port scan and the blacklisted IP's suspicious behavior, aligning well with the ground truth of being a 'Normal' incident due to the lack of actual malicious intent. It provides actionable intelligence by highlighting unauthorized access attempts and spam behavior, which are critical for understanding the context of the incident. Summary D also provides a good overview but lacks some clarity in the description of the events. Summary B is less accurate, with some incorrect threat level assessments and a less clear narrative. Summary A is the least useful, as it misidentifies the type of scan and provides an inaccurate severity breakdown, failing to cover the critical events adequately. Overall, C and D align better with the ground truth, while A and B miss key details or provide incorrect information."
+  }
+]
