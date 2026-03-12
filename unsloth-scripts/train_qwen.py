@@ -9,6 +9,7 @@ import yaml
 import torch
 from datasets import load_dataset
 from unsloth import FastLanguageModel
+from unsloth.chat_templates import get_chat_template
 from trl import SFTTrainer
 from transformers import TrainingArguments
 import wandb
@@ -45,6 +46,9 @@ def load_model_and_tokenizer(model_config):
         loftq_config=model_config.get("loftq_config", None),
     )
     
+    # Set chat template for the tokenizer
+    tokenizer = get_chat_template(tokenizer, chat_template="qwen-2.5")
+
     return model, tokenizer
 
 def prepare_dataset(dataset_config, tokenizer):
@@ -161,4 +165,6 @@ def main():
     print("Training completed successfully!")
 
 if __name__ == "__main__":
+    import torch._dynamo
+    torch._dynamo.config.disable = True
     main()

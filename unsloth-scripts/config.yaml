@@ -2,7 +2,7 @@
 
 # Model Configuration
 model:
-  model_name: "unsloth/Qwen2.5-3B"  # Options: Qwen3-4B, Qwen3-8B, Qwen3-14B, Qwen3-32B
+  model_name: "unsloth/Qwen2.5-1.5B"  # Options: Qwen3-4B, Qwen3-8B, Qwen3-14B, Qwen3-32B
   max_seq_length: 2048  # Sequence length (adjust based on your needs)
   dtype: null  # Auto-detect best dtype
   load_in_4bit: true  # Use 4-bit quantization for memory efficiency
@@ -28,7 +28,7 @@ model:
 dataset:
   type: "local"  # Options: "huggingface", "local"
   name: "mixed_dataset"  # Hugging Face dataset name (if type is huggingface)
-  path: "mixed_dataset.json"  # Local dataset path (if type is local)
+  path: "test_dataset.json"  # Local dataset path (if type is local)
   split: "train"  # Dataset split to use
   text_column: "conversation"  # Column name containing conversations
   use_chat_template: true  # Apply chat template formatting
@@ -40,18 +40,18 @@ training:
   gradient_accumulation_steps: 4  # Gradient accumulation steps
   
   # Learning rate and schedule
-  learning_rate: 2e-4  # Learning rate
+  learning_rate: 0.0002  # Learning rate
   lr_scheduler_type: "linear"  # Learning rate scheduler
   warmup_steps: 5  # Warmup steps
   weight_decay: 0.01  # Weight decay
   
   # Training duration
   num_train_epochs: 3  # Number of training epochs
-  max_steps: -1  # Maximum training steps (-1 for full epochs)
+  max_steps: 10  # Maximum training steps (-1 for full epochs)
   
   # Precision and optimization
-  fp16: false  # Use FP16 (auto-detected based on GPU)
-  bf16: true  # Use BF16 (auto-detected based on GPU)
+  fp16: true  # Use FP16 (auto-detected based on GPU)
+  bf16: false  # Use BF16 (auto-detected based on GPU)
   optimizer: "adamw_8bit"  # Optimizer
   
   # Logging and saving
@@ -60,7 +60,7 @@ training:
   save_total_limit: 3  # Maximum number of saved checkpoints
   
   # Output directory
-  output_dir: "./qwen_finetuned"  # Output directory for model and checkpoints
+output_dir: "/home/harpo/CEPH/LLM-models/qwen_finetuned"  # Output directory for model and checkpoints
   
   # Data processing
   dataset_num_proc: 2  # Number of processes for dataset processing
@@ -68,7 +68,7 @@ training:
   packing: false  # Pack sequences for efficiency
   
   # Reporting
-  report_to: ["wandb"]  # Reporting services (wandb, tensorboard, etc.)
+  report_to: []  # Reporting services (wandb, tensorboard, etc.)
   
   # Model saving format
   save_method: "merged_16bit"  # Options: "lora", "merged_16bit", "merged_4bit"
