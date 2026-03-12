@@ -19,7 +19,8 @@ MODEL_LABELS = {
     'llm_gpt_4o_analysis': 'GPT-4o',
     'llm_gpt4o_mini_analysis': 'GPT-4o-mini',
     'llm_qwen2_5:3b_analysis': 'Qwen2.5 3b',
-    'llm_qwen2_5_analysis': 'Qwen2.5'
+    'llm_qwen2_5_analysis': 'Qwen2.5',
+    'llm_finetuned_analysis': 'Finetuned',
 }
 
 def load_evaluation_sample(filepath: str) -> List[Dict]:
@@ -45,14 +46,18 @@ def create_judge_prompt(
     category = incident['category']
     incident_id = incident['incident_id']
 
-    prompt = f"""You are an experienced network security analyst conducting incident response. Your task is to evaluate 4 AI-generated security incident summaries based on your professional expertise.
+    n = len(randomized_summaries)
+    label_str = ', '.join(s[0] for s in randomized_summaries)
+    rank_str = ', '.join(str(i) for i in range(1, n + 1))
+
+    prompt = f"""You are an experienced network security analyst conducting incident response. Your task is to evaluate {n} AI-generated security incident summaries based on your professional expertise.
 
 You will be shown:
 1. The raw security event data (DAG analysis)
-2. Four different AI-generated summaries (labeled A, B, C, D)
+2. {n} different AI-generated summaries (labeled {label_str})
 3. The ground truth category (Malware/Normal)
 
-Your job is to rank these summaries from best (1) to worst (4) based on which would be most useful for your incident response work.
+Your job is to rank these summaries from best (1) to worst ({n}) based on which would be most useful for your incident response work.
 
 **Evaluation Criteria:**
 - **Accuracy**: Does it correctly identify threats from the evidence?
@@ -94,31 +99,23 @@ Your job is to rank these summaries from best (1) to worst (4) based on which wo
 ---
 """
 
-    prompt += """
+    rankings_example = {str(i+1): chr(ord('A')+i) for i in range(n)}
+    scores_example = {chr(ord('A')+i): 'N' for i in range(n)}
+    prompt += f"""
 
 ## YOUR EVALUATION TASK
 
 Please provide your evaluation in the following JSON format:
 
 ```json
-{
-  "rankings": {
-    "1": "X",
-    "2": "Y",
-    "3": "Z",
-    "4": "W"
-  },
-  "scores": {
-    "A": N,
-    "B": N,
-    "C": N,
-    "D": N
-  },
-  "justification": "Your detailed explanation as a security analyst. Explain:\n- Which summary best identifies the key threats?\n- Which provides the most actionable intelligence?\n- What critical details were missed or incorrect in lower-ranked summaries?\n- How well does each align with the ground truth category?"
-}
+{{
+  "rankings": {json.dumps(rankings_example)},
+  "scores": {json.dumps(scores_example)},
+  "justification": "Your detailed explanation as a security analyst. Explain:\\n- Which summary best identifies the key threats?\\n- Which provides the most actionable intelligence?\\n- What critical details were missed or incorrect in lower-ranked summaries?\\n- How well does each align with the ground truth category?"
+}}
 ```
 
-**Rankings**: Assign positions 1 (best) through 4 (worst) to summaries A, B, C, D
+**Rankings**: Assign positions 1 (best) through {n} (worst) to summaries {label_str}
 **Scores**: Rate each summary on a 1-10 scale (10 = excellent, 1 = poor)
 **Justification**: Provide your professional analysis explaining the rankings
 
@@ -130,6 +127,7 @@ Respond ONLY with valid JSON. No additional text before or after.
 def randomize_summaries(incident: Dict) -> Tuple[List[Tuple[str, str, str]], Dict[str, str]]:
     """
     Randomize the order of model outputs to avoid position bias.
+    Only includes models that are present in the incident data.
 
     Args:
         incident: The incident data
@@ -137,10 +135,10 @@ def randomize_summaries(incident: Dict) -> Tuple[List[Tuple[str, str, str]], Dic
     Returns:
         Tuple of (randomized summaries list, label_to_model mapping)
     """
-    models = list(MODEL_LABELS.keys())
+    models = [k for k in MODEL_LABELS.keys() if k in incident]
     random.shuffle(models)
 
-    labels = ['A', 'B', 'C', 'D']
+    labels = ['A', 'B', 'C', 'D', 'E']
     randomized = []
     label_to_model = {}
 
@@ -154,45 +152,56 @@ def randomize_summaries(incident: Dict) -> Tuple[List[Tuple[str, str, str]], Dic
 
 def call_judge_llm(prompt: str, client: OpenAI, model: str = "gpt-4o") -> Dict:
     """
-    Call the judge LLM (GPT-4o) to evaluate summaries.
+    Call the judge LLM to evaluate summaries.
 
     Args:
         prompt: The evaluation prompt
-        client: OpenAI client
-        model: Model to use (default gpt-4o)
+        client: OpenAI-compatible client
+        model: Model to use
 
     Returns:
         Parsed JSON response from judge
     """
+    kwargs = dict(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": "You are an experienced network security analyst. Respond only with valid JSON."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0.3,
+    )
+
+    # Try with json_object response format first; fall back if unsupported
     try:
         response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are an experienced network security analyst. Respond only with valid JSON."
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            temperature=0.3,  # Lower temperature for more consistent evaluation
+            **kwargs,
             response_format={"type": "json_object"}
         )
+    except Exception:
+        response = client.chat.completions.create(**kwargs)
 
-        result = json.loads(response.choices[0].message.content)
-        return result
-
+    try:
+        content = response.choices[0].message.content
+        # Strip markdown code fences if present
+        if content.strip().startswith("```"):
+            content = content.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        return json.loads(content)
     except Exception as e:
-        print(f"Error calling judge LLM: {e}")
+        print(f"Error parsing judge response: {e}")
         raise
 
 def evaluate_incident(
     incident: Dict,
     client: OpenAI,
     incident_num: int,
-    total_incidents: int
+    total_incidents: int,
+    judge_model: str = "gpt-4o"
 ) -> Dict:
     """
     Evaluate a single incident with all model outputs.
@@ -218,8 +227,8 @@ def evaluate_incident(
     prompt = create_judge_prompt(incident, randomized_summaries)
 
     # Call judge LLM
-    print(f"  Calling GPT-4o judge...")
-    judge_response = call_judge_llm(prompt, client)
+    print(f"  Calling judge LLM...")
+    judge_response = call_judge_llm(prompt, client, model=judge_model)
 
     # Map labels back to model names
     rankings = judge_response.get('rankings', {})
@@ -266,13 +275,18 @@ def main():
     import argparse
 
     # Parse command-line arguments
-    parser = argparse.ArgumentParser(description='Evaluate LLM summaries using GPT-4o as judge (network analyst)')
+    parser = argparse.ArgumentParser(description='Evaluate LLM summaries using an LLM-as-judge (OpenAI-compatible API)')
     parser.add_argument('--input', '-i', default='datasets/summary_sample.json',
                         help='Path to evaluation sample JSON file (default: datasets/summary_sample.json)')
     parser.add_argument('--output', '-o', default='results/summary_results.json',
                         help='Path to output results JSON file (default: results/summary_results.json)')
     parser.add_argument('--judge', '-j', default='gpt-4o',
                         help='Judge model to use (default: gpt-4o)')
+    parser.add_argument('--base-url', default=None,
+                        help='Base URL for OpenAI-compatible API (e.g. http://localhost:3000/api). '
+                             'Defaults to official OpenAI endpoint.')
+    parser.add_argument('--api-key', default=None,
+                        help='API key for the endpoint. Falls back to OPENAI_API_KEY env var.')
 
     args = parser.parse_args()
 
@@ -280,22 +294,22 @@ def main():
     input_file = args.input
     output_file = args.output
     judge_model = args.judge
+    api_key = args.api_key or os.getenv("OPENAI_API_KEY") or "no-key"
+    base_url = args.base_url
 
-    print(f"Input:  {input_file}")
-    print(f"Output: {output_file}")
-    print(f"Judge:  {judge_model}")
+    print(f"Input:    {input_file}")
+    print(f"Output:   {output_file}")
+    print(f"Judge:    {judge_model}")
+    print(f"Base URL: {base_url or 'OpenAI default'}")
 
     # Create results directory if needed
     os.makedirs(os.path.dirname(output_file) if os.path.dirname(output_file) else "results", exist_ok=True)
 
-    # Check for API key
-    if not os.getenv("OPENAI_API_KEY"):
-        print("\nError: OPENAI_API_KEY not found in environment")
-        print("Please set it in .env file or export it")
-        return
-
-    # Initialize OpenAI client
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    # Initialize OpenAI-compatible client
+    client_kwargs = {"api_key": api_key}
+    if base_url:
+        client_kwargs["base_url"] = base_url
+    client = OpenAI(**client_kwargs)
 
     # Load evaluation sample
     print("\nLoading evaluation sample...")
@@ -309,7 +323,7 @@ def main():
     results = []
     for i, incident in enumerate(incidents, 1):
         try:
-            result = evaluate_incident(incident, client, i, len(incidents))
+            result = evaluate_incident(incident, client, i, len(incidents), judge_model=judge_model)
             results.append(result)
         except Exception as e:
             print(f"  ERROR: Failed to evaluate incident: {e}")
