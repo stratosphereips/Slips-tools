@@ -18,6 +18,7 @@ Conversation format:
   ]
 """
 
+import argparse
 import json
 import os
 
@@ -25,6 +26,8 @@ FILTERED_TRAIN = os.path.join(os.path.dirname(__file__), "filtered_train.json")
 FILTERED_EVAL  = os.path.join(os.path.dirname(__file__), "filtered_eval.json")
 TRAIN_OUT      = os.path.join(os.path.dirname(__file__), "train_dataset.json")
 EVAL_OUT       = os.path.join(os.path.dirname(__file__), "eval_dataset.json")
+
+DEFAULT_MAX_DAG_TOKENS = 0  # 0 = no limit
 
 MODEL_NAME_TO_FIELD = {
     "GPT-4o-mini": "llm_gpt4o_mini_analysis",
@@ -80,7 +83,30 @@ def get_best_model(scores: dict) -> str:
     return max(scores.items(), key=lambda x: x[1])[0]
 
 
-def build_conversation(incident: dict) -> dict | None:
+def truncate_dag(dag: str, max_tokens: int) -> tuple[str, bool]:
+    """Truncate DAG text at a clean line boundary.
+
+    Returns (truncated_text, was_truncated).
+    Splits on newlines so events are never cut mid-sentence.
+    """
+    if not max_tokens or len(dag.split()) <= max_tokens:
+        return dag, False
+
+    lines = dag.splitlines(keepends=True)
+    kept, count = [], 0
+    for line in lines:
+        line_tokens = len(line.split())
+        if count + line_tokens > max_tokens:
+            break
+        kept.append(line)
+        count += line_tokens
+
+    truncated = "".join(kept).rstrip()
+    truncated += f"\n[truncated: showing first ~{max_tokens} tokens of full DAG]"
+    return truncated, True
+
+
+def build_conversation(incident: dict, max_dag_tokens: int = 0) -> dict | None:
     scores = incident.get("scores", {})
     if not scores:
         return None
@@ -96,49 +122,66 @@ def build_conversation(incident: dict) -> dict | None:
         return None
 
     dag_analysis = incident.get("dag_analysis", "")
+    dag_analysis, truncated = truncate_dag(dag_analysis, max_dag_tokens)
 
-    return {
+    record = {
         "messages": [
             {"role": "system",    "content": SYSTEM_PROMPT},
             {"role": "user",      "content": dag_analysis},
             {"role": "assistant", "content": summary},
         ],
-        "incident_id":  incident.get("incident_id"),
-        "best_model":   best_model,
-        "best_score":   scores[best_model],
+        "incident_id":    incident.get("incident_id"),
+        "best_model":     best_model,
+        "best_score":     scores[best_model],
+        "dag_truncated":  truncated,
     }
+    return record
 
 
-def process_split(input_path: str, output_path: str, split_name: str):
+def process_split(input_path: str, output_path: str, split_name: str, max_dag_tokens: int = 0):
     with open(input_path) as f:
         incidents = json.load(f)
 
     records = []
     skipped = 0
+    truncated_count = 0
     model_counts: dict[str, int] = {}
 
     for incident in incidents:
-        record = build_conversation(incident)
+        record = build_conversation(incident, max_dag_tokens=max_dag_tokens)
         if record is None:
             skipped += 1
             continue
         records.append(record)
         model_counts[record["best_model"]] = model_counts.get(record["best_model"], 0) + 1
+        if record["dag_truncated"]:
+            truncated_count += 1
 
     with open(output_path, "w") as f:
         json.dump(records, f, indent=2)
 
-    print(f"{split_name}: {len(records)} records ({skipped} skipped) → {output_path}")
+    print(f"{split_name}: {len(records)} records ({skipped} skipped, {truncated_count} DAGs truncated) → {output_path}")
     for model, count in sorted(model_counts.items(), key=lambda x: -x[1]):
         pct = 100 * count / len(records) if records else 0
         print(f"  {model}: {count} ({pct:.1f}%)")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Select best model response per incident and build SFT conversation dataset.")
+    parser.add_argument("--max-dag-tokens", type=int, default=DEFAULT_MAX_DAG_TOKENS,
+                        help="Truncate DAG input at this many tokens at a clean line boundary, "
+                             "appending a truncation marker. 0 = no limit (default).")
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+    if args.max_dag_tokens:
+        print(f"DAG truncation enabled: max {args.max_dag_tokens} tokens per input\n")
     print("Building SFT conversation datasets from best-of-N selection...\n")
-    process_split(FILTERED_TRAIN, TRAIN_OUT, "Train")
+    process_split(FILTERED_TRAIN, TRAIN_OUT, "Train", max_dag_tokens=args.max_dag_tokens)
     print()
-    process_split(FILTERED_EVAL,  EVAL_OUT,  "Eval")
+    process_split(FILTERED_EVAL,  EVAL_OUT,  "Eval",  max_dag_tokens=args.max_dag_tokens)
 
 
 if __name__ == "__main__":
