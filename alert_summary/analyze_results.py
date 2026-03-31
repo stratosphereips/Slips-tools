@@ -70,6 +70,7 @@ def calculate_statistics(results: List[Dict]) -> Dict:
 
         # Collect scores
         for model, score in scores.items():
+            score = float(score)
             scores_list[model].append(score)
             category_performance[category][model]['scores'].append(score)
             complexity_performance[complexity][model]['scores'].append(score)
@@ -285,22 +286,24 @@ def generate_summary_report(stats: Dict) -> str:
 
 def export_to_csv(results: List[Dict], stats: Dict, output_path: str):
     """Export detailed results to CSV for further analysis."""
-    with open(output_path, 'w', newline='') as csvfile:
-        fieldnames = [
-            'incident_id', 'category', 'event_count', 'threat_level',
-            'rank_1', 'rank_2', 'rank_3', 'rank_4',
-            'gpt4o_score', 'gpt4o_mini_score', 'qwen15b_score', 'qwen_score',
-            'gpt4o_position', 'gpt4o_mini_position', 'qwen15b_position', 'qwen_position'
-        ]
+    models = stats['models']
+    n = len(models)
+    slug = lambda m: m.lower().replace(' ', '_').replace('.', '').replace('-', '_')
 
+    rank_fields = [f'rank_{i}' for i in range(1, n + 1)]
+    score_fields = [f'{slug(m)}_score' for m in models]
+    position_fields = [f'{slug(m)}_position' for m in models]
+
+    fieldnames = ['incident_id', 'category', 'event_count', 'threat_level'] + \
+                 rank_fields + score_fields + position_fields
+
+    with open(output_path, 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
         for result in results:
             rankings = result['rankings']
             scores = result['scores']
-
-            # Create position lookup (model -> position)
             model_positions = {model: int(pos) for pos, model in rankings.items()}
 
             row = {
@@ -308,19 +311,12 @@ def export_to_csv(results: List[Dict], stats: Dict, output_path: str):
                 'category': result['category'],
                 'event_count': result['event_count'],
                 'threat_level': result['threat_level'],
-                'rank_1': rankings.get('1', ''),
-                'rank_2': rankings.get('2', ''),
-                'rank_3': rankings.get('3', ''),
-                'rank_4': rankings.get('4', ''),
-                'gpt4o_score': scores.get('GPT-4o', ''),
-                'gpt4o_mini_score': scores.get('GPT-4o-mini', ''),
-                'qwen15b_score': scores.get('Qwen2.5 15B', ''),
-                'qwen_score': scores.get('Qwen2.5', ''),
-                'gpt4o_position': model_positions.get('GPT-4o', ''),
-                'gpt4o_mini_position': model_positions.get('GPT-4o-mini', ''),
-                'qwen15b_position': model_positions.get('Qwen2.5 15B', ''),
-                'qwen_position': model_positions.get('Qwen2.5', '')
             }
+            for i in range(1, n + 1):
+                row[f'rank_{i}'] = rankings.get(str(i), '')
+            for m in models:
+                row[f'{slug(m)}_score'] = scores.get(m, '')
+                row[f'{slug(m)}_position'] = model_positions.get(m, '')
 
             writer.writerow(row)
 

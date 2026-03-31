@@ -2,7 +2,7 @@
 
 # Model Configuration
 model:
-  model_name: "unsloth/Qwen2.5-1.5B"  # Options: Qwen3-4B, Qwen3-8B, Qwen3-14B, Qwen3-32B
+  model_name: "unsloth/Qwen2.5-1.5B-Instruct"  # Options: Qwen3-4B, Qwen3-8B, Qwen3-14B, Qwen3-32B
   max_seq_length: 2048  # Sequence length (adjust based on your needs)
   dtype: null  # Auto-detect best dtype
   load_in_4bit: true  # Use 4-bit quantization for memory efficiency
@@ -11,7 +11,7 @@ model:
   # LoRA Configuration
   lora_r: 16  # LoRA rank
   lora_alpha: 16  # LoRA alpha
-  lora_dropout: 0.1  # LoRA dropout
+  lora_dropout: 0.05  # LoRA dropout
   lora_targets:  # Target modules for LoRA
     - "q_proj"
     - "k_proj"
@@ -28,44 +28,49 @@ model:
 dataset:
   type: "local"  # Options: "huggingface", "local"
   name: "mixed_dataset"  # Hugging Face dataset name (if type is huggingface)
-  path: "test_dataset.json"  # Local dataset path (if type is local)
+  path: "train_dataset.json"  # Local dataset path (if type is local)
+  eval_path: null  # Eval split path (null = skip validation)
   split: "train"  # Dataset split to use
-  text_column: "conversation"  # Column name containing conversations
+  text_column: "messages"  # Column name containing conversations
   use_chat_template: true  # Apply chat template formatting
+  dpo_train_path: "dpo_train_dataset.json"
+  dpo_eval_path:  "dpo_eval_dataset.json"
 
 # Training Configuration
 training:
+  mode: "sft"  # Options: "sft", "dpo", "orpo"
+
   # Batch size and accumulation
-  per_device_train_batch_size: 2  # Batch size per device
-  gradient_accumulation_steps: 4  # Gradient accumulation steps
+  per_device_train_batch_size: 1  # Batch size per device (reduced for 4096 seq len on 12GB)
+  gradient_accumulation_steps: 8  # Gradient accumulation steps (keeps effective batch size = 8)
   
   # Learning rate and schedule
-  learning_rate: 0.0002  # Learning rate
-  lr_scheduler_type: "linear"  # Learning rate scheduler
-  warmup_steps: 5  # Warmup steps
+  learning_rate: 0.00001  # Learning rate
+  lr_scheduler_type: "cosine"  # Learning rate scheduler
+  warmup_steps: 50  # Warmup steps
   weight_decay: 0.01  # Weight decay
   
   # Training duration
   num_train_epochs: 3  # Number of training epochs
-  max_steps: 10  # Maximum training steps (-1 for full epochs)
+  max_steps: -1  # Maximum training steps (-1 for full epochs)
   
   # Precision and optimization
-  fp16: true  # Use FP16 (auto-detected based on GPU)
-  bf16: false  # Use BF16 (auto-detected based on GPU)
+  fp16: true  # Use FP16 (Titan V is compute 7.0, BF16 not supported by Unsloth)
+  bf16: false  # BF16 requires compute >= 8.0 (Ampere+)
   optimizer: "adamw_8bit"  # Optimizer
   
   # Logging and saving
   logging_steps: 1  # Logging frequency
-  save_steps: 100  # Model save frequency
-  save_total_limit: 3  # Maximum number of saved checkpoints
+  save_steps: 50  # Model save frequency
+  save_total_limit: 2  # Maximum number of saved checkpoints
   
   # Output directory
-output_dir: "/home/harpo/CEPH/LLM-models/qwen_finetuned"  # Output directory for model and checkpoints
+  output_dir: "/home/harpo/CEPH/LLM-models/qwen_finetuned"  # Output directory for model and checkpoints
   
   # Data processing
   dataset_num_proc: 2  # Number of processes for dataset processing
   dataloader_num_workers: 0  # Number of dataloader workers
-  packing: false  # Pack sequences for efficiency
+  packing: false  # Must be false when using train_on_responses_only
   
   # Reporting
   report_to: []  # Reporting services (wandb, tensorboard, etc.)
@@ -76,11 +81,17 @@ output_dir: "/home/harpo/CEPH/LLM-models/qwen_finetuned"  # Output directory for
   # Reproducibility
   seed: 42  # Random seed
 
+# DPO / ORPO Configuration
+dpo:
+  beta: 0.1             # KL penalty coefficient for DPO (standard starting point)
+  orpo_lambda: 0.1      # ORPO odds-ratio weight (same scale as DPO beta)
+  dpo_learning_rate: 0.00005  # Lower LR than SFT — DPO is sensitive to overshooting
+
 # Weights & Biases Configuration
 use_wandb: false  # Enable W&B logging
 wandb:
   project: "qwen-finetuning"  # W&B project name
-  run_name: "qwen3-14b-mixed-dataset"  # W&B run name
+  run_name: "qwen-dpo-stage2"  # W&B run name
   tags: ["qwen", "unsloth", "lora"]  # W&B tags
 
 # Hardware-specific configurations
@@ -106,7 +117,7 @@ hardware:
 
 # Evaluation Configuration (optional)
 evaluation:
-  eval_steps: 100  # Evaluation frequency
-  eval_dataset: null  # Evaluation dataset path
+  eval_steps: 50  # Evaluation frequency (reduced for small dataset)
   metric_for_best_model: "loss"  # Metric to track for best model
   load_best_model_at_end: true  # Load best model at end of training
+  save_total_limit: 2  # Keep only 2 checkpoints to save disk

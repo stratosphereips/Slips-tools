@@ -268,8 +268,6 @@ def save_results(results: List[Dict], output_path: str):
     """Save evaluation results to JSON file."""
     with open(output_path, 'w') as f:
         json.dump(results, f, indent=2)
-    print(f"\n{'='*60}")
-    print(f"Saved evaluation results to: {output_path}")
 
 def main():
     import argparse
@@ -325,13 +323,11 @@ def main():
         try:
             result = evaluate_incident(incident, client, i, len(incidents), judge_model=judge_model)
             results.append(result)
+            save_results(results, output_file)
+            print(f"  Saved partial results ({len(results)}/{len(incidents)})")
         except Exception as e:
             print(f"  ERROR: Failed to evaluate incident: {e}")
-            # Continue with next incident
             continue
-
-    # Save results
-    save_results(results, output_file)
 
     # Print summary
     print("\n" + "="*60)
