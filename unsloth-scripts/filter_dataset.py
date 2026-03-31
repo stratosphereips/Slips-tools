@@ -15,13 +15,14 @@ Filters applied per incident:
   2. Best response (summary field) token count < 50 or > 400  → reject
 """
 
+import argparse
 import json
 import sys
 import os
 from sklearn.model_selection import train_test_split
 
-DATASET_PATH = os.path.join(os.path.dirname(__file__), "../alert_summary/datasets/summarization_dataset_v3.json")
-RESULTS_PATH = os.path.join(os.path.dirname(__file__), "../alert_summary/datasets/summarization_dataset_v3_results_oss.json")
+DEFAULT_DATASET_PATH = os.path.join(os.path.dirname(__file__), "../alert_summary/datasets/summarization_dataset_v3.json")
+DEFAULT_RESULTS_PATH = os.path.join(os.path.dirname(__file__), "../alert_summary/datasets/summarization_dataset_v3_results_oss.json")
 TRAIN_OUT = os.path.join(os.path.dirname(__file__), "filtered_train.json")
 EVAL_OUT  = os.path.join(os.path.dirname(__file__), "filtered_eval.json")
 
@@ -33,9 +34,9 @@ MODEL_NAME_TO_FIELD = {
     "Qwen2.5":     "llm_qwen2_5_analysis",
 }
 
-MIN_TOKENS = 50
-MAX_TOKENS = 400
-MIN_SCORE  = 4
+DEFAULT_MIN_TOKENS = 50
+DEFAULT_MAX_TOKENS = 400
+DEFAULT_MIN_SCORE  = 4
 
 
 def approx_tokens(text: str) -> int:
@@ -54,10 +55,21 @@ def load_and_index(path: str, key: str) -> dict:
     return {item[key]: item for item in data}
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Filter low-quality training examples and produce a 90/10 train/eval split.")
+    parser.add_argument("--dataset", default=DEFAULT_DATASET_PATH, help="Path to incidents dataset JSON (default: summarization_dataset_v3.json)")
+    parser.add_argument("--results", default=DEFAULT_RESULTS_PATH, help="Path to judge scores JSON (default: summarization_dataset_v3_results_oss.json)")
+    parser.add_argument("--min-tokens", type=int, default=DEFAULT_MIN_TOKENS, help=f"Minimum response token count (default: {DEFAULT_MIN_TOKENS})")
+    parser.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS, help=f"Maximum response token count (default: {DEFAULT_MAX_TOKENS})")
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
+
     print("Loading datasets...")
-    incidents = load_and_index(DATASET_PATH, "incident_id")
-    results   = load_and_index(RESULTS_PATH, "incident_id")
+    incidents = load_and_index(args.dataset, "incident_id")
+    results   = load_and_index(args.results, "incident_id")
 
     if len(incidents) != len(results):
         print(f"WARNING: incident count mismatch: {len(incidents)} vs {len(results)}", file=sys.stderr)
@@ -76,7 +88,7 @@ def main():
         best_model, best_score = get_best_model_and_score(scores)
 
         # Filter 1: score threshold
-        if best_score < MIN_SCORE:
+        if best_score < DEFAULT_MIN_SCORE:
             rejected["low_score"] += 1
             continue
 
@@ -90,7 +102,7 @@ def main():
         summary_text = response.get("summary", "") if isinstance(response, dict) else ""
         token_count = approx_tokens(summary_text)
 
-        if token_count < MIN_TOKENS or token_count > MAX_TOKENS:
+        if token_count < args.min_tokens or token_count > args.max_tokens:
             rejected["token_length"] += 1
             continue
 
