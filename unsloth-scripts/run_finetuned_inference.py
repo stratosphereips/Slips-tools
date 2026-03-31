@@ -59,7 +59,7 @@ RULES:
 - Do not include token counts or performance statistics"""
 
 
-def run_inference(dataset: list, client: OpenAI, model: str, max_tokens: int) -> list:
+def run_inference(dataset: list, client: OpenAI, model: str, max_tokens: int, output_path: str) -> list:
     results = []
     total = len(dataset)
 
@@ -88,6 +88,9 @@ def run_inference(dataset: list, client: OpenAI, model: str, max_tokens: int) ->
             "behavior_analysis": "",
         }
         results.append(result)
+
+        with open(output_path, "w") as f:
+            json.dump(results, f, indent=2, ensure_ascii=False)
 
     return results
 
@@ -120,10 +123,7 @@ def main():
         print(f"Skipped {before - len(dataset)} entries exceeding {args.max_input_tokens} token limit")
 
     print(f"Running inference on {len(dataset)} entries via {args.url}\n")
-    results = run_inference(dataset, client, args.model_name, args.max_tokens)
-
-    with open(args.output, "w") as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
+    results = run_inference(dataset, client, args.model_name, args.max_tokens, args.output)
 
     print(f"\nSaved {len(results)} results to {args.output}")
     print(f"Next: python3 ../alert_summary/evaluate_summaries.py --input {args.output}")
