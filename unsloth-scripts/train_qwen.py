@@ -255,24 +255,37 @@ def main():
         raise ValueError(f"Unknown training mode: {mode!r}. Expected 'sft', 'dpo', or 'orpo'.")
     
     # Save model in different formats if specified
-    if config["training"].get("save_method") == "merged_16bit":
+    save_method = config["training"].get("save_method")
+    if save_method == "merged_16bit":
         model.save_pretrained_merged(
             config["training"]["output_dir"] + "_merged_16bit",
             tokenizer,
             save_method="merged_16bit"
         )
-    elif config["training"].get("save_method") == "merged_4bit":
+    elif save_method == "merged_4bit":
         model.save_pretrained_merged(
             config["training"]["output_dir"] + "_merged_4bit",
             tokenizer,
             save_method="merged_4bit"
         )
-    elif config["training"].get("save_method") == "lora":
+    elif save_method == "lora":
         model.save_pretrained_gguf(
             config["training"]["output_dir"] + "_lora",
             tokenizer,
             quantization_method="q4_k_m"
         )
+
+    gguf_quantization = config["training"].get("gguf_quantization")
+    if gguf_quantization:
+        gguf_dir = config["training"]["output_dir"] + "_gguf"
+        print(f"Saving GGUF ({gguf_quantization})...")
+        model.save_pretrained_gguf(gguf_dir, tokenizer, quantization_method=gguf_quantization)
+        # Write Modelfile for direct use with: ollama create <name> -f <gguf_dir>/Modelfile
+        import glob as _glob
+        gguf_files = _glob.glob(f"{gguf_dir}/*.gguf")
+        if gguf_files:
+            with open(f"{gguf_dir}/Modelfile", "w") as f:
+                f.write(f"FROM ./{os.path.basename(gguf_files[0])}\n")
     
     print("Training completed successfully!")
 
