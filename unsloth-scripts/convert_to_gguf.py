@@ -11,12 +11,73 @@ Example:
 """
 
 import argparse
+import json
 import os
 import glob
 import sys
 
 
 QUANT_OPTIONS = ["q4_k_m", "q5_k_m", "q8_0", "f16", "q4_0", "q5_0", "q2_k", "q3_k_m"]
+
+# Ollama Modelfile TEMPLATE + stop tokens for known chat formats.
+# {{ .System }} / {{ .Prompt }} / {{ .Response }} are Ollama's Go template variables.
+CHAT_TEMPLATES = {
+    "chatml": {
+        "template": (
+            "{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}"
+            "<|im_start|>user\n{{ .Prompt }}<|im_end|>\n"
+            "<|im_start|>assistant\n{{ .Response }}<|im_end|>"
+        ),
+        "stop": ["<|im_end|>", "<|im_start|>"],
+    },
+    "llama3": {
+        "template": (
+            "{{ if .System }}<|start_header_id|>system<|end_header_id|>\n\n"
+            "{{ .System }}<|eot_id|>{{ end }}"
+            "<|start_header_id|>user<|end_header_id|>\n\n"
+            "{{ .Prompt }}<|eot_id|>"
+            "<|start_header_id|>assistant<|end_header_id|>\n\n"
+            "{{ .Response }}<|eot_id|>"
+        ),
+        "stop": ["<|eot_id|>", "<|end_of_text|>"],
+    },
+}
+
+
+def detect_chat_template(model_dir):
+    """Detect chat template type from tokenizer_config.json. Returns a key from CHAT_TEMPLATES."""
+    cfg_path = os.path.join(model_dir, "tokenizer_config.json")
+    if not os.path.isfile(cfg_path):
+        return "chatml"  # safe default for Qwen
+
+    with open(cfg_path) as f:
+        cfg = json.load(f)
+
+    template = cfg.get("chat_template", "")
+    if "<|im_start|>" in template:
+        return "chatml"
+    if "<|start_header_id|>" in template:
+        return "llama3"
+    # fallback
+    return "chatml"
+
+
+def write_modelfile(output_dir, gguf_filename, template_key):
+    tmpl = CHAT_TEMPLATES[template_key]
+    lines = [
+        f"FROM ./{gguf_filename}",
+        "",
+        f'TEMPLATE """{ tmpl["template"] }"""',
+        "",
+    ]
+    for stop_token in tmpl["stop"]:
+        lines.append(f'PARAMETER stop "{stop_token}"')
+    lines.append("")
+
+    modelfile_path = os.path.join(output_dir, "Modelfile")
+    with open(modelfile_path, "w") as f:
+        f.write("\n".join(lines))
+    return modelfile_path
 
 
 def parse_args():
@@ -64,9 +125,9 @@ def main():
         sys.exit(1)
 
     gguf_file = gguf_files[0]
-    modelfile_path = os.path.join(output_dir, "Modelfile")
-    with open(modelfile_path, "w") as f:
-        f.write(f"FROM ./{os.path.basename(gguf_file)}\n")
+    template_key = detect_chat_template(model_dir)
+    print(f"Detected chat template: {template_key}")
+    modelfile_path = write_modelfile(output_dir, os.path.basename(gguf_file), template_key)
 
     print()
     print("Done.")

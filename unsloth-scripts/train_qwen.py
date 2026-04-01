@@ -281,11 +281,36 @@ def main():
         print(f"Saving GGUF ({gguf_quantization})...")
         model.save_pretrained_gguf(gguf_dir, tokenizer, quantization_method=gguf_quantization)
         # Write Modelfile for direct use with: ollama create <name> -f <gguf_dir>/Modelfile
-        import glob as _glob
+        import glob as _glob, json as _json
         gguf_files = _glob.glob(f"{gguf_dir}/*.gguf")
         if gguf_files:
+            # Detect chat template from tokenizer_config
+            _cfg_path = os.path.join(config["training"]["output_dir"] + "_merged_16bit", "tokenizer_config.json")
+            _cfg_path = _cfg_path if os.path.isfile(_cfg_path) else os.path.join(config["training"]["output_dir"], "tokenizer_config.json")
+            _template = ""
+            if os.path.isfile(_cfg_path):
+                with open(_cfg_path) as _f:
+                    _template = _json.load(_f).get("chat_template", "")
+            _is_chatml = "<|im_start|>" in _template or not _template  # Qwen default
+            _gguf_name = os.path.basename(gguf_files[0])
+            if _is_chatml:
+                _tmpl_block = (
+                    '{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}'
+                    '<|im_start|>user\n{{ .Prompt }}<|im_end|>\n'
+                    '<|im_start|>assistant\n{{ .Response }}<|im_end|>'
+                )
+                _stop_tokens = ['<|im_end|>', '<|im_start|>']
+            else:
+                _tmpl_block = (
+                    '{{ if .System }}<|start_header_id|>system<|end_header_id|>\n\n{{ .System }}<|eot_id|>{{ end }}'
+                    '<|start_header_id|>user<|end_header_id|>\n\n{{ .Prompt }}<|eot_id|>'
+                    '<|start_header_id|>assistant<|end_header_id|>\n\n{{ .Response }}<|eot_id|>'
+                )
+                _stop_tokens = ['<|eot_id|>', '<|end_of_text|>']
             with open(f"{gguf_dir}/Modelfile", "w") as f:
-                f.write(f"FROM ./{os.path.basename(gguf_files[0])}\n")
+                f.write(f"FROM ./{_gguf_name}\n\nTEMPLATE \"\"\"{_tmpl_block}\"\"\"\n\n")
+                for _s in _stop_tokens:
+                    f.write(f'PARAMETER stop "{_s}"\n')
     
     print("Training completed successfully!")
 
