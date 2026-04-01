@@ -26,9 +26,9 @@ CHAT_TEMPLATES = {
         "template": (
             "{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}"
             "<|im_start|>user\n{{ .Prompt }}<|im_end|>\n"
-            "<|im_start|>assistant\n{{ .Response }}<|im_end|>"
+            "<|im_start|>assistant\n{{ .Response }}<|im_end|>\n"
         ),
-        "stop": ["<|im_end|>", "<|im_start|>"],
+        "stop": ["<|im_end|>", "<|endoftext|>"],
     },
     "llama3": {
         "template": (

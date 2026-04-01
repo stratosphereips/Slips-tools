@@ -297,9 +297,9 @@ def main():
                 _tmpl_block = (
                     '{{ if .System }}<|im_start|>system\n{{ .System }}<|im_end|>\n{{ end }}'
                     '<|im_start|>user\n{{ .Prompt }}<|im_end|>\n'
-                    '<|im_start|>assistant\n{{ .Response }}<|im_end|>'
+                    '<|im_start|>assistant\n{{ .Response }}<|im_end|>\n'
                 )
-                _stop_tokens = ['<|im_end|>', '<|im_start|>']
+                _stop_tokens = ['<|im_end|>', '<|endoftext|>']
             else:
                 _tmpl_block = (
                     '{{ if .System }}<|start_header_id|>system<|end_header_id|>\n\n{{ .System }}<|eot_id|>{{ end }}'
