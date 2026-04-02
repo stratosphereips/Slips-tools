@@ -104,13 +104,16 @@ def main():
         print(f"Error: model directory not found: {model_dir}", file=sys.stderr)
         sys.exit(1)
 
-    output_dir = args.output or model_dir + "_gguf"
-    output_dir = os.path.abspath(output_dir)
-    os.makedirs(output_dir, exist_ok=True)
+    # Unsloth's save_pretrained_gguf uses save_directory as input_folder for
+    # conversion, then writes the GGUF into save_directory + "_gguf".
+    # So we must pass model_dir as save_directory, and collect output from model_dir_gguf.
+    unsloth_gguf_dir = model_dir + "_gguf"
+
+    final_output_dir = os.path.abspath(args.output) if args.output else unsloth_gguf_dir
 
     print(f"Model:      {model_dir}")
     print(f"Quant:      {args.quant}")
-    print(f"Output dir: {output_dir}")
+    print(f"Output dir: {final_output_dir}")
     print()
 
     from unsloth import FastLanguageModel
@@ -123,22 +126,37 @@ def main():
     )
 
     print(f"Saving GGUF ({args.quant})...")
-    model.save_pretrained_gguf(output_dir, tokenizer, quantization_method=args.quant)
+    # Pass model_dir so unsloth reads config.json from there; it writes GGUF to model_dir_gguf
+    model.save_pretrained_gguf(model_dir, tokenizer, quantization_method=args.quant)
 
-    gguf_files = glob.glob(os.path.join(output_dir, "*.gguf"))
+    gguf_files = glob.glob(os.path.join(unsloth_gguf_dir, "*.gguf"))
     if not gguf_files:
-        print("Warning: no .gguf file found in output dir after conversion.", file=sys.stderr)
+        print("Warning: no .gguf file found after conversion.", file=sys.stderr)
         sys.exit(1)
+
+    # Move output to final_output_dir if different from unsloth_gguf_dir
+    if os.path.abspath(final_output_dir) != os.path.abspath(unsloth_gguf_dir):
+        os.makedirs(final_output_dir, exist_ok=True)
+        moved = []
+        for f in glob.glob(os.path.join(unsloth_gguf_dir, "*")):
+            dest = os.path.join(final_output_dir, os.path.basename(f))
+            shutil.move(f, dest)
+            moved.append(dest)
+        try:
+            os.rmdir(unsloth_gguf_dir)
+        except OSError:
+            pass
+        gguf_files = [f for f in moved if f.endswith(".gguf")]
 
     gguf_file = gguf_files[0]
     template_key = detect_chat_template(model_dir)
     print(f"Detected chat template: {template_key}")
-    modelfile_path = write_modelfile(output_dir, os.path.basename(gguf_file), template_key)
+    modelfile_path = write_modelfile(final_output_dir, os.path.basename(gguf_file), template_key)
 
     readme_path = None
     if args.readme:
         if os.path.isfile(args.readme):
-            readme_path = os.path.join(output_dir, "README.md")
+            readme_path = os.path.join(final_output_dir, "README.md")
             shutil.copy2(args.readme, readme_path)
             print(f"Copied README: {readme_path}")
         else:
