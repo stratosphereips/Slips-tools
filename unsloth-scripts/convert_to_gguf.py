@@ -14,6 +14,7 @@ import argparse
 import json
 import os
 import glob
+import shutil
 import sys
 
 
@@ -87,6 +88,11 @@ def parse_args():
                         help="Quantization method (default: q4_k_m)")
     parser.add_argument("--output", default=None,
                         help="Output directory for GGUF files (default: <model_dir>_gguf)")
+    # Look for OLLAMA_README.md next to this script as default
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    default_readme = os.path.join(script_dir, "OLLAMA_README.md")
+    parser.add_argument("--readme", default=default_readme if os.path.isfile(default_readme) else None,
+                        help="Path to README.md to copy into the output dir for Ollama (default: OLLAMA_README.md next to this script)")
     return parser.parse_args()
 
 
@@ -129,10 +135,21 @@ def main():
     print(f"Detected chat template: {template_key}")
     modelfile_path = write_modelfile(output_dir, os.path.basename(gguf_file), template_key)
 
+    readme_path = None
+    if args.readme:
+        if os.path.isfile(args.readme):
+            readme_path = os.path.join(output_dir, "README.md")
+            shutil.copy2(args.readme, readme_path)
+            print(f"Copied README: {readme_path}")
+        else:
+            print(f"Warning: README not found at {args.readme}, skipping.", file=sys.stderr)
+
     print()
     print("Done.")
     print(f"  GGUF:      {gguf_file}")
     print(f"  Modelfile: {modelfile_path}")
+    if readme_path:
+        print(f"  README:    {readme_path}")
     print()
     print("To load in Ollama:")
     print(f"  ollama create my-model -f {modelfile_path}")
