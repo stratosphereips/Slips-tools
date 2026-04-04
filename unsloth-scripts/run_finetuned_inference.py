@@ -59,7 +59,7 @@ RULES:
 - Do not include token counts or performance statistics"""
 
 
-def run_inference(dataset: list, client: OpenAI, model: str, max_tokens: int, output_path: str) -> list:
+def run_inference(dataset: list, client: OpenAI, model: str, max_tokens: int, temperature: float, output_path: str) -> list:
     results = []
     total = len(dataset)
 
@@ -75,6 +75,7 @@ def run_inference(dataset: list, client: OpenAI, model: str, max_tokens: int, ou
                     {"role": "user", "content": entry["dag_analysis"]},
                 ],
                 max_tokens=max_tokens,
+                temperature=temperature,
             )
             summary = response.choices[0].message.content.strip()
             print("OK")
@@ -104,6 +105,7 @@ def main():
     parser.add_argument("--url", default="http://localhost:8000/v1")
     parser.add_argument("--model-name", default="finetuned")
     parser.add_argument("--max-tokens", type=int, default=512)
+    parser.add_argument("--temperature", type=float, default=0.0, help="Sampling temperature (0 = greedy/deterministic)")
     parser.add_argument("--n", type=int, default=0, help="Limit to first N entries (0 = all)")
     parser.add_argument("--max-input-tokens", type=int, default=2048, help="Skip entries with estimated input tokens above this limit (0 = no limit)")
     args = parser.parse_args()
@@ -123,7 +125,7 @@ def main():
         print(f"Skipped {before - len(dataset)} entries exceeding {args.max_input_tokens} token limit")
 
     print(f"Running inference on {len(dataset)} entries via {args.url}\n")
-    results = run_inference(dataset, client, args.model_name, args.max_tokens, args.output)
+    results = run_inference(dataset, client, args.model_name, args.max_tokens, args.temperature, args.output)
 
     print(f"\nSaved {len(results)} results to {args.output}")
     print(f"Next: python3 ../alert_summary/evaluate_summaries.py --input {args.output}")

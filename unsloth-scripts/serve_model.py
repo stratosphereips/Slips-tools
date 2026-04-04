@@ -91,7 +91,7 @@ def generate_reply(messages: list[dict], max_tokens: int, temperature: float) ->
 
     inputs = tokenizer(prompt, return_tensors="pt").to(device)
 
-    do_sample = temperature > 0 and temperature != 1.0
+    do_sample = temperature > 0
     gen_kwargs = dict(
         max_new_tokens=max_tokens,
         pad_token_id=tokenizer.eos_token_id,
@@ -123,8 +123,9 @@ async def chat_completions(req: ChatCompletionRequest):
 
     messages = [{"role": m.role, "content": m.content} for m in req.messages]
     loop = asyncio.get_event_loop()
+    temperature = req.temperature if req.temperature is not None else 1.0
     reply = await loop.run_in_executor(
-        executor, generate_reply, messages, req.max_tokens or 512, req.temperature or 1.0
+        executor, generate_reply, messages, req.max_tokens or 512, temperature
     )
 
     completion_id = f"chatcmpl-{uuid.uuid4().hex[:8]}"
