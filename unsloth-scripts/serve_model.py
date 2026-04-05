@@ -1,5 +1,5 @@
 import os
-os.environ['HF_HOME'] = '/media/data/hf/'
+os.environ['HF_HOME'] = '/home/harpo/CEPH/LLM-models/'
 os.environ['HF_HUB_ENABLE_HF_TRANSFER'] = '0'
 
 import argparse
@@ -33,7 +33,7 @@ class ChatCompletionRequest(BaseModel):
     model: Optional[str] = None
     messages: list[Message]
     max_tokens: Optional[int] = 2048
-    temperature: Optional[float] = 1.0
+    temperature: Optional[float] = 0.0
     stream: Optional[bool] = False
 
 
@@ -123,7 +123,7 @@ async def chat_completions(req: ChatCompletionRequest):
 
     messages = [{"role": m.role, "content": m.content} for m in req.messages]
     loop = asyncio.get_event_loop()
-    temperature = req.temperature if req.temperature is not None else 1.0
+    temperature = req.temperature if req.temperature is not None else 0.0
     reply = await loop.run_in_executor(
         executor, generate_reply, messages, req.max_tokens or 512, temperature
     )
