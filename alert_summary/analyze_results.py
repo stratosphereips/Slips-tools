@@ -150,13 +150,13 @@ def calculate_statistics(results: List[Dict]) -> Dict:
 
     return stats
 
-def generate_summary_report(stats: Dict) -> str:
+def generate_summary_report(stats: Dict, judge: str = "GPT-4o") -> str:
     """Generate a Markdown summary report."""
     report = []
 
     report.append("# LLM Evaluation Summary Report")
     report.append("")
-    report.append("**Judge:** GPT-4o")
+    report.append(f"**Judge:** {judge}")
     report.append(f"**Total Evaluations:** {stats['total_evaluations']}")
     report.append("")
 
@@ -333,6 +333,8 @@ def main():
                         help='Path to output summary Markdown file (default: results/summary_report.md)')
     parser.add_argument('--csv', '-c', default='results/summary_data.csv',
                         help='Path to output CSV file (default: results/summary_data.csv)')
+    parser.add_argument('--judge', '-j', default='GPT-4o',
+                        help='Name of judge model to include in report (default: GPT-4o)')
 
     args = parser.parse_args()
 
@@ -340,6 +342,7 @@ def main():
     results_file = args.results
     summary_file = args.summary
     csv_file = args.csv
+    judge = args.judge
 
     print(f"Input:  {results_file}")
     print(f"Output: {summary_file}")
@@ -356,7 +359,7 @@ def main():
 
     # Generate summary report
     print("\nGenerating summary report...")
-    report = generate_summary_report(stats)
+    report = generate_summary_report(stats, judge=judge)
 
     # Save summary report
     with open(summary_file, 'w') as f:
