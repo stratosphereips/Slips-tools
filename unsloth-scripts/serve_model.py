@@ -32,7 +32,7 @@ class Message(BaseModel):
 class ChatCompletionRequest(BaseModel):
     model: Optional[str] = None
     messages: list[Message]
-    max_tokens: Optional[int] = 2048
+    max_completion_tokens: Optional[int] = 512
     temperature: Optional[float] = 0.0
     stream: Optional[bool] = False
 
@@ -125,7 +125,7 @@ async def chat_completions(req: ChatCompletionRequest):
     loop = asyncio.get_event_loop()
     temperature = req.temperature if req.temperature is not None else 0.0
     reply = await loop.run_in_executor(
-        executor, generate_reply, messages, req.max_tokens or 512, temperature
+        executor, generate_reply, messages, req.max_completion_tokens or 512, temperature
     )
 
     completion_id = f"chatcmpl-{uuid.uuid4().hex[:8]}"
