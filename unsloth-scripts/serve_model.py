@@ -37,8 +37,9 @@ class ChatCompletionRequest(BaseModel):
     stream: Optional[bool] = False
 
 
-def load_model(name, device_str, quantization):
+def load_model(name, device_str, quantization, alias=None):
     global tokenizer, model, device, model_name
+    model_name = alias if alias else name
     print(f"Loading model: {name}")
 
     if device_str == "auto":
@@ -73,8 +74,7 @@ def load_model(name, device_str, quantization):
         model.to(device)
 
     model.eval()
-    model_name = name
-    print(f"Model loaded on {device} with quantization: {quantization or 'none'}")
+    print(f"Model loaded on {device} with quantization: {quantization or 'none'}, serving as: {model_name}")
 
 
 def generate_reply(messages: list[dict], max_tokens: int, temperature: float) -> str:
@@ -156,11 +156,12 @@ def main():
     parser.add_argument("model_name", type=str, help="Model path or HF hub ID")
     parser.add_argument("--device", type=str, default="auto", choices=["auto", "cpu", "cuda"])
     parser.add_argument("--quant", type=str, choices=["4bit", "8bit"])
+    parser.add_argument("--model-alias", type=str, default=None, help="Model alias to expose via API (default: model_name)")
     parser.add_argument("--host", type=str, default="0.0.0.0")
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
-    load_model(args.model_name, args.device, args.quant)
+    load_model(args.model_name, args.device, args.quant, alias=args.model_alias)
     uvicorn.run(app, host=args.host, port=args.port)
 
 
