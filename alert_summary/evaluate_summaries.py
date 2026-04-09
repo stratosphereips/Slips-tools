@@ -66,6 +66,7 @@ Your job is to rank these summaries from best (1) to worst ({n}) based on which 
 - **Actionability**: Does it help you decide on next steps?
 - **Professional Quality**: Would you trust this in a security operations center?
 - **Proper Severity Assessment**: Are threat levels appropriately categorized?
+- **Conciseness**: Does it synthesize and compress the raw data into a readable summary? A good summary should be significantly shorter than the raw DAG analysis. Penalize summaries that merely copy-paste raw log lines verbatim or reproduce the full DAG with minimal changes — these provide no value over reading the source data directly. The word count of each summary is shown in its header to help you assess this.
 
 **Ground Truth:** This incident is categorized as "{category}"
 
@@ -82,13 +83,16 @@ Your job is to rank these summaries from best (1) to worst ({n}) based on which 
 """
 
     # Add each randomized summary
+    dag_word_count = len(dag_analysis.split())
     for label, model_name, content in randomized_summaries:
         # Split summary and behavior analysis
         summary_text = content.get('summary', 'N/A')
         behavior_text = content.get('behavior_analysis', 'N/A')
+        word_count = len(summary_text.split()) + len(behavior_text.split()) if behavior_text != 'N/A' else len(summary_text.split())
+        compression_pct = int(word_count / dag_word_count * 100) if dag_word_count > 0 else 0
 
         prompt += f"""
-### Summary {label}
+### Summary {label} ({word_count} words — {compression_pct}% of raw data size)
 
 **Summary:**
 {summary_text}
@@ -111,7 +115,7 @@ Please provide your evaluation in the following JSON format:
 {{
   "rankings": {json.dumps(rankings_example)},
   "scores": {json.dumps(scores_example)},
-  "justification": "Your detailed explanation as a security analyst. Explain:\\n- Which summary best identifies the key threats?\\n- Which provides the most actionable intelligence?\\n- What critical details were missed or incorrect in lower-ranked summaries?\\n- How well does each align with the ground truth category?"
+  "justification": "Your detailed explanation as a security analyst. Explain:\\n- Which summary best identifies the key threats?\\n- Which provides the most actionable intelligence?\\n- What critical details were missed or incorrect in lower-ranked summaries?\\n- How well does each align with the ground truth category?\\n- Which summaries are too verbose or copy-paste the raw data, and how did that affect their ranking?"
 }}
 ```
 
