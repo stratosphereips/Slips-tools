@@ -45,24 +45,46 @@ def create_judge_prompt(
     category = incident['category']
     incident_id = incident['incident_id']
 
-    prompt = f"""You are an experienced cybersecurity risk analyst. Your task is to evaluate 4 AI-generated risk analyses of security incidents based on your professional expertise.
+    n = len(randomized_analyses)
+    label_str = ', '.join(s[0] for s in randomized_analyses)
+    rank_str = ', '.join(str(i) for i in range(1, n + 1))
+
+    prompt = f"""You are an experienced cybersecurity risk analyst. Your task is to evaluate {n} AI-generated risk analyses of security incidents based on your professional expertise.
 
 You will be shown:
 1. The raw security event data (DAG analysis)
-2. Four different AI-generated risk analyses (labeled A, B, C, D)
-3. The ground truth category (Malware/Normal)
+2. {n} different AI-generated risk analyses (labeled {label_str})
+3. The incident category for context (Malware/Normal)
 
-Your job is to rank these analyses from best (1) to worst (4) based on which would be most useful for risk management and incident prioritization.
+Your job is to rank these analyses from best (1) to worst ({n}) based on which would be most useful for risk management and incident prioritization.
 
-**Evaluation Criteria:**
-- **Cause Identification**: Correctly identifies malicious/legitimate/misconfiguration causes
-- **Evidence-Based Reasoning**: Uses specific evidence from DAG to support conclusions
-- **Risk Level Accuracy**: Appropriate High/Medium/Low risk assessment
-- **Business Impact**: Realistic and relevant impact analysis
-- **Investigation Priority**: Proper urgency classification
-- **Professional Quality**: Clear, actionable analysis suitable for executive reporting
+**Evaluation Criteria (score each 1-10):**
 
-**Ground Truth:** This incident is categorized as "{category}"
+- **Evidence Grounding**: Does the analysis cite specific events from the DAG (IPs, ports, counts, timestamps)?
+  - 1-3 = pure generalities, no specific data referenced
+  - 4-6 = some specifics but incomplete or cherry-picked
+  - 7-9 = systematically references key evidence (scan targets, blacklisted IPs, event counts)
+  - 10 = covers all significant evidence with precise detail
+
+- **Cause Specificity**: Does it name the specific attack behavior or stay vague?
+  - 1-3 = "possible malicious activity" — could apply to any incident
+  - 4-6 = names the attack class but not the specific behavior
+  - 7-9 = identifies specific TTP (e.g. horizontal scan pattern, C2 callback behavior)
+  - 10 = precise TTP with supporting evidence chain
+
+- **Risk Calibration**: Is the risk level proportionate to the actual evidence weight?
+  - 1-3 = flat assessment ignoring evidence distribution (e.g. always "High")
+  - 4-6 = correct level but reasoning not tied to evidence
+  - 7-9 = risk level explicitly derived from evidence severity and volume
+  - 10 = nuanced calibration distinguishing between event types and their relative weight
+
+- **Actionability**: Are recommended actions concrete and scoped to this incident?
+  - 1-3 = generic boilerplate ("investigate the IP", "update firewall rules")
+  - 4-6 = incident-specific but vague or unprioritized
+  - 7-9 = concrete actions with priority order tied to specific findings
+  - 10 = scoped response plan with clear sequencing and ownership
+
+**Incident Category (for context):** "{category}"
 
 ---
 
@@ -94,33 +116,26 @@ Your job is to rank these analyses from best (1) to worst (4) based on which wou
 ---
 """
 
-    prompt += """
+    rankings_example = {str(i+1): chr(ord('A')+i) for i in range(n)}
+    dim_scores_example = {"evidence_grounding": "N", "cause_specificity": "N", "risk_calibration": "N", "actionability": "N"}
+    scores_example = {chr(ord('A')+i): dim_scores_example for i in range(n)}
+    prompt += f"""
 
 ## YOUR EVALUATION TASK
 
 Please provide your evaluation in the following JSON format:
 
 ```json
-{
-  "rankings": {
-    "1": "X",
-    "2": "Y",
-    "3": "Z",
-    "4": "W"
-  },
-  "scores": {
-    "A": N,
-    "B": N,
-    "C": N,
-    "D": N
-  },
-  "justification": "Your detailed explanation as a risk analyst. Explain:\n- Which analysis best identifies the root cause?\n- Which provides the most accurate risk assessment?\n- What critical factors were missed or incorrect in lower-ranked analyses?\n- How well does each align with the ground truth category?"
-}
+{{
+  "rankings": {json.dumps(rankings_example)},
+  "scores": {json.dumps(scores_example)},
+  "justification": "Your detailed explanation as a risk analyst. For each dimension explain:\\n- Evidence Grounding: which analysis best uses the specific DAG data?\\n- Cause Specificity: which identifies the most precise attack behavior?\\n- Risk Calibration: which risk assessment is best proportioned to the evidence?\\n- Actionability: which recommendations are most concrete and incident-specific?"
+}}
 ```
 
-**Rankings**: Assign positions 1 (best) through 4 (worst) to analyses A, B, C, D
-**Scores**: Rate each analysis on a 1-10 scale (10 = excellent, 1 = poor)
-**Justification**: Provide your professional analysis explaining the rankings
+**Rankings**: Assign positions 1 (best) through {n} (worst) to analyses {label_str}. Derive rankings from the total score across all dimensions.
+**Scores**: Rate each analysis on each dimension using the 1-10 anchors above. Replace each "N" with an integer.
+**Justification**: Explain the key differentiators per dimension across analyses.
 
 Respond ONLY with valid JSON. No additional text before or after.
 """
@@ -193,12 +208,8 @@ def call_judge_llm(prompt: str, client: OpenAI, model: str = "gpt-4o") -> Dict:
 
     content = response.choices[0].message.content
     # Strip markdown code fences if present
-    content = content.strip()
-    if content.startswith("```"):
-        content = content.split("```")[1]
-        if content.startswith("json"):
-            content = content[4:]
-        content = content.strip()
+    if content.strip().startswith("```"):
+        content = content.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
 
     try:
         return json.loads(content)
@@ -255,10 +266,14 @@ def evaluate_incident(
         model_name = MODEL_LABELS.get(model_key, 'unknown')
         model_rankings[position] = model_name
 
-    for label, score in scores.items():
+    for label, dim_scores in scores.items():
         model_key = label_to_model.get(label, 'unknown')
         model_name = MODEL_LABELS.get(model_key, 'unknown')
-        model_scores[model_name] = score
+        if isinstance(dim_scores, dict):
+            total = sum(v for v in dim_scores.values() if isinstance(v, (int, float)))
+            model_scores[model_name] = {**dim_scores, 'total': total}
+        else:
+            model_scores[model_name] = dim_scores
 
     result = {
         'incident_id': incident_id,
