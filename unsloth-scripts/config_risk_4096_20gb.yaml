@@ -1,0 +1,125 @@
+# Qwen Fine-tuning Configuration with Unsloth
+# Risk analysis (cause + risk combined adapter) — Qwen2.5-3B, 4096 seq_len, 20GB VRAM
+
+# Model Configuration
+model:
+  model_name: "unsloth/Qwen2.5-3B-Instruct"  # Target deployment model (RPi5)
+  max_seq_length: 4096 # 3500 DAG tokens + 183 prompt overhead + ~400 response tokens
+  dtype: null  # Auto-detect best dtype
+  load_in_4bit: true  # QLoRA — 4-bit base model required for 20GB VRAM
+  device_map: "auto"  # Automatic device mapping
+
+  # LoRA Configuration
+  lora_r: 64  # Increased from 16 — wider subspace helps model learn synthesis over verbatim copying
+  lora_alpha: 64  # Keep equal to r with RSLoRA
+  lora_dropout: 0.0  # No dropout — 461 samples, ~174 optimizer steps; every gradient counts
+  lora_targets:  # Target modules for LoRA
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  use_rslora: true  # Mandatory at r=64 to normalize gradient scaling
+  random_state: 42  # Random seed for reproducibility
+  loftq_config: null  # LoftQ configuration
+
+# Dataset Configuration
+dataset:
+  type: "local"  # Options: "huggingface", "local"
+  name: "mixed_dataset"  # Hugging Face dataset name (if type is huggingface)
+  path: "risk_combined_train_dataset.json"  # Combined interleaved cause+risk train split (1328 records)
+  eval_path: "risk_combined_eval_dataset.json"  # Combined interleaved cause+risk eval split (148 records)
+  split: "train"  # Dataset split to use
+  text_column: "messages"  # Column name containing conversations
+  use_chat_template: true  # Apply chat template formatting
+  dpo_train_path: "dpo_train_dataset.json"
+  dpo_eval_path:  "dpo_eval_dataset.json"
+
+# Training Configuration
+training:
+  mode: "sft"  # Options: "sft", "dpo", "orpo"
+
+  # Batch size and accumulation
+  per_device_train_batch_size: 1  # 8192 seq len requires batch=1 to avoid OOM
+  gradient_accumulation_steps: 16  # effective batch size = 16
+
+  # Learning rate and schedule
+  learning_rate: 0.00002  # 2e-5 — RSLoRA stability allows higher LR than r=16 config
+  lr_scheduler_type: "cosine"  # Learning rate scheduler
+  warmup_steps: 20  # 11% of ~174 steps
+  weight_decay: 0.01  # Weight decay
+
+  # Training duration
+  num_train_epochs: 3  # Number of training epochs
+  max_steps: -1  # Maximum training steps (-1 for full epochs)
+
+  # Precision and optimization
+  fp16: false  # Use BF16 instead (Ampere GPU assumed)
+  bf16: true   # BF16 — larger dynamic range than FP16, no overflow risk
+  optimizer: "adamw_8bit"  # 8-bit optimizer — keeps optimizer states within 20GB budget
+
+  # Logging and saving
+  logging_steps: 1  # Logging frequency
+  save_steps: 50  # Model save frequency
+  save_total_limit: 2  # Maximum number of saved checkpoints
+
+  # Output directory
+  output_dir: "./qwen_risk_finetuned"  # Output directory for model and checkpoints
+
+  # Data processing
+  dataset_num_proc: 2  # Number of processes for dataset processing
+  dataloader_num_workers: 0  # Number of dataloader workers
+  packing: false  # Must be false when using train_on_responses_only
+
+  # Reporting
+  report_to: []  # Reporting services (wandb, tensorboard, etc.)
+
+  # Model saving format
+  save_method: "merged_16bit"  # Options: "lora", "merged_16bit", "merged_4bit"
+  gguf_quantization: "q5_k_m"  # Also export GGUF for Ollama. Options: q4_k_m, q5_k_m, q8_0, f16. Set to null to skip.
+
+  # Reproducibility
+  seed: 42  # Random seed
+
+# DPO / ORPO Configuration
+dpo:
+  beta: 0.1             # KL penalty coefficient for DPO (standard starting point)
+  orpo_lambda: 0.1      # ORPO odds-ratio weight (same scale as DPO beta)
+  dpo_learning_rate: 0.00005  # Lower LR than SFT — DPO is sensitive to overshooting
+
+# Weights & Biases Configuration
+use_wandb: false  # Enable W&B logging
+wandb:
+  project: "qwen-finetuning"  # W&B project name
+  run_name: "qwen-dpo-stage2"  # W&B run name
+  tags: ["qwen", "unsloth", "lora"]  # W&B tags
+
+# Hardware-specific configurations
+hardware:
+  # For different GPU memory configurations
+  gpu_16gb:
+    model_name: "unsloth/Qwen1.5-3B"
+    per_device_train_batch_size: 2
+    gradient_accumulation_steps: 4
+    max_seq_length: 2048
+
+  gpu_24gb:
+    model_name: "unsloth/Qwen1.5-3B"
+    per_device_train_batch_size: 4
+    gradient_accumulation_steps: 2
+    max_seq_length: 4096
+
+  gpu_40gb:
+    model_name: "unsloth/Qwen1.5-3B"
+    per_device_train_batch_size: 2
+    gradient_accumulation_steps: 4
+    max_seq_length: 4096
+
+# Evaluation Configuration (optional)
+evaluation:
+  eval_steps: 50  # Evaluation frequency (reduced for small dataset)
+  metric_for_best_model: "loss"  # Metric to track for best model
+  load_best_model_at_end: true  # Load best model at end of training
+  save_total_limit: 2  # Keep only 2 checkpoints to save disk

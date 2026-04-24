@@ -18,7 +18,7 @@
 
 set -euo pipefail
 
-MODEL_PATH="/home/harpo/CEPH/LLM-models/qwen_finetuned_merged_16bit"
+MODEL_PATH="/home/harpo/CEPH/LLM-models/qwen_finetuned_4096_20gb"
 QUANT_ARG=""
 
 while [[ $# -gt 0 ]]; do
