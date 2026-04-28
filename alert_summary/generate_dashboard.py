@@ -114,7 +114,9 @@ def generate_dashboard_html(results: List[Dict], sample_data: List[Dict]) -> str
                 'GPT-4o': 'llm_gpt_4o_analysis',
                 'GPT-4o-mini': 'llm_gpt4o_mini_analysis',
                 'Qwen2.5 15B': 'llm_qwen2_5:15b_analysis',
-                'Qwen2.5': 'llm_qwen2_5_analysis'
+                'Qwen2.5 3b': 'llm_qwen2_5:3b_analysis',
+                'Qwen2.5': 'llm_qwen2_5_analysis',
+                'Finetuned': 'llm_finetuned_analysis',
             }
             for model in models:
                 model_field_map[model] = field_patterns.get(model, '')
@@ -144,14 +146,15 @@ def generate_dashboard_html(results: List[Dict], sample_data: List[Dict]) -> str
             category_stats[category][model]['positions'].append(position_num)
 
         for model, score in scores.items():
-            scores_list[model].append(score)
-            category_stats[category][model]['scores'].append(score)
+            scores_list[model].append(float(score))
+            category_stats[category][model]['scores'].append(float(score))
 
     # Calculate averages
+    num_positions = len(models)
     model_stats = {}
     for model in models:
         positions = []
-        for pos in range(1, 5):
+        for pos in range(1, num_positions + 1):
             positions.extend([pos] * position_counts[model][pos])
 
         avg_position = sum(positions) / len(positions) if positions else 0
@@ -182,7 +185,7 @@ def generate_dashboard_html(results: List[Dict], sample_data: List[Dict]) -> str
 
         # Get winner (rank 1)
         winner = result['rankings'].get('1', 'N/A')
-        winner_score = result['scores'].get(winner, 0)
+        winner_score = float(result['scores'].get(winner, 0))
 
         incident_details.append({
             'id': incident_id[:8],
@@ -274,6 +277,7 @@ def generate_dashboard_html(results: List[Dict], sample_data: List[Dict]) -> str
         .rank-2 {{ background: #d1ecf1; color: #0c5460; }}
         .rank-3 {{ background: #fff3cd; color: #856404; }}
         .rank-4 {{ background: #f8d7da; color: #721c24; }}
+        .rank-other {{ background: #e2e3e5; color: #383d41; }}
         .chart-container {{
             position: relative;
             height: 300px;
@@ -541,12 +545,13 @@ def generate_dashboard_html(results: List[Dict], sample_data: List[Dict]) -> str
                                             <div class="row">
 """
 
-        for pos in ['1', '2', '3', '4']:
+        for pos in [str(p) for p in range(1, num_positions + 1)]:
             model = incident['rankings'].get(pos, 'N/A')
             score = incident['scores'].get(model, 0)
+            badge_class = f"rank-{pos}" if int(pos) <= 4 else "rank-other"
             html += f"""                                                <div class="col-md-3">
                                                     <div class="summary-box">
-                                                        <span class="rank-badge rank-{pos}">#{pos}</span>
+                                                        <span class="rank-badge {badge_class}">#{pos}</span>
                                                         <strong>{model}</strong>
                                                         <div class="text-muted">Score: {score}/10</div>
                                                     </div>
@@ -658,28 +663,14 @@ def generate_dashboard_html(results: List[Dict], sample_data: List[Dict]) -> str
             type: 'bar',
             data: {
                 labels: """ + json.dumps(sorted_models) + """,
-                datasets: [
-                    {
-                        label: '1st Place',
-                        data: """ + json.dumps([model_stats[m]['positions'].get(1, 0) for m in sorted_models]) + """,
-                        backgroundColor: '#28a745'
-                    },
-                    {
-                        label: '2nd Place',
-                        data: """ + json.dumps([model_stats[m]['positions'].get(2, 0) for m in sorted_models]) + """,
-                        backgroundColor: '#17a2b8'
-                    },
-                    {
-                        label: '3rd Place',
-                        data: """ + json.dumps([model_stats[m]['positions'].get(3, 0) for m in sorted_models]) + """,
-                        backgroundColor: '#ffc107'
-                    },
-                    {
-                        label: '4th Place',
-                        data: """ + json.dumps([model_stats[m]['positions'].get(4, 0) for m in sorted_models]) + """,
-                        backgroundColor: '#dc3545'
-                    }
-                ]
+                datasets: """ + json.dumps([
+    {
+        'label': f'{p}{"st" if p==1 else "nd" if p==2 else "rd" if p==3 else "th"} Place',
+        'data': [model_stats[m]['positions'].get(p, 0) for m in sorted_models],
+        'backgroundColor': ['#28a745','#17a2b8','#ffc107','#dc3545','#6f42c1','#fd7e14'][p-1]
+    }
+    for p in range(1, num_positions + 1)
+]) + """
             },
             options: {
                 responsive: true,

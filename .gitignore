@@ -137,3 +137,7 @@ alert_summary/my_dataset_*.llm.*.json
 alert_summary/results/
 .attic/
 alert_summary/.attic/
+unsloth-scripts/tools/
+unsloth-scripts/unsloth_compiled_cache/
+unsloth-scripts/.sync_backups/
+unsloth-scripts/gguf_*/
