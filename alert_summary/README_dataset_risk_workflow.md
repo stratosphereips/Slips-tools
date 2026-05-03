@@ -195,7 +195,7 @@ After generating the dataset, evaluate LLM performance using LLM-as-judge:
 ```bash
 # Evaluate risk assessments
 python3 evaluate_risk.py datasets/final_dataset_risk.json \
-  --judge-model gpt-4o \
+  --judge gpt-4o \
   -o risk_evaluation_results.json
 ```
 

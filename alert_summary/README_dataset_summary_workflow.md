@@ -1,7 +1,7 @@
 # Dataset Generation Pipeline for Slips Alert Analysis
 
 > **Note**: This guide covers the **Summarization workflow** (summary + behavior analysis).
-> For **Cause & Risk analysis** workflow, see [README_RISK_WORKFLOW.md](README_RISK_WORKFLOW.md).
+> For **Cause & Risk analysis** workflow, see [README_dataset_risk_workflow.md](README_dataset_risk_workflow.md).
 > For a comparison of both workflows, see [WORKFLOWS_OVERVIEW.md](WORKFLOWS_OVERVIEW.md).
 
 ## 1. Overview

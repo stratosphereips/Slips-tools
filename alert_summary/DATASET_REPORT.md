@@ -37,7 +37,7 @@ Develop a dataset for network security event summarization to be integrated with
 
 The dataset generation process consists of four stages, each implemented as Python scripts with shell wrappers that simplify execution, handle argument validation, and automate file naming. This modular design enables flexible experimentation with different models and configurations while maintaining reproducibility.
 
-**Detailed documentation**: See [README_dataset_workflow.md](README_dataset_workflow.md) for complete pipeline specifications and advanced usage.
+**Detailed documentation**: See [README_dataset_summary_workflow.md](README_dataset_summary_workflow.md) for complete pipeline specifications and advanced usage.
 
 ### Stage 1: Incident Sampling
 Extract security incidents from Slips `alerts.json` logs with category labels (Malware/Normal):

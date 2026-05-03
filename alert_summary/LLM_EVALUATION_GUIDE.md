@@ -159,4 +159,4 @@ Rank   Model                     Avg Pos    Avg Score    Win Rate
 
 ---
 
-For detailed dataset generation instructions, see [README_SUMMARY_WORKFLOW.md](README_SUMMARY_WORKFLOW.md) and [README_RISK_WORKFLOW.md](README_RISK_WORKFLOW.md).
+For detailed dataset generation instructions, see [README_dataset_summary_workflow.md](README_dataset_summary_workflow.md) and [README_dataset_risk_workflow.md](README_dataset_risk_workflow.md).

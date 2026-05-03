@@ -1,28 +1,30 @@
 # Sample Logs Directory
 
-This directory contains various Slips evidence log files used for testing and demonstrating the DAG generator functionality. These logs represent different types of network security captures and processing methods.
+This directory contains various Slips evidence log files retained as sample data. These logs represent different types of network security captures and processing methods.
+
+Most sample logs are stored as gzip-compressed `.log.gz` files to save space. Decompress a file before using tools that expect a plain `.log` input.
 
 ## File Types and Origins
 
 ### Malware Capture Logs
 These logs contain evidence from network traffic captures where malware was actively present and detected:
 
-- **`slips.log`** - Complete malware capture log with all Slips evidence detection
-- **`slips-1.log`** - Malware capture log from a different session/dataset
-- **`slips-5.log`** - Malware capture log from another session/dataset
+- **`slips.log.gz`** - Complete malware capture log with all Slips evidence detection
+- **`slips-1.log.gz`** - Malware capture log from a different session/dataset
+- **`slips-5.log.gz`** - Malware capture log from another session/dataset
 
 **Characteristics:**
 - Contains evidence of malicious activities (C&C channels, port scans, blacklisted IPs)
 - Higher density of high-severity threats
 - Represents real-world malware behavior patterns
-- Useful for testing attack pattern detection and incident response workflows
+- Useful as reference data for malware-capture behavior
 
 ### Normal Network Capture Logs
 These logs contain evidence from normal network operations without active malware:
 
-- **`slips-normal.log`** - Normal network traffic capture
-- **`slips-normal-2.log`** - Additional normal network capture
-- **`slips-normal-3.log`** - Third normal network capture
+- **`slips-normal.log.gz`** - Normal network traffic capture
+- **`slips-normal-2.log.gz`** - Additional normal network capture
+- **`slips-normal-3.log.gz`** - Third normal network capture
 
 **Characteristics:**
 - Lower threat levels (mostly INFO/LOW/MEDIUM)
@@ -33,16 +35,16 @@ These logs contain evidence from normal network operations without active malwar
 ### Processed Evidence Logs
 These logs are derived from other log files with specific processing applied:
 
-- **`slips-evidence.log`** - Similar to `slips.log` but with all evidence entries filtered using grep
-- **`test_data.log`** - Synthetic or curated test data for development purposes
+- **`slips-evidence.log.gz`** - Similar to `slips.log.gz` but with all evidence entries filtered using grep
+- **`test_data.log.gz`** - Synthetic or curated test data for development purposes
 
 **Characteristics:**
-- `slips-evidence.log`: Clean evidence-only format, easier to parse
-- `test_data.log`: Controlled dataset for testing specific scenarios
+- `slips-evidence.log.gz`: Clean evidence-only format, easier to parse after decompression
+- `test_data.log.gz`: Controlled dataset for testing specific scenarios after decompression
 
 ## Log Format Variations
 
-The DAG generator supports multiple Slips log formats found in these files:
+These compressed files contain multiple historical Slips log formats:
 
 ### Standard Format
 ```
@@ -59,64 +61,38 @@ given the following evidence:
 	- Detected Non-SSL connection to 185.29.135.234:443...
 ```
 
-## Usage Examples
+## Usage Notes
 
-### Malware Analysis
+These compressed plain-text logs are retained as sample data. The current
+analysis workflow uses JSONL/IDEA `alerts.json` files under
+`sample_logs/alya_datasets/`.
+
 ```bash
-# Analyze malware behavior patterns
-python3 ../slips_dag_generator.py slips.log --all-ips --pattern
+# Decompress one sample for manual inspection
+gzip -dk slips.log.gz
 
-# Focus on high-severity threats from malware capture
-python3 ../slips_dag_generator.py slips-5.log 192.168.1.113 --min-threat high
-```
-
-### Normal Network Analysis
-```bash
-# Baseline analysis of normal network activity
-python3 ../slips_dag_generator.py slips-normal.log --all-ips --minimal
-
-# Compare normal vs malware patterns
-python3 ../slips_dag_generator.py slips-normal-2.log 10.0.2.15 --full
-```
-
-### Evidence Processing
-```bash
-# Clean evidence analysis
-python3 ../slips_dag_generator.py slips-evidence.log --all-ips --json
-
-# Development testing
-python3 ../slips_dag_generator.py test_data.log 192.168.1.113
+# Use the current JSONL/IDEA DAG parser on an alerts.json file
+python3 ../alert_dag_parser.py alya_datasets/Malware/.../alerts.json
 ```
 
 ## File Size and Content Overview
 
 | File | Type | Size | IPs | Primary Threats |
 |------|------|------|-----|----------------|
-| slips.log | Malware | Large | Multiple | C&C, Port Scans, Blacklists |
-| slips-1.log | Malware | Medium | Few | Port Scans, Suspicious Connections |
-| slips-5.log | Malware | Medium | Few | Port Scans, Private IPs |
-| slips-normal.log | Normal | Large | Single | SSL, HTTP, User-agents |
-| slips-normal-2.log | Normal | Medium | Multiple | DNS, HTTP, SSL |
-| slips-normal-3.log | Normal | Medium | Multiple | Standard network activity |
-| slips-evidence.log | Processed | Medium | Multiple | Filtered evidence only |
-| test_data.log | Test | Small | Few | Controlled test scenarios |
+| slips.log.gz | Malware | Large | Multiple | C&C, Port Scans, Blacklists |
+| slips-1.log.gz | Malware | Medium | Few | Port Scans, Suspicious Connections |
+| slips-5.log.gz | Malware | Medium | Few | Port Scans, Private IPs |
+| slips-normal.log.gz | Normal | Large | Single | SSL, HTTP, User-agents |
+| slips-normal-2.log.gz | Normal | Medium | Multiple | DNS, HTTP, SSL |
+| slips-normal-3.log.gz | Normal | Medium | Multiple | Standard network activity |
+| slips-evidence.log.gz | Processed | Medium | Multiple | Filtered evidence only |
+| test_data.log.gz | Test | Small | Few | Controlled test scenarios |
 
 ## Best Practices
 
-### For Testing
-- Use `test_data.log` for quick functionality tests
-- Use `slips-evidence.log` for clean parsing tests
-- Use normal logs for false positive analysis
-
-### For Demonstration
-- Use `slips.log` for comprehensive malware analysis demos
-- Use `slips-normal.log` for normal network analysis
-- Use `slips-5.log` for focused malware incident response
-
-### For Development
-- Test with both malware and normal logs to ensure balanced detection
-- Verify parsing works across different log formats
-- Use various IP addresses to test multi-IP functionality
+- Treat these files as archived plain-text reference data.
+- Use `sample_logs/alya_datasets/**/alerts.json` for the current JSONL/IDEA workflow.
+- Decompress `.log.gz` files only when you need manual inspection or ad hoc analysis.
 
 ## Data Sources
 

@@ -128,8 +128,8 @@ Both workflows use the same:
 ## Next Steps
 
 Choose your workflow:
-- **Summarization**: [README_dataset_workflow.md](README_dataset_workflow.md)
-- **Cause & Risk**: [README_RISK_WORKFLOW.md](README_RISK_WORKFLOW.md)
+- **Summarization**: [README_dataset_summary_workflow.md](README_dataset_summary_workflow.md)
+- **Cause & Risk**: [README_dataset_risk_workflow.md](README_dataset_risk_workflow.md)
 - **Evaluation**: [LLM_EVALUATION_GUIDE.md](LLM_EVALUATION_GUIDE.md)
 
 Or run both for comprehensive analysis!

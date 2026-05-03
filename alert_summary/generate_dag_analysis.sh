@@ -25,7 +25,7 @@ Arguments:
     input.jsonl         Input JSONL file (from sample_dataset.py)
 
 Options:
-    --output FILE              Output file (default: {input_base}.dag.txt)
+    --output FILE              Output file (default: {input_base}.dag.json)
     --incident-id UUID         Analyze specific incident by ID
     --verbose                  Verbose output
     --help                     Show this help message
