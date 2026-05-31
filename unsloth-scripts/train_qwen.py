@@ -154,10 +154,18 @@ def train_dpo(config, model, tokenizer):
     return trainer
 
 
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config.yaml",
+                        help="Path to YAML config file (default: config.yaml)")
+    return parser.parse_args()
+
+
 def main():
     """Main training function."""
-    # Load configuration
-    config = load_config()
+    args = parse_args()
+    config = load_config(args.config)
     
     # Initialize wandb if enabled
     if config.get("use_wandb", False):

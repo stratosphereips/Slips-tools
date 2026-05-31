@@ -1,0 +1,125 @@
+# UNIFIED CONFIG — 20GB VRAM
+# Slips unified fine-tuning with Unsloth
+# Tasks: summarization (S) + cause analysis (A) + risk assessment (B)
+# Model: Qwen2.5-1.5B-Instruct, 4096 seq_len, single LoRA adapter
+
+# Model Configuration
+model:
+  model_name: "unsloth/Qwen2.5-1.5B-Instruct"  # Target deployment model (RPi5)
+  max_seq_length: 4096  # 3500 DAG tokens + prompt overhead + response budget
+  dtype: null            # Auto-detect best dtype
+  load_in_4bit: true     # QLoRA — 4-bit base model required for 20GB VRAM
+  device_map: "auto"
+
+  # LoRA Configuration — matches risk config (r=64 + RSLoRA)
+  lora_r: 64             # Wider subspace for 3-task learning
+  lora_alpha: 64         # Equal to r with RSLoRA
+  lora_dropout: 0.0      # No dropout — curated dataset, every gradient counts
+  lora_targets:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  use_rslora: true       # Mandatory at r=64 to normalize gradient scaling
+  random_state: 42
+  loftq_config: null
+
+# Dataset Configuration
+dataset:
+  type: "local"
+  name: "unified_dataset"
+  path: "unified_train_dataset.json"   # 2025 records — S+A+B interleaved, 675 incidents
+  eval_path: "unified_eval_dataset.json"  # 225 records — 75 incidents
+  split: "train"
+  text_column: "messages"
+  use_chat_template: true
+  dpo_train_path: "dpo_train_dataset.json"
+  dpo_eval_path:  "dpo_eval_dataset.json"
+
+# Training Configuration
+training:
+  mode: "sft"
+
+  # Batch size and accumulation
+  per_device_train_batch_size: 1   # 4096 seq_len + 3 task types; keep at 1 for 20GB
+  gradient_accumulation_steps: 16  # effective batch size = 16
+
+  # Learning rate and schedule
+  learning_rate: 0.00002   # 2e-5 — RSLoRA stability allows higher LR
+  lr_scheduler_type: "cosine"
+  warmup_steps: 30          # Slightly longer warmup for 3-task dataset (vs 20 for risk-only)
+  weight_decay: 0.01
+
+  # Training duration — 3 epochs over 2025 records = 6075 steps / 16 accum = ~380 optimizer steps
+  num_train_epochs: 3
+  max_steps: -1
+
+  # Precision and optimization
+  fp16: false
+  bf16: true               # BF16 — Ampere GPU assumed
+  optimizer: "adamw_8bit"  # 8-bit optimizer for 20GB budget
+
+  # Logging and saving
+  logging_steps: 1
+  save_steps: 50
+  save_total_limit: 2
+
+  # Output
+  output_dir: "./qwen_unified_finetuned"
+
+  # Data processing
+  dataset_num_proc: 2
+  dataloader_num_workers: 0
+  packing: false           # Must be false with train_on_responses_only
+
+  # Reporting
+  report_to: []
+
+  # Model saving — export merged 16-bit + GGUF for Ollama/RPi5
+  save_method: "merged_16bit"
+  gguf_quantization: "q5_k_m"  # Options: q4_k_m, q5_k_m, q8_0, f16. null to skip.
+
+  seed: 42
+
+# DPO / ORPO Configuration (for optional stage 2)
+dpo:
+  beta: 0.1
+  orpo_lambda: 0.1
+  dpo_learning_rate: 0.00005
+
+# Weights & Biases
+use_wandb: false
+wandb:
+  project: "qwen-finetuning"
+  run_name: "qwen-unified-sft"
+  tags: ["qwen", "unsloth", "lora", "unified"]
+
+# Hardware-specific configurations
+hardware:
+  gpu_16gb:
+    model_name: "unsloth/Qwen2.5-1.5B-Instruct"
+    per_device_train_batch_size: 1
+    gradient_accumulation_steps: 16
+    max_seq_length: 4096
+
+  gpu_24gb:
+    model_name: "unsloth/Qwen2.5-1.5B-Instruct"
+    per_device_train_batch_size: 2
+    gradient_accumulation_steps: 8
+    max_seq_length: 4096
+
+  gpu_40gb:
+    model_name: "unsloth/Qwen2.5-3B-Instruct"
+    per_device_train_batch_size: 2
+    gradient_accumulation_steps: 8
+    max_seq_length: 4096
+
+# Evaluation Configuration
+evaluation:
+  eval_steps: 50
+  metric_for_best_model: "loss"
+  load_best_model_at_end: true
+  save_total_limit: 2
