@@ -1,0 +1,48 @@
+incident_id,category,event_count,threat_level,rank_1,rank_2,rank_3,rank_4,rank_5,finetuned_score,gpt_4o_score,gpt_4o_mini_score,qwen25_score,qwen25_3b_score,finetuned_position,gpt_4o_position,gpt_4o_mini_position,qwen25_position,qwen25_3b_position
+9332d913-40ee-400a-8b95-f07a83c7f55c,Malware,2947,15.160000000000005,GPT-4o,GPT-4o-mini,Qwen2.5,Qwen2.5 3b,Finetuned,2,8,7,4,3,5,1,2,3,4
+f3a523ce-cc49-4fd4-9cf9-d5893f77e244,Malware,2987,15.340000000000007,GPT-4o,GPT-4o-mini,Finetuned,Qwen2.5,Qwen2.5 3b,5,8,7,3,2,3,1,2,4,5
+d5f63e9f-e07b-47c2-8888-c411ac5f5557,Malware,1441,15.040000000000004,GPT-4o,GPT-4o-mini,Qwen2.5 3b,Finetuned,Qwen2.5,3,7,6,2,4,4,1,2,5,3
+f526ffff-74fa-4f38-8944-9123f1a2ba96,Malware,29,15.36000000000001,GPT-4o-mini,Finetuned,GPT-4o,Qwen2.5 3b,Qwen2.5,7,6,8,4,5,2,3,1,5,4
+65c4fc3f-fc5b-4fe3-93e7-508714a4412d,Malware,73,15.35,Qwen2.5 3b,GPT-4o,GPT-4o-mini,Finetuned,Qwen2.5,5,7,6,2,8,4,2,3,5,1
+fcbe60d2-91b1-4b12-8b55-08c9ff030e42,Malware,190,15.25,GPT-4o,Finetuned,GPT-4o-mini,Qwen2.5,Qwen2.5 3b,6,8,5,4,2,2,1,3,4,5
+a1c25998-77df-456a-bcfc-0bc1632b7598,Malware,4290,15.720000000000006,GPT-4o-mini,Finetuned,Qwen2.5 3b,Qwen2.5,GPT-4o,5,1,7,3,4,2,5,1,4,3
+795e8daa-a0d6-48ce-87b5-e0696cbe84bb,Malware,103,15.35,Qwen2.5 3b,GPT-4o-mini,Finetuned,Qwen2.5,GPT-4o,5,1,6,3,7,3,5,2,4,1
+b0662e49-7719-4cf6-a84f-59d47f5c7158,Malware,516,15.320000000000004,Finetuned,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,GPT-4o,7,1,5,3,4,1,5,2,4,3
+aefbb600-258e-4aa9-b779-708063ffc110,Malware,3206,15.120000000000003,GPT-4o-mini,GPT-4o,Qwen2.5 3b,Qwen2.5,Finetuned,2,6,7,3,5,5,2,1,4,3
+8ce47029-b7a2-45d0-a148-73fbfed1af73,Malware,91,15.1,Finetuned,GPT-4o,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,8,7,6,2,5,1,2,3,5,4
+2eb541d8-fd1d-4c77-a93c-79d3c0173f8a,Malware,123,15.350000000000001,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5 3b,Qwen2.5,6,7,8,3,4,3,2,1,5,4
+077a680a-e994-41ef-82dc-713041e89c1f,Malware,110,15.350000000000001,Qwen2.5 3b,GPT-4o-mini,Finetuned,GPT-4o,Qwen2.5,5,6,7,3,8,3,4,2,5,1
+a144c54f-4f52-4dcd-a555-74e79ef27f7e,Malware,106,15.100000000000001,Qwen2.5 3b,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5,4,5,6,2,7,4,3,2,5,1
+2c2e040b-45d4-4113-9490-d7d4b248e782,Malware,95,15.100000000000001,Qwen2.5 3b,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5,4,5,5,3,7,4,3,2,5,1
+13d86553-deed-4545-96ef-1adbdebcc6df,Malware,154,15.1,GPT-4o,Qwen2.5 3b,GPT-4o-mini,Finetuned,Qwen2.5,4,8,5,2,6,4,1,3,5,2
+5c8a1989-2d62-4831-9738-4bdafedde798,Malware,122,15.1,GPT-4o,GPT-4o-mini,Finetuned,Qwen2.5 3b,Qwen2.5,5,8,7,2,4,3,1,2,5,4
+61e1fa2a-e7ba-4658-880c-ae8cc1ff0373,Malware,79,15.100000000000001,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5 3b,Qwen2.5,5,6,7,2,4,3,2,1,5,4
+6bb57c7c-9fac-49fa-8626-b4fb5e78d22d,Malware,116,15.100000000000001,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5,Qwen2.5 3b,6,7,8,4,2,3,2,1,4,5
+66cd5e8d-6b7b-41ae-a40c-0ee96940254b,Malware,1211,15.320000000000006,GPT-4o-mini,GPT-4o,Qwen2.5 3b,Finetuned,Qwen2.5,4,7,8,2,5,4,2,1,5,3
+87859fd4-ea74-4cc9-8c77-90702e386054,Malware,39,15.100000000000001,GPT-4o,GPT-4o-mini,Qwen2.5 3b,Finetuned,Qwen2.5,4,8,7,2,5,4,1,2,5,3
+66b948e3-0ba6-4531-a5bb-1874bdc6f239,Malware,120,15.1,,,,,,,,,,,,,,,
+3dcaa1a2-dab1-455a-8891-87487d56535b,Malware,101,15.35,Finetuned,GPT-4o,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,9,8,7,3,5,1,2,3,5,4
+29e96cf2-63ed-4de8-8e0e-c53ba99eff10,Malware,95,15.650000000000002,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5 3b,Qwen2.5,6,7,8,3,4,3,2,1,5,4
+b89dce4b-059f-49c5-a554-a3fbf785612c,Malware,33,15.0,GPT-4o,GPT-4o-mini,Finetuned,Qwen2.5,Qwen2.5 3b,6,8,7,5,4,3,1,2,4,5
+ab7daa23-91a5-466d-89a6-a950f7162d87,Malware,84,15.350000000000001,GPT-4o,GPT-4o-mini,Qwen2.5 3b,Finetuned,Qwen2.5,5,8,7,3,6,4,1,2,5,3
+9fcdd530-e799-41d4-9739-1f72c9609623,Normal,559,15.200000000000008,Qwen2.5 3b,Qwen2.5,GPT-4o-mini,GPT-4o,Finetuned,1,2,2,3,4,5,4,3,2,1
+77eb949c-3d6f-4b69-a90d-013bb1875025,Malware,1942,15.240000000000006,GPT-4o-mini,GPT-4o,Qwen2.5,Qwen2.5 3b,Finetuned,1,4,5,3,2,5,2,1,3,4
+a51fedac-40cd-43c9-9611-c7767957baa0,Malware,120,15.350000000000001,Finetuned,GPT-4o,GPT-4o-mini,Qwen2.5,Qwen2.5 3b,9,7,6,4,2,1,2,3,4,5
+46da9492-8c85-4f78-be6b-de5fad10c5fa,Malware,964,15.040000000000004,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5 3b,Qwen2.5,5,6,7,3,4,3,2,1,5,4
+06598746-f11e-454e-8d96-91b1ee2a85e1,Malware,3427,15.320000000000006,GPT-4o-mini,GPT-4o,Qwen2.5 3b,Qwen2.5,Finetuned,2,6,7,3,4,5,2,1,4,3
+2971e7a7-5f85-4745-9e4e-0e4a56465e60,Malware,105,15.100000000000001,GPT-4o-mini,Qwen2.5 3b,GPT-4o,Finetuned,Qwen2.5,5,6,9,3,7,4,3,1,5,2
+c012d33a-c056-4f54-913a-6835a87a23cd,Malware,117,15.350000000000001,GPT-4o-mini,GPT-4o,Qwen2.5,Finetuned,Qwen2.5 3b,4,7,8,5,1,4,2,1,3,5
+edfb8fd4-2393-4c2e-9778-d961bfc890ba,Malware,107,15.100000000000001,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5,Qwen2.5 3b,7,8,9,5,4,3,2,1,4,5
+6d8fd038-3ca1-4577-a968-8d90c43ec02a,Malware,32,15.0,GPT-4o-mini,Qwen2.5 3b,Finetuned,Qwen2.5,GPT-4o,4,1,7,3,5,3,5,1,4,2
+298b0c57-c3e8-45f6-afcd-a7e8ed7246fe,Malware,2947,15.160000000000002,GPT-4o,GPT-4o-mini,Finetuned,Qwen2.5,Qwen2.5 3b,5,7,6,3,2,3,1,2,4,5
+cdadfc33-c374-40d8-ae42-b70856452291,Malware,55,15.350000000000001,,,,,,,,,,,,,,,
+27c08877-ebbd-4ee4-907b-bea0a16317d5,Malware,299,15.160000000000005,Finetuned,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,GPT-4o,8,1,6,4,5,1,5,2,4,3
+4e99f27e-1ea8-4488-8d5c-66da6fcd8226,Malware,71,15.350000000000001,Finetuned,GPT-4o-mini,Qwen2.5 3b,GPT-4o,Qwen2.5,7,4,6,2,5,1,4,2,5,3
+c29b1e6e-adb4-46bd-b4cc-f0b597813abc,Malware,31,15.100000000000001,,,,,,,,,,,,,,,
+91684d9f-7746-451a-a059-d2862ffcab96,Malware,4974,15.200000000000006,GPT-4o,Finetuned,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,6,7,4,1,2,2,1,3,5,4
+2c219442-8dea-430a-9cff-b3f842e97573,Malware,69,15.100000000000001,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5,Qwen2.5 3b,5,7,8,3,2,3,2,1,4,5
+f63c7397-31d6-4e7b-a09e-9278cf95160b,Normal,1823,15.355999999999998,GPT-4o-mini,GPT-4o,Qwen2.5 3b,Qwen2.5,Finetuned,2,7,9,4,5,5,2,1,4,3
+9bcb9d22-f168-4f85-8d2c-20d33507a374,Malware,3302,15.360000000000005,GPT-4o,GPT-4o-mini,Finetuned,Qwen2.5,Qwen2.5 3b,5,8,7,3,2,3,1,2,4,5
+e971f9b3-0269-4a8f-9b14-51062ea8c809,Malware,215,15.0,GPT-4o,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,Finetuned,3,8,7,4,5,5,1,2,4,3
+304b2da9-1bb8-40c6-89b8-615f1a71d2a3,Malware,6267,15.000000000000005,GPT-4o-mini,GPT-4o,Finetuned,Qwen2.5,Qwen2.5 3b,5,7,8,3,2,3,2,1,4,5
+733a6224-0286-4edf-b880-d22e2486d5af,Malware,101,15.350000000000001,GPT-4o-mini,Qwen2.5 3b,Qwen2.5,Finetuned,GPT-4o,4,1,7,5,6,4,5,1,3,2
